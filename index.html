@@ -83,7 +83,7 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
     object-fit: cover;
     object-position: center;
     z-index: 1;
-    opacity: 0.70; /* Aumentada a opacidade para ver claramente as imagens */
+    opacity: 0.60; /* Aumentada a opacidade para ver claramente as imagens */
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
     /* Degradê suave apenas à esquerda para garantir legibilidade dos textos */
@@ -97,8 +97,28 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 }
 
 /* BOTÃO ℹ️ SEM CÍRCULO / QUADRADO ESTRANHO */
-.arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: rgba(0,0,0,0.4); border-radius: 50%; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 4px 6px; line-height: 1; transition: transform 0.2s ease, background 0.2s ease; }
-.arc-info-btn:hover { transform: scale(1.2); background: rgba(0,0,0,0.7); }
+.arc-info-btn { 
+    position: absolute; 
+    top: 10px; 
+    right: 10px; 
+    z-index: 3; 
+    background: transparent !important; 
+    border: none; 
+    outline: none; 
+    color: var(--accent-gold); 
+    font-size: 1.1em; 
+    cursor: pointer; 
+    padding: 0; 
+    line-height: 1; 
+    transition: transform 0.2s ease, opacity 0.2s ease; 
+    opacity: 0.85; 
+    box-shadow: none !important;
+}
+
+.arc-info-btn:hover { 
+    transform: scale(1.25); 
+    opacity: 1; 
+}
 
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }

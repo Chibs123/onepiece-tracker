@@ -1,5 +1,5 @@
-const CACHE_NAME = 'op-tracker-v1';
-const urlsToCache = ['./OnePace.html', './manifest.json'];
+const CACHE_NAME = 'op-tracker-v2';
+const urlsToCache = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(

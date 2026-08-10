@@ -7,8 +7,6 @@
 
     <!-- 🏴‍☠️ PWA & FAVICON 🏴‍☠️ -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b132b'/><path d='M10,65 Q50,45 90,65 Q50,85 10,65 Z' fill='%23ffb703'/><path d='M30,60 Q50,15 70,60 Z' fill='%23ffb703'/><rect x='28' y='55' width='44' height='6' fill='%23d90429'/></svg>">
-    
-    <!-- Ícone específico para o ecrã principal do iPhone/Android -->
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b132b'/><path d='M10,65 Q50,45 90,65 Q50,85 10,65 Z' fill='%23ffb703'/><path d='M30,60 Q50,15 70,60 Z' fill='%23ffb703'/><rect x='28' y='55' width='44' height='6' fill='%23d90429'/></svg>">
     
     <link rel="manifest" href="./manifest.json">
@@ -34,8 +32,10 @@ header { text-align: center; padding: 16px 10px; border-bottom: 2px solid var(--
 h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
 .user-bar { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85em; color: var(--text-dim); margin-top: 5px; flex-wrap: wrap; }
 .user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.05em; }
-.btn-switch-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 4px 10px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
-.btn-switch-user:hover { background: var(--accent-gold); color: #000; }
+.btn-switch-user, .btn-open-map { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 12px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
+.btn-switch-user:hover, .btn-open-map:hover { background: var(--accent-gold); color: #000; transform: scale(1.03); }
+.btn-open-map { background: linear-gradient(135deg, var(--accent-red), #900c3f); color: #fff; border: 1px solid var(--accent-gold); margin-top: 4px; }
+
 .lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 4px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
 
 .cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
@@ -51,24 +51,15 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* CORREÇÃO DO LAYOUT DOS 3 CARTÕES NAS ESTATÍSTICAS */
-.stats-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
-    gap: 10px; 
-    margin-bottom: 14px; 
-}
+/* STATS GRID RESPONSIVO */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .stat-card { background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; }
 .stat-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); margin-bottom: 4px; }
 .stat-value { font-size: 0.95em; font-weight: bold; color: var(--text-main); }
 .stat-value.bounty-highlight { color: var(--accent-gold); font-family: 'Courier New', Courier, monospace; font-size: 1em; letter-spacing: -0.5px; }
 
-/* No telemóvel, o último cartão (Bounty) ocupa a linha inteira */
 @media (max-width: 480px) {
-    .stats-grid .stat-card:last-child {
-        grid-column: 1 / -1;
-        text-align: center;
-    }
+    .stats-grid .stat-card:last-child { grid-column: 1 / -1; text-align: center; }
 }
 
 .progress-bar-bg { background-color: rgba(0,0,0,0.5); height: 16px; border-radius: 8px; overflow: hidden; margin: 8px 0; border: 1px solid var(--text-dim); }
@@ -88,50 +79,11 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.65), rgba(11,19,43,0.85))); z-index: 1; opacity: 0.5; }
 .arc-card:hover { border-color: var(--accent-gold); }
 
-/* IMAGEM COVER A OCUPAR TODO O CARTÃO COM EXCELENTE VISIBILIDADE */
-.arc-img-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    z-index: 1;
-    opacity: 0.70;
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%);
-    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%);
-}
+.arc-img-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; opacity: 0.70; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%); }
+.arc-card:hover .arc-img-icon { opacity: 0.88; transform: scale(1.04); }
 
-.arc-card:hover .arc-img-icon {
-    opacity: 0.88;
-    transform: scale(1.04);
-}
-
-/* BOTÃO ℹ️ TOTALMENTE LIMPO SEM FUNDO */
-.arc-info-btn { 
-    position: absolute; 
-    top: 10px; 
-    right: 10px; 
-    z-index: 3; 
-    background: transparent !important; 
-    border: none; 
-    outline: none; 
-    color: var(--accent-gold); 
-    font-size: 1.1em; 
-    cursor: pointer; 
-    padding: 0; 
-    line-height: 1; 
-    transition: transform 0.2s ease, opacity 0.2s ease; 
-    opacity: 0.85; 
-    box-shadow: none !important;
-}
-.arc-info-btn:hover { 
-    transform: scale(1.25); 
-    opacity: 1; 
-}
+.arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: transparent !important; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 0; line-height: 1; transition: transform 0.2s ease, opacity 0.2s ease; opacity: 0.85; box-shadow: none !important; }
+.arc-info-btn:hover { transform: scale(1.25); opacity: 1; }
 
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }
@@ -148,7 +100,92 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
-/* MODAIS TOTALMENTE RESPONSIVOS PARA MOBILE */
+/* 🌫️ MODAL DO MAPA INTERATIVO & FOG OF WAR */
+.world-map-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.96); backdrop-filter: blur(10px); z-index: 2500; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 10px; box-sizing: border-box; }
+.world-map-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 16px; width: 100%; max-width: 980px; height: 90vh; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.9); }
+.world-map-header { padding: 12px 16px; background: rgba(11, 19, 43, 0.95); border-bottom: 1px solid var(--accent-gold); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+.world-map-header h2 { margin: 0; color: var(--accent-gold); font-size: 1.1em; text-transform: uppercase; letter-spacing: 1px; }
+
+/* VISTA DO MAPA COM A ILUSTRAÇÃO REAL DE FUNDO */
+.world-map-viewport { 
+    flex: 1; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    position: relative; 
+    background: #080f23; 
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* O CANVAS PASSA A TER A IMAGEM HD DE FUNDO */
+.world-map-canvas { 
+    width: 2600px; /* Era 1600, agora temos muito mais espaço! */
+    height: 1250px; 
+    position: relative; 
+    background-image: url('./img/world-map.jpg'); 
+    background-size: 100% 100%; /* Preencher exatamente as margens da imagem HD */
+    background-position: center; 
+    background-repeat: no-repeat; 
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+}
+
+/* ESTILOS DAS ILHAS E FOG OF WAR */
+.map-node { position: absolute; width: 38px; height: 38px; border-radius: 50%; background: #111a30; border: 2px solid var(--text-dim); display: flex; align-items: center; justify-content: center; cursor: pointer; transform: translate(-50%, -50%); transition: all 0.3s ease; z-index: 5; }
+.map-node span { font-size: 0.75em; font-weight: bold; color: #fff; pointer-events: none; }
+
+/* ILHAS COMPLETADAS */
+.map-node.completed { background: #1b4332; border-color: #52b788; box-shadow: 0 0 12px rgba(82, 183, 136, 0.7); }
+
+/* ILHA ATUAL */
+.map-node.active { background: #d90429; border-color: var(--accent-gold); box-shadow: 0 0 20px var(--accent-gold); animation: pulseNode 1.5s infinite alternate; scale: 1.25; z-index: 8; }
+
+/* FOG OF WAR (NÉVOA DE GUERRA) */
+.map-node.locked { background: rgba(15, 23, 42, 0.9); border-color: rgba(255,255,255,0.15); opacity: 0.45; filter: grayscale(1); }
+.map-node.locked::after { content: '🔒'; font-size: 0.7em; position: absolute; }
+
+@keyframes pulseNode { from { box-shadow: 0 0 8px var(--accent-gold); } to { box-shadow: 0 0 22px var(--accent-gold), 0 0 35px var(--accent-red); } }
+
+.ship-marker { position: absolute; font-size: 2em; z-index: 9; transform: translate(-50%, -85%); transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.9)); animation: floatShip 3s ease-in-out infinite alternate; }
+@keyframes floatShip { 0% { transform: translate(-50%, -85%) rotate(-3deg); } 100% { transform: translate(-50%, -92%) rotate(3deg); } }
+
+.map-node-label { 
+    position: absolute; 
+    top: 42px; /* Por defeito fica por baixo da ilha */
+    left: 50%; 
+    transform: translateX(-50%); 
+    font-size: 0.7em; 
+    font-weight: bold; 
+    white-space: nowrap; 
+    color: var(--text-main); 
+    background: rgba(0,0,0,0.85); 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    pointer-events: none; 
+    text-shadow: 0 1px 2px #000; 
+    border: 1px solid rgba(255,255,255,0.1); 
+}
+
+.map-node:nth-child(even) .map-node-label { 
+    top: auto; 
+    bottom: 42px; /* As ilhas pares ficam com o nome por cima */
+}
+
+/* 📜 WANTED POSTER POPOVER (POPOVER DE ILHA) */
+.wanted-popover-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); backdrop-filter: blur(4px); z-index: 20; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box; }
+.wanted-poster-card { background: #e2c08d; border: 4px solid #8b5a2b; border-radius: 8px; width: 100%; max-width: 320px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.9); color: #3d2314; font-family: 'Times New Roman', Times, serif; text-align: center; position: relative; animation: popIn 0.3s ease-out; }
+@keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+.wanted-title { font-size: 1.8em; font-weight: 900; letter-spacing: 3px; margin: 0 0 6px 0; color: #2b1704; border-bottom: 2px solid #8b5a2b; }
+.wanted-img-container { width: 100%; height: 140px; border: 3px solid #8b5a2b; border-radius: 4px; overflow: hidden; margin-bottom: 10px; background: #000; position: relative; }
+.wanted-img-container img { width: 100%; height: 100%; object-fit: cover; }
+.wanted-arc-name { font-size: 1.2em; font-weight: bold; margin: 4px 0; text-transform: uppercase; letter-spacing: 1px; color: #2b1704; }
+.wanted-eps { font-size: 0.85em; font-weight: bold; color: #5c3a1e; margin-bottom: 12px; }
+.wanted-actions { display: flex; gap: 6px; justify-content: center; margin-top: 10px; font-family: 'Segoe UI', sans-serif; }
+.wanted-btn { background: #8b5a2b; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 0.8em; cursor: pointer; transition: background 0.2s; }
+.wanted-btn:hover { background: #5c3a1e; }
+.wanted-btn-close { position: absolute; top: 6px; right: 10px; background: none; border: none; font-size: 1.5em; font-weight: bold; color: #8b5a2b; cursor: pointer; }
+
+/* MODAIS GERAIS */
 .user-modal-overlay, .summary-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
 .user-modal-box, .summary-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 450px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
 
@@ -158,7 +195,8 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .summary-highlights { list-style: none; padding: 0; margin: 0; }
 .summary-highlights li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.85em; color: #d0d7de; }
 
-.modal-close-btn { position: absolute; top: 10px; right: 12px; background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; }
+.modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
+.modal-close-btn:hover { color: var(--accent-gold); }
 .user-modal-box { text-align: center; }
 .user-input { width: 90%; background: rgba(0,0,0,0.5); border: 1.5px solid var(--text-dim); color: #fff; padding: 10px; border-radius: 6px; font-size: 0.95em; text-align: center; font-weight: bold; margin-bottom: 14px; outline: none; box-sizing: border-box; }
 .btn-login { background: var(--accent-gold); color: #000; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95em; width: 90%; box-sizing: border-box; }
@@ -191,6 +229,38 @@ footer { margin-top: 40px; }
         </g>
     </svg>
 </div>
+
+<!-- 🗺️ MODAL DO MAPA INTERATIVO COM FOG OF WAR -->
+<div class="world-map-overlay" id="world-map-modal" style="display:none;">
+    <div class="world-map-box">
+        <div class="world-map-header">
+            <h2>🗺️ Rota da Aventura do Bando</h2>
+            <button class="modal-close-btn" onclick="closeWorldMap()">&times;</button>
+        </div>
+        <div class="world-map-viewport" id="map-viewport">
+            <div class="world-map-canvas" id="map-canvas">
+				<svg width="2600" height="1250" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+                    <path id="map-route-path" d="" stroke="rgba(255,183,3,0.4)" stroke-width="3" stroke-dasharray="6 6" fill="none"/>
+                </svg>
+                <div class="ship-marker" id="ship-marker">⛵</div>
+                <div id="map-nodes-container"></div>
+            </div>
+            
+            <!-- POPOVER WANTED POSTER -->
+            <div class="wanted-popover-overlay" id="wanted-popover" style="display:none;">
+                <div class="wanted-poster-card">
+                    <button class="wanted-btn-close" onclick="closeWantedPopover()">&times;</button>
+                    <div class="wanted-title">WANTED</div>
+                    <div class="wanted-img-container" id="wanted-img-box"></div>
+                    <div class="wanted-arc-name" id="wanted-name">ARCO</div>
+                    <div class="wanted-eps" id="wanted-eps-info">Eps: 0 / 0</div>
+                    <div class="wanted-actions" id="wanted-actions-box"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="user-modal-overlay" id="user-modal">
     <div class="user-modal-box">
         <h2 id="modal-welcome-title">☠️ BEM-VINDO Á TRIPULAÇÃO ☠️</h2>
@@ -199,9 +269,10 @@ footer { margin-top: 40px; }
         <button class="btn-login" id="modal-login-btn" onclick="loginUser()">Entrar na Aventura ▶</button>
     </div>
 </div>
+
 <div class="summary-modal-overlay" id="summary-modal" style="display:none;" onclick="closeSummaryOnOverlay(event)">
     <div class="summary-modal-box">
-        <button class="modal-close-btn" onclick="closeSummaryModal()">&times;</button>
+        <button class="modal-close-btn" onclick="closeSummaryModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
         <h2 id="summary-title">Nome do Arco</h2>
         <span style="font-size:0.8em; color:var(--text-dim);" id="summary-eps">Episódios X - Y</span>
         <h4 id="summary-heading-desc">📖 Resumo da Aventura</h4>
@@ -210,6 +281,7 @@ footer { margin-top: 40px; }
         <ul class="summary-highlights" id="summary-list"></ul>
     </div>
 </div>
+
 <div class="container">
     <div class="cloud-status" id="cloud-status">
         ☁️ <span id="label-cloud">Estado Firebase:</span> <span id="sync-text" class="status-offline">A ligar...</span>
@@ -219,6 +291,7 @@ footer { margin-top: 40px; }
         <div class="user-bar">
             <span>👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span></span>
             <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
+            <button class="btn-open-map" onclick="openWorldMap()">🗺️ Ver Mapa do Mundo</button>
             <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
                 <option value="pt">🇵🇹 PT</option>
                 <option value="en">🇬🇧 EN</option>
@@ -226,6 +299,7 @@ footer { margin-top: 40px; }
             </select>
         </div>
     </header>
+
     <div class="next-up-container" id="next-up-card">
         <div class="next-up-info">
             <span style="font-size:0.75em; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); font-weight:bold;" id="label-current-adventure">📍 A tua aventura atual</span>
@@ -234,6 +308,7 @@ footer { margin-top: 40px; }
         </div>
         <div class="next-up-actions" id="next-up-actions"></div>
     </div>
+
     <div class="progress-container">
         <div class="stats-grid">
             <div class="stat-card">
@@ -257,6 +332,7 @@ footer { margin-top: 40px; }
             <span id="percentage-text">0% Concluído</span>
         </div>
     </div>
+
     <div class="toolbar">
         <div class="filter-buttons">
             <button class="filter-btn active" id="filter-all-btn" onclick="setFilter('all', this)">Todos</button>
@@ -266,9 +342,11 @@ footer { margin-top: 40px; }
         </div>
         <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar arco..." oninput="renderApp()">
     </div>
+
     <div id="saga-list"></div>
 </div>
 <footer></footer>
+
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
@@ -295,6 +373,49 @@ let userProgress = {};
 let dbRef = null;
 let currentFilter = 'all';
 
+// Coordenadas X, Y das Ilhas no Mapa Expandido (2600x1250)
+const mapCoordinates = {
+    // EAST BLUE (Canto Superior Direito)
+    "romance-dawn": { x: 2150, y: 220 },
+    "orange-town": { x: 2000, y: 260 },
+    "syrup-village": { x: 1850, y: 280 },
+    "baratie": { x: 1700, y: 380 },
+    "arlong-park": { x: 1550, y: 340 },
+    "loguetown": { x: 1400, y: 460 },
+
+    // REVERSE MOUNTAIN (O X Exato no Centro da Red Line)
+    "reverse-mountain": { x: 1300, y: 625 },
+
+    // PARADISE - GRAND LINE (Meio Direito, do Centro para a Direita)
+    "whiskey-peak": { x: 1400, y: 660 },
+    "little-garden": { x: 1520, y: 670 },
+    "drum-island": { x: 1640, y: 640 },
+    "alabasta": { x: 1760, y: 620 },
+    "jaya": { x: 1900, y: 650 },
+    "skypiea": { x: 1950, y: 560 }, // Um pouco mais acima por ser Ilha do Céu
+    "long-ring": { x: 2080, y: 680 },
+    "water-7": { x: 2200, y: 700 },
+    "enies-lobby": { x: 2300, y: 720 },
+    "post-enies": { x: 2380, y: 740 },
+    "thriller-bark": { x: 2460, y: 720 },
+    "sabaody": { x: 2550, y: 680 }, // Fim do Paradise na beira do mapa
+    "amazon-lily": { x: 2480, y: 820 }, // Ilha das Mulheres a Sul
+    "impel-down": { x: 2560, y: 800 },
+    "marineford": { x: 2540, y: 620 },
+    "post-war": { x: 2580, y: 650 },
+    "return-sabaody": { x: 2550, y: 680 },
+    "fishman-island": { x: 2580, y: 750 }, // Fundo do mar
+
+    // NEW WORLD (Lado Esquerdo do Mapa, da Esquerda a Caminhar para o Centro)
+    "punk-hazard": { x: 150, y: 680 },
+    "dressrosa": { x: 300, y: 690 },
+    "zou": { x: 450, y: 670 },
+    "whole-cake": { x: 620, y: 630 },
+    "reverie": { x: 1300, y: 580 }, // Mariejois no topo da Red Line
+    "wano": { x: 800, y: 600 },
+    "egghead": { x: 980, y: 620 }
+};
+
 const i18n = {
     pt: { cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!" },
     en: { cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!" },
@@ -315,11 +436,11 @@ const arcDetailsI18n = {
         "drum-island": { summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
         "alabasta": { summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
         "jaya": { summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
-        "skypiea": { summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlled pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "skypiea": { summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
         "long-ring": { summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
@@ -565,6 +686,102 @@ function openSummaryModal(arcId, isCompleted) {
 
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
+
+/* 🗺️ LÓGICA DO MAPA COM FOG OF WAR E WANTED POPOVER */
+function openWorldMap() {
+    renderWorldMap();
+    document.getElementById('world-map-modal').style.display = 'flex';
+}
+
+function closeWorldMap() {
+    closeWantedPopover();
+    document.getElementById('world-map-modal').style.display = 'none';
+}
+
+function closeWantedPopover() {
+    document.getElementById('wanted-popover').style.display = 'none';
+}
+
+function renderWorldMap() {
+    const container = document.getElementById('map-nodes-container');
+    container.innerHTML = '';
+    const allArcs = opData.flatMap(s => s.arcs);
+    let activeArc = null;
+    let foundFirstUnwatched = false;
+    let pathD = '';
+
+    allArcs.forEach((arc, index) => {
+        const coords = mapCoordinates[arc.id] || { x: 50 + index * 30, y: 300 };
+        const currentEps = Math.min(arc.totalEps, Math.max(0, userProgress[arc.id] || 0));
+        const isCompleted = currentEps >= arc.totalEps;
+        
+        let isActive = false;
+        let isLocked = false;
+
+        if (!isCompleted && !foundFirstUnwatched) {
+            isActive = true;
+            activeArc = arc;
+            foundFirstUnwatched = true;
+        } else if (!isCompleted && foundFirstUnwatched) {
+            isLocked = true; // Fog of War ativa para ilhas futuras
+        }
+
+        pathD += (index === 0 ? `M ${coords.x} ${coords.y}` : ` L ${coords.x} ${coords.y}`);
+
+        const node = document.createElement('div');
+        node.className = `map-node ${isCompleted ? 'completed' : ''} ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
+        node.style.left = `${coords.x}px`;
+        node.style.top = `${coords.y}px`;
+        
+        node.onclick = () => showWantedPopover(arc, isCompleted, isLocked, currentEps);
+
+        node.innerHTML = `
+            <span>${index + 1}</span>
+            <div class="map-node-label">${arc.name}</div>
+        `;
+        container.appendChild(node);
+    });
+
+    document.getElementById('map-route-path').setAttribute('d', pathD);
+
+    // Mover o Navio para a Ilha Atual e Fazer Auto-Scroll
+    const ship = document.getElementById('ship-marker');
+    if (activeArc && mapCoordinates[activeArc.id]) {
+        const c = mapCoordinates[activeArc.id];
+        ship.style.left = `${c.x}px`;
+        ship.style.top = `${c.y}px`;
+        
+        setTimeout(() => {
+            const viewport = document.getElementById('map-viewport');
+            viewport.scrollTo({ left: Math.max(0, c.x - viewport.clientWidth / 2), behavior: 'smooth' });
+        }, 150);
+    } else {
+        ship.style.left = `1180px`;
+        ship.style.top = `180px`;
+    }
+}
+
+/* MOSTRAR WANTED POSTER DA ILHA */
+function showWantedPopover(arc, isCompleted, isLocked, currentEps) {
+    const popover = document.getElementById('wanted-popover');
+    const imgBox = document.getElementById('wanted-img-box');
+    const nameEl = document.getElementById('wanted-name');
+    const epsEl = document.getElementById('wanted-eps-info');
+    const actionsBox = document.getElementById('wanted-actions-box');
+    const t = i18n[currentLang] || i18n.pt;
+
+    imgBox.innerHTML = arc.icon;
+    nameEl.textContent = arc.name;
+    epsEl.textContent = `Vistos: ${currentEps} / ${arc.totalEps} (${t.epsSeries} ${arc.eps})`;
+
+    actionsBox.innerHTML = `
+        <button class="wanted-btn" onclick="addEps('${arc.id}', 1, ${arc.totalEps}); closeWantedPopover(); renderWorldMap();">+1 Ep</button>
+        <button class="wanted-btn" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${currentEps}); closeWantedPopover(); renderWorldMap();">✓ Concluir</button>
+        <button class="wanted-btn" onclick="closeWorldMap(); openSummaryModal('${arc.id}', ${isCompleted});">📖 Resumo</button>
+    `;
+
+    popover.style.display = 'flex';
+}
 
 function renderApp() {
     const t = i18n[currentLang] || i18n.pt;

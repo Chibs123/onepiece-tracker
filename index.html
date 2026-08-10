@@ -27,13 +27,13 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 @keyframes dashMove { to { stroke-dashoffset: -200; } }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* HEADER & USER BAR AJUSTADOS */
+/* HEADER & USER BAR DESTAQUE */
 header { text-align: center; padding: 16px 12px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
 h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
 
 .user-bar { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 0.88em; color: var(--text-dim); margin-top: 6px; }
-.user-info-label { font-size: 0.95em; color: var(--text-dim); margin-bottom: 2px; }
-.user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.1em; }
+.user-info-label { font-size: 1.05em; color: var(--text-dim); margin-bottom: 4px; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+.user-name-tag { color: var(--accent-gold); font-weight: 900; font-size: 1.25em; text-shadow: 0 2px 5px rgba(0,0,0,0.9); letter-spacing: 0.5px; }
 
 .user-bar-controls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; }
 
@@ -44,7 +44,7 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 10px;
+    padding: 0 12px;
     border-radius: 8px;
     font-size: 0.8em;
     font-weight: bold;
@@ -60,10 +60,10 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .btn-fleet-user { background: rgba(217, 4, 41, 0.2); border: 1px solid var(--accent-red); color: #ff6b6b; }
 
 .lang-select, .crew-select {
-    background: rgba(11, 19, 43, 0.8);
+    background: rgba(11, 19, 43, 0.85);
     border: 1px solid var(--accent-gold);
     color: var(--accent-gold);
-    padding-right: 4px;
+    padding-right: 6px;
 }
 
 .lang-select option, .crew-select option {
@@ -76,20 +76,22 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .btn-fleet-user:hover { background: var(--accent-red); color: #fff; }
 .lang-select:hover, .crew-select:hover { border-color: #fff; }
 
-/* 📱 TELEMÓVEL: GRID AJUSTADA */
+/* 📱 TELEMÓVEL: CENTRALIZAÇÃO DOS 2 BOTÕES FINAIS */
 @media (max-width: 650px) {
     .user-bar-controls {
-        display: grid;
-        grid-template-columns: repeat(3, auto);
-        gap: 8px;
+        display: flex;
+        flex-wrap: wrap;
         justify-content: center;
+        gap: 6px;
         width: 100%;
     }
-    .btn-switch-user, .btn-stats-user, .btn-fleet-user, .lang-select, .crew-select {
-        font-size: 0.75em;
-        height: 32px;
-        padding: 0 6px;
-        width: 100%;
+    .btn-switch-user, .btn-stats-user, .btn-fleet-user {
+        flex: 1 1 30%;
+        min-width: 100px;
+    }
+    .crew-select, .lang-select {
+        flex: 0 1 45%;
+        min-width: 130px;
     }
 }
 
@@ -299,9 +301,9 @@ footer { margin-top: 40px; }
     <header>
         <h1>☠️ One Piece Voyage Log ☠️</h1>
         <div class="user-bar">
-            <!-- NOME DO UTILIZADOR MOVIDO PARA A LINHA DE CIMA -->
+            <!-- NOME DO UTILIZADOR DESTACADO NA LINHA DE CIMA -->
             <div class="user-info-label">
-                👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
+                🏴‍☠️ <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
             </div>
             
             <div class="user-bar-controls">
@@ -450,7 +452,7 @@ const arcDetailsI18n = {
         "post-war": { summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
         "return-sabaody": { summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
         "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
-        "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
+        "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
         "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
@@ -524,7 +526,7 @@ const arcDetailsI18n = {
         "whole-cake": { summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconcilia con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
-        "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Admirales y los Cinco Ancianos (Gorosei)"] }
+        "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Almirantes y los Cinco Ancianos (Gorosei)"] }
     }
 };
 

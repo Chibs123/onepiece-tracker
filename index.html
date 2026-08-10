@@ -28,11 +28,46 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .container { max-width: 1100px; margin: 0 auto; }
 
 /* HEADER */
-header { text-align: center; padding: 16px 10px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
+header { 
+    text-align: center; 
+    padding: 16px 10px; 
+    border-bottom: 2px solid var(--accent-red); 
+    margin-bottom: 20px; 
+    background: var(--header-bg); 
+    border-radius: 12px; 
+    backdrop-filter: blur(8px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    position: relative; 
+    overflow: visible !important; /* Garante que nada no header é cortado */
+}
+
 h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
-.user-bar { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85em; color: var(--text-dim); margin-top: 5px; flex-wrap: wrap; }
+.user-bar { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 10px; 
+    font-size: 0.85em; 
+    color: var(--text-dim); 
+    margin-top: 8px; 
+    flex-wrap: wrap; /* Permite que os botões se alinhem lado a lado no PC e em linhas no mobile */
+}
 .user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.05em; }
-.btn-switch-user, .btn-stats-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
+.btn-switch-user, .btn-stats-user { 
+    background: rgba(255, 183, 3, 0.15); 
+    border: 1px solid var(--accent-gold); 
+    color: var(--accent-gold); 
+    padding: 6px 12px; 
+    border-radius: 12px; 
+    cursor: pointer; 
+    font-size: 0.8em; 
+    font-weight: bold; 
+    transition: all 0.2s; 
+    white-space: nowrap; /* Impede o texto do botão de se partir ao meio */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 .btn-stats-user { background: rgba(82, 183, 136, 0.2); border-color: #52b788; color: #52b788; }
 .btn-switch-user:hover, .btn-stats-user:hover { transform: scale(1.05); }
 .btn-switch-user:hover { background: var(--accent-gold); color: #000; }

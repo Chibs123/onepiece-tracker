@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One Piece Progress Tracker</title>
+
+    <!-- 🏴‍☠️ PWA & FAVICON 🏴‍☠️ -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path d='M10,65 Q50,45 90,65 Q50,85 10,65 Z' fill='%23ffb703'/><path d='M30,60 Q50,15 70,60 Z' fill='%23ffb703'/><rect x='28' y='55' width='44' height='6' fill='%23d90429'/></svg>">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b132b">
+    
+    <!-- Configurações para iOS / iPhone -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="OP Tracker">
+
+    <style>
+:root { --bg-color: #0b132b; --card-bg: rgba(28, 37, 65, 0.88); --accent-red: #d90429; --accent-gold: #ffb703; --text-main: #edf2f4; --text-dim: #a0aec0; --completed-bg: rgba(27, 67, 50, 0.92); --completed-border: #52b788; --in-progress-bg: rgba(61, 43, 0, 0.92); --in-progress-border: #ffb703; --header-bg: rgba(28, 37, 65, 0.95); --map-opacity: 0.55; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; min-height: 100vh; position: relative; overflow-x: hidden; }
+.bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; }
+@keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
+.compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
+@keyframes compassRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.route-line-red { stroke-dasharray: 10 8; animation: dashMove 20s linear infinite; }
+.route-line-gold { stroke-dasharray: 14 8; animation: dashMove 30s linear infinite reverse; }
+@keyframes dashMove { to { stroke-dashoffset: -200; } }
+.container { max-width: 1100px; margin: 0 auto; }
+header { text-align: center; padding: 20px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
+h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 2px; text-transform: uppercase; }
+.user-bar { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 0.9em; color: var(--text-dim); margin-top: 5px; flex-wrap: wrap; }
+.user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.1em; }
+.btn-switch-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 3px 10px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
+.btn-switch-user:hover { background: var(--accent-gold); color: #000; }
+.lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 3px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
+.cloud-status { text-align: center; font-size: 0.85em; margin-bottom: 15px; padding: 8px; border-radius: 6px; background: rgba(0,0,0,0.4); }
+.status-online { color: #52b788; font-weight: bold; }
+.status-offline { color: var(--accent-red); font-weight: bold; }
+.next-up-container { background: linear-gradient(135deg, rgba(217, 4, 41, 0.2), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 18px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 15px; flex-wrap: wrap; }
+.next-up-info h2 { margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em; }
+.next-up-info p { margin: 0; color: var(--text-main); font-size: 0.95em; }
+.next-up-actions { display: flex; align-items: center; gap: 10px; }
+.btn-quick-add { background-color: var(--accent-gold); color: #000; border: none; padding: 8px 14px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.9em; transition: transform 0.15s ease, background-color 0.2s; }
+.btn-quick-add:hover { transform: scale(1.05); background-color: #ffe066; }
+.progress-container { background-color: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; }
+.stat-label { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); margin-bottom: 4px; }
+.stat-value { font-size: 1em; font-weight: bold; color: var(--text-main); }
+.stat-value.bounty-highlight { color: var(--accent-gold); font-family: 'Courier New', Courier, monospace; font-size: 1.1em; letter-spacing: -0.5px; }
+.progress-bar-bg { background-color: rgba(0,0,0,0.5); height: 18px; border-radius: 9px; overflow: hidden; margin: 8px 0; border: 1px solid var(--text-dim); }
+.progress-bar-fill { background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), #52b788); height: 100%; width: 0%; transition: width 0.4s ease; }
+.progress-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.85em; color: var(--text-dim); font-weight: bold; }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; }
+.filter-buttons { display: flex; gap: 8px; }
+.filter-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85em; font-weight: bold; transition: all 0.2s; }
+.filter-btn.active, .filter-btn:hover { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
+.search-input { background: rgba(0,0,0,0.4); border: 1px solid var(--text-dim); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 0.9em; outline: none; width: 200px; }
+.saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 35px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+.arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 15px; }
+.arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 16px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 140px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
+.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
+.arc-icon-bg { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 110px; height: 110px; z-index: 1; opacity: 0.16; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; }
+.arc-card:hover .arc-icon-bg { opacity: 0.28; transform: translateY(-50%) scale(1.08) rotate(-6deg); }
+.arc-card:hover { transform: translateY(-4px); border-color: var(--accent-gold); }
+.arc-info-btn { position: absolute; top: 12px; right: 12px; z-index: 3; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.3); color: var(--accent-gold); width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85em; font-weight: bold; cursor: pointer; transition: all 0.2s ease; }
+.arc-info-btn:hover { background: var(--accent-gold); color: #000; transform: scale(1.15); }
+.arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+.arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }
+.arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
+.arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; padding-right: 30px; }
+.arc-info h3 { margin: 0 0 4px 0; font-size: 1.15em; }
+.arc-episodes { font-size: 0.85em; color: var(--text-dim); }
+.ep-controls { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+.ep-input { width: 55px; background-color: rgba(0, 0, 0, 0.6); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px 6px; border-radius: 4px; text-align: center; font-weight: bold; }
+.btn-ep { background-color: rgba(42, 58, 94, 0.9); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; }
+.btn-ep:hover { background-color: var(--accent-gold); color: #000; }
+.btn-complete { background-color: var(--completed-border); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; margin-left: auto; }
+.arc-mini-progress { background-color: rgba(0, 0, 0, 0.5); height: 6px; border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
+.arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
+.user-modal-overlay, .summary-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.user-modal-box, .summary-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; max-width: 520px; width: 100%; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 85vh; overflow-y: auto; }
+.summary-modal-box h2 { margin: 0 0 6px 0; color: var(--accent-gold); }
+.summary-modal-box h4 { margin: 16px 0 6px 0; color: #52b788; text-transform: uppercase; font-size: 0.85em; letter-spacing: 1px; }
+.summary-modal-box p { font-size: 0.95em; color: var(--text-main); line-height: 1.5; margin: 0; }
+.summary-highlights { list-style: none; padding: 0; margin: 0; }
+.summary-highlights li { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9em; color: #d0d7de; }
+.summary-highlights li:last-child { border-bottom: none; }
+.modal-close-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; }
+.modal-close-btn:hover { color: var(--accent-red); }
+.user-modal-box { text-align: center; }
+.user-input { width: 80%; background: rgba(0,0,0,0.5); border: 1.5px solid var(--text-dim); color: #fff; padding: 10px; border-radius: 6px; font-size: 1em; text-align: center; font-weight: bold; margin-bottom: 15px; outline: none; }
+.user-input:focus { border-color: var(--accent-gold); }
+.btn-login { background: var(--accent-gold); color: #000; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; width: 88%; transition: transform 0.15s ease; }
+.btn-login:hover { transform: scale(1.03); }
+footer { margin-top: 50px; }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+</head>
+<body>
+<div class="bg-map-container">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#4a5568" stroke-width="0.8"/>
+                <circle cx="40" cy="40" r="2" fill="#ffb703"/>
+            </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+        <path class="route-line-red" d="M-100 200 Q 400 600 1200 -100" stroke="#d90429" stroke-width="3.5" fill="none"/>
+        <path class="route-line-gold" d="M0 800 Q 800 200 1800 900" stroke="#ffb703" stroke-width="2.5" fill="none"/>
+        <g class="compass-rose" stroke="#ffb703" fill="none" stroke-width="1.5">
+            <circle cx="160" cy="160" r="45" stroke="#457b9d" stroke-width="2"/>
+            <circle cx="160" cy="160" r="35" stroke="#ffb703" stroke-dasharray="4 4"/>
+            <path d="M160 100 L160 220 M100 160 L220 160" stroke="#edf2f4" stroke-width="1.5"/>
+            <polygon points="160,115 168,148 160,160 152,148" fill="#d90429" stroke="none"/>
+            <polygon points="160,205 168,172 160,160 152,172" fill="#edf2f4" stroke="none"/>
+            <polygon points="115,160 148,152 160,160 148,168" fill="#edf2f4" stroke="none"/>
+            <polygon points="205,160 172,152 160,160 172,168" fill="#edf2f4" stroke="none"/>
+        </g>
+    </svg>
+</div>
+<div class="user-modal-overlay" id="user-modal">
+    <div class="user-modal-box">
+        <h2 id="modal-welcome-title">☠️ BEM-VINDO Á TRIPULAÇÃO ☠️</h2>
+        <p id="modal-welcome-desc">Introduz o teu nome para carregar ou criar o teu progresso no tracker:</p>
+        <input type="text" class="user-input" id="username-input" placeholder="O teu nome..." autocomplete="off">
+        <button class="btn-login" id="modal-login-btn" onclick="loginUser()">Entrar na Aventura ▶</button>
+    </div>
+</div>
+<div class="summary-modal-overlay" id="summary-modal" style="display:none;" onclick="closeSummaryOnOverlay(event)">
+    <div class="summary-modal-box">
+        <button class="modal-close-btn" onclick="closeSummaryModal()">&times;</button>
+        <h2 id="summary-title">Nome do Arco</h2>
+        <span style="font-size:0.8em; color:var(--text-dim);" id="summary-eps">Episódios X - Y</span>
+        <h4 id="summary-heading-desc">📖 Resumo da Aventura</h4>
+        <p id="summary-text">...</p>
+        <h4 id="summary-heading-scenes">🔥 Momentos & Cenas Marcantes</h4>
+        <ul class="summary-highlights" id="summary-list"></ul>
+    </div>
+</div>
+<div class="container">
+    <div class="cloud-status" id="cloud-status">
+        ☁️ <span id="label-cloud">Estado Firebase:</span> <span id="sync-text" class="status-offline">A ligar...</span>
+    </div>
+    <header>
+        <h1>☠️ One Piece Voyage Log ☠️</h1>
+        <div class="user-bar">
+            <span>👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span></span>
+            <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
+            <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="pt">🇵🇹 PT</option>
+                <option value="en">🇬🇧 EN</option>
+                <option value="es">🇪🇸 ES</option>
+            </select>
+        </div>
+    </header>
+    <div class="next-up-container" id="next-up-card">
+        <div class="next-up-info">
+            <span style="font-size:0.75em; text-transform:uppercase; letter-spacing:1px; color:var(--text-dim); font-weight:bold;" id="label-current-adventure">📍 A tua aventura atual</span>
+            <h2 id="next-arc-title">Carregando...</h2>
+            <p id="next-arc-detail">A procurar o teu progresso...</p>
+        </div>
+        <div class="next-up-actions" id="next-up-actions"></div>
+    </div>
+    <div class="progress-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-arcs">MAPA DE ARCOS</span>
+                <span class="stat-value" id="arcs-count">0 / 0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-eps">EPISÓDIOS VISTOS</span>
+                <span class="stat-value" id="episodes-count">0 / 0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-bounty">RECOMPENSA DE LUFFY</span>
+                <span class="stat-value bounty-highlight" id="bounty-val">฿ 0</span>
+            </div>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-footer">
+            <span id="label-journey-progress">Progresso da Jornada</span>
+            <span id="percentage-text">0% Concluído</span>
+        </div>
+    </div>
+    <div class="toolbar">
+        <div class="filter-buttons">
+            <button class="filter-btn active" id="filter-all-btn" onclick="setFilter('all', this)">Todos</button>
+            <button class="filter-btn" id="filter-progress-btn" onclick="setFilter('in-progress', this)">🟡 Em Progresso</button>
+            <button class="filter-btn" id="filter-completed-btn" onclick="setFilter('completed', this)">🟢 Concluídos</button>
+            <button class="filter-btn" id="filter-unwatched-btn" onclick="setFilter('unwatched', this)">⚪ Pendentes</button>
+        </div>
+        <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar arco..." oninput="renderApp()">
+    </div>
+    <div id="saga-list"></div>
+</div>
+<footer></footer>
+<script>
+  // REGISTO DO SERVICE WORKER DA PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').then(
+        (reg) => console.log('PWA ServiceWorker ativo com sucesso!'),
+        (err) => console.log('Falha ao registar ServiceWorker:', err)
+      );
+    });
+  }
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCtyyBVAuEich0M_cHHDKeHXsb9fgQkq1w",
+    authDomain: "onepace-5a8ad.firebaseapp.com",
+    databaseURL: "https://onepace-5a8ad-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "onepace-5a8ad",
+    storageBucket: "onepace-5a8ad.firebasestorage.app",
+    messagingSenderId: "820758566613",
+    appId: "1:820758566613:web:5a5b8ea96f3e853df1f45c"
+  };
+
+let currentUser = localStorage.getItem('op_current_user') || '';
+let currentLang = localStorage.getItem('op_current_lang') || 'pt';
+let userProgress = {};
+let dbRef = null;
+let currentFilter = 'all';
+
+const i18n = {
+    pt: { cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!" },
+    en: { cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!" },
+    es: { cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!" }
+};
+
+const arcDetailsI18n = {
+    pt: {
+        "romance-dawn": { summary: "Luffy começa a sua jornada para se tornar o Rei dos Piratas, recruta Zoro e enfrenta o Capitão Morgan.", highlights: ["Luffy ganha o Chapéu de Palha de Shanks", "Recrutamento de Roronoa Zoro", "Derrota de Morgan Mão-de-Machado"] },
+        "orange-town": { summary: "Luffy e Zoro conhecem Nami e enfrentam os Piratas de Buggy, o Palhaço.", highlights: ["Introdução de Nami", "Luffy vs Buggy", "O cão leal Chouchou a defender a loja"] },
+        "syrup-village": { summary: "O bando ajuda Usopp a salvar a mansão da sua amiga Kaya das garras do malvado Capitão Kuro.", highlights: ["Recrutamento de Usopp", "O bando recebe o navio Going Merry", "Luffy derrota Kuro"] },
+        "baratie": { summary: "O bando visita o restaurante flutuante Baratie para recrutar um cozinheiro e enfrenta os Piratas de Don Krieg.", highlights: ["Recrutamento de Sanji", "Duelo Lendário: Zoro vs Mihawk", "Aparição do Shichibukai Dracule Mihawk"] },
+        "arlong-park": { summary: "Luffy descobre o passado trágico de Nami e enfrenta o Homem-Peixe Arlong para libertar a sua vila.", highlights: ["Cena Icónica: 'Luffy, ajuda-me!'", "Luffy coloca o Chapéu de Palha na cabeça da Nami", "Destruição do Arlong Park e Primeira Recompensa do Luffy (฿30M)"] },
+        "loguetown": { summary: "A última paragem antes do Grand Line, na cidade onde Gol D. Roger nasceu e foi executado.", highlights: ["Luffy sorri na plataforma de execução", "Zoro ganha as espadas Sandai Kitetsu e Yubashiri", "Intervenção misteriosa de Monkey D. Dragon", "Promessa no Barril antes da Reverse Mountain"] },
+        "reverse-mountain": { summary: "O bando entra no Grand Line subindo uma montanha de água e encontra a baleia Laboon.", highlights: ["Entrada espetacular na Grand Line", "Encontro com Crocus e a história emocionante da baleia Laboon"] },
+        "whiskey-peak": { summary: "A ilha dos caçadores de recompensas da Baroque Works e o início da aliança com a Princesa Vivi.", highlights: ["Zoro vs 100 Caçadores de Recompensas", "Luffy vs Zoro (Mal-entendido)", "Revelação da identidade da Princesa Vivi"] },
+        "little-garden": { summary: "Uma ilha pré-histórica onde dois gigantes travam um duelo há mais de 100 anos.", highlights: ["Duelo dos Gigantes Dorry e Brogy", "Zoro prestes a cortar os próprios pés", "Usopp ganha admiração pelo orgulho guerreiro de Elbaf"] },
+        "drum-island": { summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
+        "alabasta": { summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
+        "jaya": { summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
+        "skypiea": { summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "long-ring": { summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
+        "water-7": { summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
+        "enies-lobby": { summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
+        "post-enies": { summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "thriller-bark": { summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
+        "sabaody": { summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
+        "amazon-lily": { summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
+        "impel-down": { summary: "A invasão à prisão de máxima segurança da Marinha para salvar Ace.", highlights: ["Luffy sobrevive ao veneno mortal de Magellan com a ajuda de Ivankov", "Aliança épica com Buggy, Crocodile e Jinbe", "O sacrifício heróico de Bon Clay para abrir os portões da justiça"] },
+        "marineford": { summary: "A Maior Guerra do Século: Barba Branca e Luffy tentam resgatar Ace da Marinha.", highlights: ["Luffy despoleta o Haki do Conquistador (Haoshoku)", "A morte trágica de Portgas D. Ace protegendo Luffy de Akainu", "A morte lendária de Barba Branca em pé", "Shanks chega para pôr fim à guerra"] },
+        "post-war": { summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
+        "return-sabaody": { summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
+        "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
+        "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
+        "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
+        "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
+        "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "reverie": { summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
+        "wano": { summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
+        "egghead": { summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
+    },
+    en: {
+        "romance-dawn": { summary: "Luffy begins his journey to become the Pirate King, recruits Zoro, and faces Captain Morgan.", highlights: ["Luffy receives the Straw Hat from Shanks", "Roronoa Zoro recruitment", "Captain Morgan defeated"] },
+        "orange-town": { summary: "Luffy and Zoro meet Nami and battle Buggy the Clown and his crew.", highlights: ["Introduction of Nami", "Luffy vs Buggy", "Chouchou the loyal dog defending the shop"] },
+        "syrup-village": { summary: "The crew helps Usopp save his friend Kaya's mansion from the evil Captain Kuro.", highlights: ["Usopp recruitment", "The crew receives the Going Merry ship", "Luffy defeats Kuro"] },
+        "baratie": { summary: "The crew visits the ocean restaurant Baratie to recruit a cook and fights Don Krieg.", highlights: ["Sanji recruitment", "Legendary Duel: Zoro vs Mihawk", "Appearance of Warlord Dracule Mihawk"] },
+        "arlong-park": { summary: "Luffy discovers Nami's tragic past and fights the Fishman Arlong to free her village.", highlights: ["Iconic Moment: 'Luffy, help me!'", "Luffy places the Straw Hat on Nami's head", "Destruction of Arlong Park & Luffy's first bounty (฿30M)"] },
+        "loguetown": { summary: "The final stop before the Grand Line, in the town where Gol D. Roger was born and executed.", highlights: ["Luffy smiles on the execution platform", "Zoro acquires Sandai Kitetsu and Yubashiri", "Mysterious intervention by Monkey D. Dragon", "Barrel Pledge before Reverse Mountain"] },
+        "reverse-mountain": { summary: "The crew enters the Grand Line by climbing a mountain of water and meets Laboon the whale.", highlights: ["Spectacular entry into the Grand Line", "Meeting Crocus and the emotional story of Laboon"] },
+        "whiskey-peak": { summary: "An island of Baroque Works bounty hunters and the start of the alliance with Princess Vivi.", highlights: ["Zoro vs 100 Bounty Hunters", "Luffy vs Zoro (Misunderstanding)", "Princess Vivi's true identity revealed"] },
+        "little-garden": { summary: "A prehistoric island where two giants have been dueling for over 100 years.", highlights: ["Duel of giants Dorry and Brogy", "Zoro about to cut off his own feet", "Usopp gains admiration for Elbaf's warrior pride"] },
+        "drum-island": { summary: "The crew searches for a doctor to save Nami on a winter island ruled by Wapol.", highlights: ["Heartwarming story of Tony Tony Chopper and Dr. Hiriluk", "Luffy climbing the mountain carrying Nami and Sanji", "Cherry blossoms blooming in the snow & Chopper recruitment"] },
+        "alabasta": { summary: "A full-scale war in the desert kingdom to defeat Crocodile and save Vivi's people.", highlights: ["Introduction of Luffy's brother, Portgas D. Ace", "Zoro learns to cut steel against Mr. 1", "Luffy vs Crocodile underground duel", "Silent farewell with the mark of friendship (X)", "Nico Robin joins the crew"] },
+        "jaya": { summary: "The crew searches for a way to reach the sky while confronting pirates in Mock Town.", highlights: ["Blackbeard's legendary speech on human dreams", "Luffy defeats Bellamy with a single punch", "Introduction of Whitebeard and Doflamingo"] },
+        "skypiea": { summary: "The adventure on the island in the sky and the battle against 'God' Enel.", highlights: ["Spectacular ascent via the Knock Up Stream", "Luffy immune to Enel's lightning due to rubber", "Luffy rings the Golden Bell of Shandora, fulfilling a 400-year promise"] },
+        "long-ring": { summary: "The crew competes in the Davy Back Fight games against Foxy's Pirates.", highlights: ["Afro Luffy in boxing matches", "Terrifying appearance of Admiral Aokiji (Kuzan)"] },
+        "water-7": { summary: "Internal crisis: Going Merry's retirement, Luffy vs Usopp duel, and Robin's disappearance.", highlights: ["Dramatic conflict: Luffy vs Usopp over the Going Merry", "CP9 betrayal at Galley-La shipyards", "Nico Robin surrenders to World Government to protect the crew"] },
+        "enies-lobby": { summary: "Invasion of the judicial island to rescue Nico Robin at all costs.", highlights: ["Luffy unveils Gear 2nd against Blueno", "Sogeking burns the World Government flag", "Robin cries: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci and Jet Gatling final blow", "Emotional funeral and farewell to the Going Merry"] },
+        "post-enies": { summary: "Aftermath of Enies Lobby: Thousand Sunny ship, new bounties, and Luffy's family reveal.", highlights: ["Garp reveals Dragon is Luffy's father and Shanks is a Yonko", "Franky officially joins as shipwright", "Usopp's tearful apology to rejoin", "Ace vs Blackbeard on Banaro Island"] },
+        "thriller-bark": { summary: "Giant ghost ship ruled by Warlord Gecko Moria who steals human shadows.", highlights: ["Skeleton musician Brook joins the crew", "Luffy turns into Nightmare Luffy", "Zoro takes all of Luffy's pain from Kuma: 'NOTHING HAPPENED!'"] },
+        "sabaody": { summary: "Arrival at the gateway to the New World and meeting the Worst Generation.", highlights: ["Luffy punches a Celestial Dragon", "Silvers Rayleigh (Roger's First Mate) appears", "Tragic separation of the Straw Hats caused by Kuma"] },
+        "amazon-lily": { summary: "Luffy is sent to the women's island ruled by Warlord Boa Hancock.", highlights: ["Boa Hancock falls in love with Luffy", "Luffy learns Ace is about to be executed at Marineford"] },
+        "impel-down": { summary: "Infiltration of the maximum-security underwater prison to rescue Ace.", highlights: ["Luffy survives Magellan's deadly poison with Ivankov's help", "Epic alliance with Buggy, Crocodile, and Jinbe", "Bon Clay's heroic sacrifice to open the Gates of Justice"] },
+        "marineford": { summary: "The Paramount War: Whitebeard and Luffy fight the Navy to save Ace.", highlights: ["Luffy unleashes Conqueror's Haki", "Tragic death of Ace protecting Luffy from Akainu", "Whitebeard dies standing tall", "Shanks arrives to end the war"] },
+        "post-war": { summary: "Luffy's grief, childhood story with Ace and Sabo, and start of 2-year training.", highlights: ["Luffy, Ace, and Sabo brotherhood backstory", "Jinbe helps Luffy remember what remains: his crew", "Secret message 3D2Y in the newspaper for 2 years of training with Rayleigh"] },
+        "return-sabaody": { summary: "2 years later, the Straw Hats reunite at Sabaody much stronger.", highlights: ["Epic crew reunion after the timeskip", "Destroying the Fake Straw Hats with ease"] },
+        "fishman-island": { summary: "Journey to the ocean floor to stop Hody Jones' coup d'état.", highlights: ["Luffy knocks out 50,000 fish-men with Conqueror's Haki", "Princess Shirahoshi revealed as Ancient Weapon Poseidon", "Symbolic blood transfusion between Jinbe and Luffy"] },
+        "punk-hazard": { summary: "On an island split between fire and ice, the crew forms an alliance with Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Defeat of Caesar Clown and SAD factory destroyed", "Zoro slices Monet in half without Haki"] },
+        "dressrosa": { summary: "Operation to overthrow tyrant Doflamingo and free the kingdom of toys.", highlights: ["Sabo returns alive and wins Mera Mera no Mi", "Luffy reveals Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formation of the Straw Hat Grand Fleet (5,600 members)"] },
+        "zou": { summary: "A city built on the back of a giant elephant over 1,000 years old.", highlights: ["Secret of Road Poneglyphs leading to One Piece revealed", "Iconic Mink line: 'Raizo is safe!'"] },
+        "whole-cake": { summary: "Sanji rescue mission in Yonko Big Mom's territory.", highlights: ["Luffy vs Sanji painful duel", "Luffy vs Katakuri in Mirror World and Future Sight Haki upgrade", "Sanji reconciles with the crew", "Luffy declared 5th Emperor with ฿1.5B bounty"] },
+        "reverie": { summary: "World summit of kings and leaders in Mary Geoise.", highlights: ["Empty Throne and mysterious leader Imu revealed", "Sabo and Revolutionary Army infiltrate Mary Geoise"] },
+        "wano": { summary: "Epic war to liberate isolated Wano Country from Kaido and Orochi.", highlights: ["Zoro gets Enma sword", "Kozuki Oden and Gol D. Roger flashback", "Onigashima raid and battle against Kaido & Big Mom", "Luffy awakens GEAR 5TH (Sun God Nika)", "Defeat of Kaido and Luffy's bounty rises to ฿3.0B"] },
+        "egghead": { summary: "Arrival at Dr. Vegapunk's future island and clash with Gorosei.", highlights: ["Devil Fruit origins revealed by Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Arrival of Admirals and the Five Elders (Gorosei)"] }
+    },
+    es: {
+        "romance-dawn": { summary: "Luffy começa su viaje para ser el Rey de los Piratas, recluta a Zoro y enfrenta al Capitán Morgan.", highlights: ["Luffy recebe el Sombrero de Paja de Shanks", "Reclutamiento de Roronoa Zoro", "Derrota del Capitán Morgan"] },
+        "orange-town": { summary: "Luffy y Zoro conocen a Nami y se enfrentan a Buggy el Payaso.", highlights: ["Introducción de Nami", "Luffy vs Buggy", "Chouchou el perro leal defendiendo la tienda"] },
+        "syrup-village": { summary: "La tripulación ayuda a Usopp a salvar la mansión de Kaya del Capitán Kuro.", highlights: ["Reclutamiento de Usopp", "Obtención del barco Going Merry", "Luffy derrota a Kuro"] },
+        "baratie": { summary: "Visita al restaurante flotante Baratie para reclutar a un cocinero y combate con Don Krieg.", highlights: ["Reclutamiento de Sanji", "Duelo Legendario: Zoro vs Mihawk", "Aparición del Shichibukai Dracule Mihawk"] },
+        "arlong-park": { summary: "Luffy descubre el pasado trágico de Nami y combate a Arlong para liberar su aldea.", highlights: ["Cena Icónica: '¡Luffy, ayúdame!'", "Luffy coloca el Sombrero de Paja a Nami", "Destrucción de Arlong Park y primera recompensa de Luffy (฿30M)"] },
+        "loguetown": { summary: "La última parada antes del Grand Line, donde nació y fue ejecutado Gol D. Roger.", highlights: ["Luffy sonríe en la plataforma de ejecución", "Zoro obtiene Sandai Kitetsu y Yubashiri", "Intervención misteriosa de Monkey D. Dragon", "Promesa del Barril antes de Reverse Mountain"] },
+        "reverse-mountain": { summary: "Entrada al Grand Line subiendo una montaña de agua y encuentro con la ballena Laboon.", highlights: ["Entrada espectacular al Grand Line", "Encuentro con Crocus y la historia emotiva de Laboon"] },
+        "whiskey-peak": { summary: "La isla de cazadores de recompensas de Baroque Works y alianza con la Princesa Vivi.", highlights: ["Zoro vs 100 Cazadores de Recompensas", "Luffy vs Zoro (Malentendido)", "Revelación de la identidad de la Princesa Vivi"] },
+        "little-garden": { summary: "Isla prehistórica donde dos gigantes llevan duelando más de 100 años.", highlights: ["Duelo de Gigantes Dorry y Brogy", "Zoro a punto de cortarse los pies", "Usopp admira el orgullo guerrero de Elbaf"] },
+        "drum-island": { summary: "Búsqueda de un médico para Nami en una isla helada dominada por Wapol.", highlights: ["Historia de Tony Tony Chopper y el Dr. Hiriluk", "Luffy escalando la montaña cargando a Nami y Sanji", "Florecimiento de cerezos en la nieve y reclutamiento de Chopper"] },
+        "alabasta": { summary: "Guerra en el reino del desierto para derrotar a Crocodile y salvar al pueblo de Vivi.", highlights: ["Introducción del hermano de Luffy, Portgas D. Ace", "Zoro aprende a cortar acero contra Mr. 1", "Luffy vs Crocodile en el subsuelo", "Despedida silenciosa con la marca de la amistad (X)", "Nico Robin se une a la tripulación"] },
+        "jaya": { summary: "Búsqueda de una forma de subir al cielo mientras enfrentan piratas en Mock Town.", highlights: ["Discurso de Barbanegra sobre los sueños", "Luffy derrota a Bellamy de un solo puñetazo", "Introducción de Barbablanca y Doflamingo"] },
+        "skypiea": { summary: "Aventura en la isla del cielo y combate contra el 'Dios' Enel.", highlights: ["Ascenso por la Knock Up Stream", "Luffy inmune a la electricidad de Enel por ser de goma", "Luffy toca la Campana de Oro de Shandora cumpliendo la promesa"] },
+        "long-ring": { summary: "Competencia en los juegos Davy Back Fight contra los Piratas de Foxy.", highlights: ["Afro Luffy en combates de boxeo", "Aparición del Almirante Aokiji (Kuzan)"] },
+        "water-7": { summary: "Crisis interna: retiro del Going Merry, duelo Luffy vs Usopp y desaparición de Robin.", highlights: ["Confrontación dramática: Luffy vs Usopp por el Going Merry", "Traición del CP9 en los astilleros Galley-La", "Nico Robin se entrega al Gobierno Mundial para proteger a la tripulación"] },
+        "enies-lobby": { summary: "Invasión a la isla judicial del Gobierno Mundial para rescatar a Nico Robin.", highlights: ["Luffy revela el Gear 2nd contra Blueno", "Sogeking quema la bandera del Gobierno Mundial", "Robin grita: '¡QUIERO VIVIR!'", "Luffy vs Rob Lucci y golpe final Jet Gatling", "Funeral y despedida emotiva del Going Merry"] },
+        "post-enies": { summary: "Consecuencias de Enies Lobby: nuevo barco Thousand Sunny, nuevas recompensas y revelación familiar.", highlights: ["Garp revela que Dragon es el padre de Luffy y Shanks es un Yonko", "Franky se une oficialmente como carpintero", "Usopp pide perdón entre lágrimas para regresar", "Ace vs Barbanegra en la Isla Banaro"] },
+        "thriller-bark": { summary: "Barco fantasma gigante dominado por Gecko Moria que roba sombras humanas.", highlights: ["Reclutamiento del esqueleto músico Brook", "Luffy se transforma en Nightmare Luffy", "Zoro absorbe todo el dolor de Luffy ante Kuma: '¡AQUÍ NO HA PASADO NADA!'"] },
+        "sabaody": { summary: "Llegada a la antesala del Nuevo Mundo y encuentro con la Peor Generación.", highlights: ["Luffy golpea a un Tenryuubito", "Aparición de Silvers Rayleigh", "Separación trágica de la tripulación causada por Kuma"] },
+        "amazon-lily": { summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
+        "impel-down": { summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive al veneno de Magellan con ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
+        "marineford": { summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegiendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
+        "post-war": { summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace y Sabo (Hermandad)", "Jinbe le recuerda a Luffy que aún le queda su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
+        "return-sabaody": { summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
+        "fishman-island": { summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
+        "punk-hazard": { summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Alianza Pirata entre Luffy y Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
+        "dressrosa": { summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo derrotado con el King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
+        "zou": { summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
+        "whole-cake": { summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconcilia con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
+        "reverie": { summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
+        "wano": { summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Asalto a Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
+        "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Almirantes y los Cinco Ancianos (Gorosei)"] }
+    }
+};
+
+const svgIcons = {
+    hat: `<svg viewBox="0 0 100 100" fill="#ffb703"><path d="M10,65 Q50,45 90,65 Q50,85 10,65 Z"/><path d="M30,60 Q50,15 70,60 Z"/><rect x="28" y="55" width="44" height="6" fill="#d90429"/></svg>`,
+    buggy: `<svg viewBox="0 0 100 100" fill="#d90429"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="12" fill="#fff"/></svg>`,
+    slingshot: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="8" fill="none"><path d="M30,20 L50,60 L70,20 M50,60 L50,90"/></svg>`,
+    anchor: `<svg viewBox="0 0 100 100" stroke="#edf2f4" stroke-width="6" fill="none"><circle cx="50" cy="25" r="10"/><path d="M50,35 L50,85 M20,60 Q50,95 80,60 M15,60 L25,60 M75,60 L85,60"/></svg>`,
+    shark: `<svg viewBox="0 0 100 100" fill="#457b9d"><path d="M10,80 Q50,10 90,80 Q50,60 10,80 Z"/><polygon points="45,35 65,15 60,45"/></svg>`,
+    barrel: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="5" fill="none"><rect x="25" y="15" width="50" height="70" rx="10"/><line x1="25" y1="35" x2="75" y2="35"/><line x1="25" y1="65" x2="75" y2="65"/></svg>`,
+    mountain: `<svg viewBox="0 0 100 100" fill="#d90429"><polygon points="10,85 50,15 90,85"/><polygon points="35,40 50,15 65,40" fill="#fff"/></svg>`,
+    cactus: `<svg viewBox="0 0 100 100" fill="#52b788"><rect x="42" y="20" width="16" height="70" rx="8"/><path d="M20,40 L42,40 L42,55 L20,55 Z"/><path d="M58,50 L80,50 L80,65 L58,65 Z"/></svg>`,
+    dino: `<svg viewBox="0 0 100 100" fill="#52b788"><path d="M20,80 Q30,20 70,30 Q90,40 80,70 Z"/></svg>`,
+    sakura: `<svg viewBox="0 0 100 100" fill="#ffb703"><circle cx="50" cy="30" r="15"/><circle cx="30" cy="50" r="15"/><circle cx="70" cy="50" r="15"/><circle cx="40" cy="70" r="15"/><circle cx="60" cy="70" r="15"/></svg>`,
+    sun: `<svg viewBox="0 0 100 100" fill="#ffb703"><circle cx="50" cy="50" r="25"/><path d="M50,10 L50,0 M50,90 L50,100 M10,50 L0,50 M90,50 L100,50 M20,20 L10,10 M80,80 L90,90 M20,80 L10,90 M80,20 L90,10" stroke="#ffb703" stroke-width="6"/></svg>`,
+    cloud: `<svg viewBox="0 0 100 100" fill="#edf2f4"><path d="M20,65 Q10,65 10,50 Q10,35 30,35 Q40,15 65,25 Q95,50 90,65 Z"/></svg>`,
+    ship: `<svg viewBox="0 0 100 100" fill="#ffb703"><path d="M10,60 L90,60 L75,85 L25,85 Z"/><rect x="45" y="15" width="8" height="45"/><polygon points="53,20 85,35 53,50"/></svg>`,
+    ghost: `<svg viewBox="0 0 100 100" fill="#edf2f4"><path d="M25,80 Q25,20 50,20 Q75,20 75,80 L62,70 L50,80 L37,70 Z"/><circle cx="40" cy="40" r="5" fill="#000"/><circle cx="60" cy="40" r="5" fill="#000"/></svg>`,
+    swords: `<svg viewBox="0 0 100 100" stroke="#edf2f4" stroke-width="6"><line x1="15" y1="15" x2="85" y2="85"/><line x1="85" y1="15" x2="15" y2="85"/></svg>`,
+    wheel: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="5" fill="none"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="8" fill="#ffb703"/><line x1="50" y1="10" x2="50" y2="90"/><line x1="10" y1="50" x2="90" y2="50"/></svg>`,
+    dragon: `<svg viewBox="0 0 100 100" fill="#d90429"><path d="M20,70 Q40,10 80,30 Q60,90 20,70 Z"/></svg>`
+};
+
+const opData = [
+    { saga: "Saga East Blue", arcs: [
+        { id: "romance-dawn", name: "Romance Dawn", eps: "1-3", totalEps: 3, icon: svgIcons.hat, grad: "linear-gradient(135deg, rgba(14, 43, 92, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "orange-town", name: "Orange Town", eps: "4-8", totalEps: 5, icon: svgIcons.buggy, grad: "linear-gradient(135deg, rgba(92, 43, 14, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "syrup-village", name: "Syrup Village", eps: "9-18", totalEps: 10, icon: svgIcons.slingshot, grad: "linear-gradient(135deg, rgba(14, 92, 43, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "baratie", name: "Baratie", eps: "19-30", totalEps: 12, icon: svgIcons.swords, grad: "linear-gradient(135deg, rgba(92, 14, 43, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "arlong-park", name: "Arlong Park", eps: "31-44", totalEps: 14, icon: svgIcons.shark, grad: "linear-gradient(135deg, rgba(14, 75, 92, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "loguetown", name: "Loguetown", eps: "45, 48-53", totalEps: 7, icon: svgIcons.barrel, grad: "linear-gradient(135deg, rgba(45, 45, 75, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Alabasta", arcs: [
+        { id: "reverse-mountain", name: "Reverse Mountain", eps: "62-63", totalEps: 2, icon: svgIcons.mountain, grad: "linear-gradient(135deg, rgba(120, 40, 40, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "whiskey-peak", name: "Whiskey Peak", eps: "64-67", totalEps: 4, icon: svgIcons.cactus, grad: "linear-gradient(135deg, rgba(80, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "little-garden", name: "Little Garden", eps: "70-77", totalEps: 8, icon: svgIcons.dino, grad: "linear-gradient(135deg, rgba(30, 90, 40, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "drum-island", name: "Drum Island", eps: "78-91", totalEps: 14, icon: svgIcons.sakura, grad: "linear-gradient(135deg, rgba(60, 90, 110, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "alabasta", name: "Alabasta", eps: "92-130", totalEps: 39, icon: svgIcons.sun, grad: "linear-gradient(135deg, rgba(140, 90, 20, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Sky Island", arcs: [
+        { id: "jaya", name: "Jaya", eps: "144-152", totalEps: 9, icon: svgIcons.anchor, grad: "linear-gradient(135deg, rgba(100, 70, 30, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "skypiea", name: "Skypiea", eps: "153-195", totalEps: 43, icon: svgIcons.cloud, grad: "linear-gradient(135deg, rgba(40, 100, 120, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Water 7", arcs: [
+        { id: "long-ring", name: "Long Ring Long Land", eps: "207-219", totalEps: 13, icon: svgIcons.wheel, grad: "linear-gradient(135deg, rgba(50, 80, 120, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "water-7", name: "Water 7", eps: "229-263", totalEps: 35, icon: svgIcons.ship, grad: "linear-gradient(135deg, rgba(20, 90, 140, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "enies-lobby", name: "Enies Lobby", eps: "264-312", totalEps: 49, icon: svgIcons.swords, grad: "linear-gradient(135deg, rgba(120, 30, 30, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "post-enies", name: "Post-Enies Lobby", eps: "313-325", totalEps: 13, icon: svgIcons.anchor, grad: "linear-gradient(135deg, rgba(60, 60, 90, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Thriller Bark", arcs: [
+        { id: "thriller-bark", name: "Thriller Bark", eps: "337-381", totalEps: 45, icon: svgIcons.ghost, grad: "linear-gradient(135deg, rgba(60, 20, 80, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Summit War", arcs: [
+        { id: "sabaody", name: "Arquipélago Sabaody", eps: "385-405", totalEps: 21, icon: svgIcons.cloud, grad: "linear-gradient(135deg, rgba(30, 100, 80, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "amazon-lily", name: "Amazon Lily", eps: "408-421", totalEps: 14, icon: svgIcons.sun, grad: "linear-gradient(135deg, rgba(110, 30, 70, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "impel-down", name: "Impel Down", eps: "422-425, 430-452", totalEps: 27, icon: svgIcons.anchor, grad: "linear-gradient(135deg, rgba(90, 30, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "marineford", name: "Marineford", eps: "457-489", totalEps: 33, icon: svgIcons.swords, grad: "linear-gradient(135deg, rgba(130, 20, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "post-war", name: "Pós-Guerra", eps: "490-516", totalEps: 27, icon: svgIcons.hat, grad: "linear-gradient(135deg, rgba(70, 70, 70, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Ilha dos Homens-Peixe", arcs: [
+        { id: "return-sabaody", name: "Regresso a Sabaody", eps: "517-522", totalEps: 6, icon: svgIcons.hat, grad: "linear-gradient(135deg, rgba(20, 80, 100, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "fishman-island", name: "Ilha dos Homens-Peixe", eps: "523-574", totalEps: 52, icon: svgIcons.shark, grad: "linear-gradient(135deg, rgba(10, 110, 130, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Dressrosa", arcs: [
+        { id: "punk-hazard", name: "Punk Hazard", eps: "579-625", totalEps: 47, icon: svgIcons.dragon, grad: "linear-gradient(135deg, rgba(120, 60, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "dressrosa", name: "Dressrosa", eps: "629-746", totalEps: 118, icon: svgIcons.sun, grad: "linear-gradient(135deg, rgba(130, 30, 60, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Whole Cake Island", arcs: [
+        { id: "zou", name: "Zou", eps: "751-779", totalEps: 29, icon: svgIcons.dino, grad: "linear-gradient(135deg, rgba(30, 90, 50, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "whole-cake", name: "Whole Cake Island", eps: "783-877", totalEps: 95, icon: svgIcons.sun, grad: "linear-gradient(135deg, rgba(140, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "reverie", name: "Reverie", eps: "878-889", totalEps: 12, icon: svgIcons.wheel, grad: "linear-gradient(135deg, rgba(100, 80, 20, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga País de Wano", arcs: [
+        { id: "wano", name: "País de Wano", eps: "890-894, 897-906, 908-1085", totalEps: 191, icon: svgIcons.dragon, grad: "linear-gradient(135deg, rgba(150, 20, 30, 0.85), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { saga: "Saga Final", arcs: [
+        { id: "egghead", name: "Egghead", eps: "1086+", totalEps: 65, icon: svgIcons.sun, grad: "linear-gradient(135deg, rgba(160, 110, 10, 0.85), rgba(11, 19, 43, 0.95))" }
+    ]}
+];
+
+try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-text').className = 'status-offline'; document.getElementById('sync-text').textContent = 'Modo Offline (Verifica as chaves firebaseConfig)'; }
+
+function changeLanguage(lang) { currentLang = lang; localStorage.setItem('op_current_lang', lang); applyTranslations(); renderApp(); }
+function applyTranslations() {
+    const t = i18n[currentLang] || i18n.pt;
+    document.getElementById('lang-select').value = currentLang;
+    document.getElementById('label-cloud').textContent = t.cloudState;
+    document.getElementById('label-user').textContent = t.adventureOf;
+    document.getElementById('btn-switch-txt').textContent = t.switchProfile;
+    document.getElementById('label-current-adventure').textContent = t.currentAdventure;
+    document.getElementById('label-stat-arcs').textContent = t.statArcs;
+    document.getElementById('label-stat-eps').textContent = t.statEps;
+    document.getElementById('label-stat-bounty').textContent = t.statBounty;
+    document.getElementById('label-journey-progress').textContent = t.journeyProgress;
+    document.getElementById('filter-all-btn').textContent = t.filterAll;
+    document.getElementById('filter-progress-btn').textContent = t.filterInProgress;
+    document.getElementById('filter-completed-btn').textContent = t.filterCompleted;
+    document.getElementById('filter-unwatched-btn').textContent = t.filterPending;
+    document.getElementById('search-box').placeholder = t.searchPlaceholder;
+    document.getElementById('modal-welcome-title').textContent = t.welcomeTitle;
+    document.getElementById('modal-welcome-desc').textContent = t.welcomeDesc;
+    document.getElementById('username-input').placeholder = t.yourName;
+    document.getElementById('modal-login-btn').textContent = t.enterBtn;
+    document.getElementById('summary-heading-desc').textContent = t.summaryDescHeading;
+    document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
+}
+
+function checkUserSession() {
+    applyTranslations();
+    if (!currentUser) { document.getElementById('user-modal').style.display = 'flex'; } 
+    else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
+}
+
+function loginUser() {
+    const inputVal = document.getElementById('username-input').value.trim();
+    if (!inputVal) return alert('Por favor, introduz o teu nome!');
+    currentUser = inputVal.replace(/[.#$\[\]]/g, "_");
+    localStorage.setItem('op_current_user', currentUser);
+    checkUserSession();
+}
+
+function switchUserPrompt() { document.getElementById('user-modal').style.display = 'flex'; document.getElementById('username-input').value = currentUser; }
+
+function bindFirebaseUser(username) {
+    dbRef = firebase.database().ref('users/' + username);
+    dbRef.on('value', (snapshot) => {
+        userProgress = snapshot.val() || {};
+        document.getElementById('sync-text').className = 'status-online';
+        document.getElementById('sync-text').textContent = `Sincronizado (Perfil: ${username}) ✓`;
+        renderApp();
+    }, (error) => {
+        console.error(error);
+        document.getElementById('sync-text').className = 'status-offline';
+        document.getElementById('sync-text').textContent = 'Erro de permissões no Firebase';
+        renderApp();
+    });
+}
+
+function setFilter(filterType, btnEl) { currentFilter = filterType; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnEl.classList.add('active'); renderApp(); }
+function saveData() { if (dbRef) { dbRef.set(userProgress); } }
+function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+function getLuffyBounty() {
+    let isDone = (arcId) => {
+        let arc = opData.flatMap(s => s.arcs).find(a => a.id === arcId);
+        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
+    };
+    if (isDone('wano') || isDone('egghead')) return 3000000000;
+    if (isDone('whole-cake') || isDone('reverie')) return 1500000000;
+    if (isDone('dressrosa') || isDone('zou')) return 500000000; // 👈 CORRIGIDO: 500 Milhões
+    if (isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 400000000;
+    if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford')) return 300000000;
+    if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 100000000;
+    if (isDone('arlong-park') || isDone('loguetown') || isDone('reverse-mountain') || isDone('whiskey-peak') || isDone('little-garden') || isDone('drum-island')) return 30000000;
+    return 0;
+}
+
+function openSummaryModal(arcId, isCompleted) {
+    const arc = opData.flatMap(s => s.arcs).find(a => a.id === arcId);
+    if (!arc) return;
+    const t = i18n[currentLang] || i18n.pt;
+    const langData = arcDetailsI18n[currentLang] || arcDetailsI18n.pt;
+    const details = langData[arcId] || arcDetailsI18n.pt[arcId] || { summary: "", highlights: [] };
+
+    document.getElementById('summary-title').textContent = arc.name;
+    document.getElementById('summary-eps').textContent = `${t.epsSeries} ${arc.eps}`;
+
+    const textEl = document.getElementById('summary-text');
+    const listEl = document.getElementById('summary-list');
+
+    if (isCompleted) {
+        textEl.textContent = details.summary;
+        listEl.innerHTML = (details.highlights || []).map(h => `<li>🔥 ${h}</li>`).join('');
+    } else {
+        textEl.textContent = t.spoilerLock;
+        listEl.innerHTML = `<li style='color:var(--accent-gold)'>${t.spoilerList}</li>`;
+    }
+    document.getElementById('summary-modal').style.display = 'flex';
+}
+
+function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
+function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
+
+function renderApp() {
+    const t = i18n[currentLang] || i18n.pt;
+    const sagaListContainer = document.getElementById('saga-list');
+    sagaListContainer.innerHTML = '';
+    const searchQuery = (document.getElementById('search-box')?.value || '').toLowerCase();
+
+    let totalArcs = 0, completedArcs = 0, totalEpisodes = 0, watchedEpisodes = 0, activeArc = null;
+
+    opData.forEach(saga => {
+        let sagaHasVisibleArcs = false;
+        const sagaSection = document.createElement('div');
+        const title = document.createElement('h2');
+        title.className = 'saga-title';
+        title.textContent = saga.saga;
+        const arcGrid = document.createElement('div');
+        arcGrid.className = 'arc-grid';
+
+        saga.arcs.forEach(arc => {
+            totalArcs++;
+            totalEpisodes += arc.totalEps;
+            const currentEps = Math.min(arc.totalEps, Math.max(0, userProgress[arc.id] || 0));
+            watchedEpisodes += currentEps;
+
+            let statusClass = '', statusState = 'unwatched', isCompleted = false;
+            if (currentEps >= arc.totalEps) {
+                statusClass = 'status-completed'; statusState = 'completed'; completedArcs++; isCompleted = true;
+            } else if (currentEps > 0) {
+                statusClass = 'status-in-progress'; statusState = 'in-progress';
+            }
+            if (!activeArc && currentEps < arc.totalEps) { activeArc = { ...arc, currentEps }; }
+
+            const matchesSearch = arc.name.toLowerCase().includes(searchQuery) || saga.saga.toLowerCase().includes(searchQuery);
+            const matchesFilter = (currentFilter === 'all') || (currentFilter === statusState);
+
+            if (matchesSearch && matchesFilter) {
+                sagaHasVisibleArcs = true;
+                const arcPercent = Math.min(100, Math.round((currentEps / arc.totalEps) * 100));
+                const card = document.createElement('div');
+                card.className = `arc-card ${statusClass}`;
+                card.style.setProperty('--card-gradient', arc.grad);
+                card.innerHTML = `
+                    <button class="arc-info-btn" onclick="openSummaryModal('${arc.id}', ${isCompleted})" title="Resumo / Cenas Marcantes">ℹ️</button>
+                    <div class="arc-icon-bg">${arc.icon}</div>
+                    <div class="arc-card-content">
+                        <div>
+                            <div class="arc-header">
+                                <div class="arc-info">
+                                    <h3>${arc.name}</h3>
+                                    <div class="arc-episodes">${t.epsSeries} ${arc.eps}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="ep-controls">
+                                <span style="font-size:0.8em; color:var(--text-dim)">${t.watchedLabel}</span>
+                                <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" />
+                                <span style="font-size:0.8em; color:var(--text-dim)">/ ${arc.totalEps}</span>
+                                <button class="btn-ep" id="btn-add-${arc.id}">+5</button>
+                                <button class="btn-complete" id="btn-comp-${arc.id}">
+                                    ${currentEps >= arc.totalEps ? '✓' : t.completeBtn}
+                                </button>
+                            </div>
+                            <div class="arc-mini-progress">
+                                <div class="arc-mini-fill" style="width: ${arcPercent}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                arcGrid.appendChild(card);
+            }
+        });
+        if (sagaHasVisibleArcs) {
+            sagaSection.appendChild(title);
+            sagaSection.appendChild(arcGrid);
+            sagaListContainer.appendChild(sagaSection);
+        }
+    });
+
+    renderNextUpCard(activeArc);
+
+    opData.forEach(saga => {
+        saga.arcs.forEach(arc => {
+            const input = document.getElementById(`input-${arc.id}`);
+            const btnAdd = document.getElementById(`btn-add-${arc.id}`);
+            const btnComp = document.getElementById(`btn-comp-${arc.id}`);
+            if (input) input.onchange = (e) => updateEpisodicProgress(arc.id, e.target.value, arc.totalEps);
+            if (btnAdd) btnAdd.onclick = () => addEps(arc.id, 5, arc.totalEps);
+            if (btnComp) btnComp.onclick = () => toggleComplete(arc.id, arc.totalEps, userProgress[arc.id] || 0);
+        });
+    });
+
+    const percent = Math.round((watchedEpisodes / totalEpisodes) * 100) || 0;
+    const luffyBounty = getLuffyBounty();
+    document.getElementById('progress-fill').style.width = `${percent}%`;
+    document.getElementById('percentage-text').textContent = `${percent}% ${t.completedText}`;
+    document.getElementById('arcs-count').textContent = `${completedArcs} / ${totalArcs}`;
+    document.getElementById('episodes-count').textContent = `${watchedEpisodes} / ${totalEpisodes}`;
+    document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
+}
+
+function renderNextUpCard(arc) {
+    const t = i18n[currentLang] || i18n.pt;
+    const titleEl = document.getElementById('next-arc-title');
+    const detailEl = document.getElementById('next-arc-detail');
+    const actionsEl = document.getElementById('next-up-actions');
+    if (!arc) {
+        titleEl.textContent = t.allDoneTitle;
+        detailEl.textContent = t.allDoneDesc;
+        actionsEl.innerHTML = '';
+        return;
+    }
+    titleEl.textContent = `${arc.name}`;
+    detailEl.textContent = `${arc.currentEps} / ${arc.totalEps} (${t.epsSeries} ${arc.eps})`;
+    actionsEl.innerHTML = `
+        <button class="btn-quick-add" onclick="addEps('${arc.id}', 1, ${arc.totalEps})">${t.addOneEp}</button>
+        <button class="btn-ep" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${arc.currentEps})">✓ ${t.completeBtn}</button>
+    `;
+}
+
+function updateEpisodicProgress(arcId, val, totalEps) {
+    let num = parseInt(val) || 0;
+    userProgress[arcId] = Math.min(totalEps, Math.max(0, num));
+    saveData();
+}
+
+function addEps(arcId, amount, totalEps) {
+    let current = userProgress[arcId] || 0;
+    userProgress[arcId] = Math.min(totalEps, current + amount);
+    saveData();
+}
+
+function toggleComplete(arcId, totalEps, currentEps) {
+    if (currentEps >= totalEps) { userProgress[arcId] = 0; } 
+    else { userProgress[arcId] = totalEps; }
+    saveData();
+}
+
+renderApp();
+</script>
+</body>
+</html>

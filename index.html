@@ -35,10 +35,12 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .user-bar-controls { display: flex; align-items: center; gap: 8px; }
 .user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.05em; }
 
-.btn-switch-user, .btn-stats-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
+.btn-switch-user, .btn-stats-user, .btn-fleet-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
 .btn-stats-user { background: rgba(82, 183, 136, 0.2); border-color: #52b788; color: #52b788; }
+.btn-fleet-user { background: rgba(217, 4, 41, 0.2); border-color: var(--accent-red); color: #ff6b6b; }
 .btn-switch-user:hover { background: var(--accent-gold); color: #000; }
 .btn-stats-user:hover { background: #52b788; color: #000; }
+.btn-fleet-user:hover { background: var(--accent-red); color: #fff; }
 
 .lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 4px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
 
@@ -46,7 +48,7 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 @media (max-width: 600px) {
     .user-bar { flex-direction: column; gap: 8px; }
     .user-bar-controls { width: 100%; justify-content: center; flex-wrap: wrap; gap: 6px; }
-    .btn-switch-user, .btn-stats-user, .lang-select { font-size: 0.75em; padding: 4px 8px; }
+    .btn-switch-user, .btn-stats-user, .btn-fleet-user, .lang-select { font-size: 0.75em; padding: 4px 8px; }
 }
 
 .cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
@@ -111,11 +113,25 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
 /* MODAIS */
-.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
-.user-modal-box, .summary-modal-box, .global-stats-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 500px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
+.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .fleet-map-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
+.user-modal-box, .summary-modal-box, .global-stats-box, .fleet-map-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
+
+/* ESTILOS DO MAPA DA FROTA (OPÇÃO B - PONTOS CHAVE) */
+.fleet-timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 16px; position: relative; padding-left: 20px; }
+.fleet-timeline::before { content: ''; position: absolute; top: 0; bottom: 0; left: 35px; width: 4px; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); border-radius: 2px; }
+
+.fleet-saga-node { display: flex; flex-direction: column; position: relative; z-index: 2; }
+.saga-badge { display: flex; align-items: center; gap: 10px; }
+.saga-icon-circle { width: 32px; height: 32px; border-radius: 50%; background: #0b132b; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 0.9em; box-shadow: 0 0 8px rgba(255,183,3,0.4); }
+.saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 0.95em; }
+
+.ships-container { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 42px; margin-top: 6px; }
+.user-ship-tag { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 4px 10px; display: flex; align-items: center; gap: 6px; font-size: 0.8em; cursor: pointer; transition: transform 0.2s; }
+.user-ship-tag:hover { transform: scale(1.08); border-color: var(--accent-gold); }
+.user-ship-tag.is-me { border-color: #52b788; background: rgba(27, 67, 50, 0.7); }
 
 /* ESTILOS TABELA ESTATÍSTICAS GERAIS */
 .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85em; }
@@ -154,6 +170,19 @@ footer { margin-top: 40px; }
             <polygon points="205,160 172,152 160,160 172,168" fill="#edf2f4" stroke="none"/>
         </g>
     </svg>
+</div>
+
+<!-- ⛵ MODAL DO MAPA DA FROTA DA TRIPULAÇÃO -->
+<div class="fleet-map-overlay" id="fleet-map-modal" style="display:none;" onclick="closeFleetMapOnOverlay(event)">
+    <div class="fleet-map-box">
+        <button class="modal-close-btn" onclick="closeFleetMapModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
+        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h2>
+        <span style="font-size:0.8em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
+
+        <div class="fleet-timeline" id="fleet-timeline-container">
+            <div style="text-align:center; color:var(--text-dim); padding:20px;">A carregar rota dos navios...</div>
+        </div>
+    </div>
 </div>
 
 <!-- 📊 MODAL DE ESTATÍSTICAS GERAIS -->
@@ -228,6 +257,7 @@ footer { margin-top: 40px; }
             <span>👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span></span>
             <div class="user-bar-controls">
                 <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
+                <button class="btn-fleet-user" id="btn-fleet-txt" onclick="openFleetMapModal()">⛵ Frota</button>
                 <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas</button>
                 <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
                     <option value="pt">🇵🇹 PT</option>
@@ -313,16 +343,19 @@ let currentFilter = 'all';
 
 const i18n = {
     pt: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
-        statsTitle: "📊 Estatísticas da Tripulação", statsSub: "Resumo geral de todos os navegadores registados", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)"
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas", fleetBtn: "⛵ Frota", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        statsTitle: "📊 Estatísticas da Tripulação", statsSub: "Resumo geral de todos os navegadores registados", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
+        fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line"
     },
     en: { 
-        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Global Stats", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
-        statsTitle: "📊 Crew Statistics", statsSub: "General overview of all registered navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)"
+        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Global Stats", fleetBtn: "⛵ Fleet", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        statsTitle: "📊 Crew Statistics", statsSub: "General overview of all registered navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
+        fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line"
     },
     es: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "📊 Estadísticas de la Tripulación", statsSub: "Resumen general de todos los navegantes registrados", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)"
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas", fleetBtn: "⛵ Flota", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        statsTitle: "📊 Estadísticas de la Tripulación", statsSub: "Resumen general de todos los navegantes registrados", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line"
     }
 };
 
@@ -352,11 +385,11 @@ const arcDetailsI18n = {
         "marineford": { summary: "A Maior Guerra do Século: Barba Branca e Luffy tentam resgatar Ace da Marinha.", highlights: ["Luffy despoleta o Haki do Conquistador (Haoshoku)", "A morte trágica de Portgas D. Ace protegendo Luffy de Akainu", "A morte lendária de Barba Branca em pé", "Shanks chega para pôr fim à guerra"] },
         "post-war": { summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
         "return-sabaody": { summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
-        "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
+        "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe and Luffy"] },
         "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -432,7 +465,7 @@ const arcDetailsI18n = {
 };
 
 const opData = [
-    { saga: "Saga East Blue", arcs: [
+    { saga: "Saga East Blue", icon: "🌊", arcs: [
         { id: "romance-dawn", name: "Romance Dawn", eps: "1-3", totalEps: 3, icon: `<img src="./img/village-cows.webp" class="arc-img-icon" alt="Romance Dawn">`, grad: "linear-gradient(135deg, rgba(14, 43, 92, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "orange-town", name: "Orange Town", eps: "4-8", totalEps: 5, icon: `<img src="./img/Orange_Town.webp" class="arc-img-icon" alt="Orange Town">`, grad: "linear-gradient(135deg, rgba(92, 43, 14, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "syrup-village", name: "Syrup Village", eps: "9-18", totalEps: 10, icon: `<img src="./img/Syrup.webp" class="arc-img-icon" alt="Syrup Village">`, grad: "linear-gradient(135deg, rgba(14, 92, 43, 0.8), rgba(11, 19, 43, 0.95))" },
@@ -440,50 +473,50 @@ const opData = [
         { id: "arlong-park", name: "Arlong Park", eps: "31-44", totalEps: 14, icon: `<img src="./img/Arlong_Park.webp" class="arc-img-icon" alt="Arlong Park">`, grad: "linear-gradient(135deg, rgba(14, 75, 92, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "loguetown", name: "Loguetown", eps: "45, 48-53", totalEps: 7, icon: `<img src="./img/The_Town_of_the_Beginning_and_the_End_Landfall_at_Logue_Town.webp" class="arc-img-icon" alt="Loguetown">`, grad: "linear-gradient(135deg, rgba(45, 45, 75, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Alabasta", arcs: [
+    { saga: "Saga Alabasta", icon: "🏜️", arcs: [
         { id: "reverse-mountain", name: "Reverse Mountain", eps: "62-63", totalEps: 2, icon: `<img src="./img/Reverse_Mountain.webp" class="arc-img-icon" alt="Reverse Mountain">`, grad: "linear-gradient(135deg, rgba(120, 40, 40, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "whiskey-peak", name: "Whiskey Peak", eps: "64-67", totalEps: 4, icon: `<img src="./img/Whisky_Peak.webp" class="arc-img-icon" alt="Whiskey Peak">`, grad: "linear-gradient(135deg, rgba(80, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "little-garden", name: "Little Garden", eps: "70-77", totalEps: 8, icon: `<img src="./img/Little_Garden.webp" class="arc-img-icon" alt="Little Garden">`, grad: "linear-gradient(135deg, rgba(30, 90, 40, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "drum-island", name: "Drum Island", eps: "78-91", totalEps: 14, icon: `<img src="./img/Drum_Island.webp" class="arc-img-icon" alt="Drum Island">`, grad: "linear-gradient(135deg, rgba(60, 90, 110, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "alabasta", name: "Alabasta", eps: "92-130", totalEps: 39, icon: `<img src="./img/Arabasta.webp" class="arc-img-icon" alt="Alabasta">`, grad: "linear-gradient(135deg, rgba(140, 90, 20, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Sky Island", arcs: [
+    { saga: "Saga Sky Island", icon: "☁️", arcs: [
         { id: "jaya", name: "Jaya", eps: "144-152", totalEps: 9, icon: `<img src="./img/Jaya.webp" class="arc-img-icon" alt="Jaya">`, grad: "linear-gradient(135deg, rgba(100, 70, 30, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "skypiea", name: "Skypiea", eps: "153-195", totalEps: 43, icon: `<img src="./img/Skypiea.webp" class="arc-img-icon" alt="Skypiea">`, grad: "linear-gradient(135deg, rgba(40, 100, 120, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Water 7", arcs: [
+    { saga: "Saga Water 7", icon: "🚂", arcs: [
         { id: "long-ring", name: "Long Ring Long Land", eps: "207-219", totalEps: 13, icon: `<img src="./img/Long_Ring_Long_Land.webp" class="arc-img-icon" alt="Long Ring Long Land">`, grad: "linear-gradient(135deg, rgba(50, 80, 120, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "water-7", name: "Water 7", eps: "229-263", totalEps: 35, icon: `<img src="./img/Water_Seven.webp" class="arc-img-icon" alt="Water 7">`, grad: "linear-gradient(135deg, rgba(20, 90, 140, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "enies-lobby", name: "Enies Lobby", eps: "264-312", totalEps: 49, icon: `<img src="./img/enieslobby.webp" class="arc-img-icon" alt="Enies Lobby">`, grad: "linear-gradient(135deg, rgba(120, 30, 30, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "post-enies", name: "Post-Enies Lobby", eps: "313-325", totalEps: 13, icon: `<img src="./img/Post-Enies_Lobby.webp" class="arc-img-icon" alt="Post-Enies Lobby">`, grad: "linear-gradient(135deg, rgba(60, 60, 90, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Thriller Bark", arcs: [
+    { saga: "Saga Thriller Bark", icon: "👻", arcs: [
         { id: "thriller-bark", name: "Thriller Bark", eps: "337-381", totalEps: 45, icon: `<img src="./img/Thriller_Bark.webp" class="arc-img-icon" alt="Thriller Bark">`, grad: "linear-gradient(135deg, rgba(60, 20, 80, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Summit War", arcs: [
+    { saga: "Saga Summit War", icon: "⚓", arcs: [
         { id: "sabaody", name: "Arquipélago Sabaody", eps: "385-405", totalEps: 21, icon: `<img src="./img/Sabaody_Archipelago.webp" class="arc-img-icon" alt="Arquipélago Sabaody">`, grad: "linear-gradient(135deg, rgba(30, 100, 80, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "amazon-lily", name: "Amazon Lily", eps: "408-421", totalEps: 14, icon: `<img src="./img/Amazon_Lily.webp" class="arc-img-icon" alt="Amazon Lily">`, grad: "linear-gradient(135deg, rgba(110, 30, 70, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "impel-down", name: "Impel Down", eps: "422-425, 430-452", totalEps: 27, icon: `<img src="./img/Impel_Down.webp" class="arc-img-icon" alt="Impel Down">`, grad: "linear-gradient(135deg, rgba(90, 30, 20, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "marineford", name: "Marineford", eps: "457-489", totalEps: 33, icon: `<img src="./img/Marineford.webp" class="arc-img-icon" alt="Marineford">`, grad: "linear-gradient(135deg, rgba(130, 20, 20, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "post-war", name: "Pós-Guerra", eps: "490-516", totalEps: 27, icon: `<img src="./img/Post-War.webp" class="arc-img-icon" alt="Pós-Guerra">`, grad: "linear-gradient(135deg, rgba(70, 70, 70, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Ilha dos Homens-Peixe", arcs: [
+    { saga: "Saga Ilha dos Homens-Peixe", icon: "🧜‍♂️", arcs: [
         { id: "return-sabaody", name: "Regresso a Sabaody", eps: "517-522", totalEps: 6, icon: `<img src="./img/Return_to_Sabaody.webp" class="arc-img-icon" alt="Regresso a Sabaody">`, grad: "linear-gradient(135deg, rgba(20, 80, 100, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "fishman-island", name: "Ilha dos Homens-Peixe", eps: "523-574", totalEps: 52, icon: `<img src="./img/Fishman_Island.webp" class="arc-img-icon" alt="Ilha dos Homens-Peixe">`, grad: "linear-gradient(135deg, rgba(10, 110, 130, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Dressrosa", arcs: [
+    { saga: "Saga Dressrosa", icon: "🧸", arcs: [
         { id: "punk-hazard", name: "Punk Hazard", eps: "579-625", totalEps: 47, icon: `<img src="./img/Punk_Hazard.webp" class="arc-img-icon" alt="Punk Hazard">`, grad: "linear-gradient(135deg, rgba(120, 60, 20, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "dressrosa", name: "Dressrosa", eps: "629-746", totalEps: 118, icon: `<img src="./img/Dressrosa.webp" class="arc-img-icon" alt="Dressrosa">`, grad: "linear-gradient(135deg, rgba(130, 30, 60, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Whole Cake Island", arcs: [
+    { saga: "Saga Whole Cake Island", icon: "🍰", arcs: [
         { id: "zou", name: "Zou", eps: "751-779", totalEps: 29, icon: `<img src="./img/zou.webp" class="arc-img-icon" alt="Zou">`, grad: "linear-gradient(135deg, rgba(30, 90, 50, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "whole-cake", name: "Whole Cake Island", eps: "783-877", totalEps: 95, icon: `<img src="./img/Whole_Cake_Island.webp" class="arc-img-icon" alt="Whole Cake Island">`, grad: "linear-gradient(135deg, rgba(140, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "reverie", name: "Reverie", eps: "878-889", totalEps: 12, icon: `<img src="./img/Reverie.webp" class="arc-img-icon" alt="Reverie">`, grad: "linear-gradient(135deg, rgba(100, 80, 20, 0.8), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga País de Wano", arcs: [
+    { saga: "Saga País de Wano", icon: "⚔️", arcs: [
         { id: "wano", name: "País de Wano", eps: "890-894, 897-906, 908-1085", totalEps: 191, icon: `<img src="./img/Wano.webp" class="arc-img-icon" alt="País de Wano">`, grad: "linear-gradient(135deg, rgba(150, 20, 30, 0.85), rgba(11, 19, 43, 0.95))" }
     ]},
-    { saga: "Saga Final", arcs: [
+    { saga: "Saga Final", icon: "🤖", arcs: [
         { id: "egghead", name: "Egghead", eps: "1086+", totalEps: 65, icon: `<img src="./img/Egghead.webp" class="arc-img-icon" alt="Egghead">`, grad: "linear-gradient(135deg, rgba(160, 110, 10, 0.85), rgba(11, 19, 43, 0.95))" }
     ]}
 ];
@@ -498,6 +531,7 @@ function applyTranslations() {
     document.getElementById('label-user').textContent = t.adventureOf;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
     document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
+    document.getElementById('btn-fleet-txt').textContent = t.fleetBtn;
     document.getElementById('label-current-adventure').textContent = t.currentAdventure;
     document.getElementById('label-stat-arcs').textContent = t.statArcs;
     document.getElementById('label-stat-eps').textContent = t.statEps;
@@ -515,7 +549,6 @@ function applyTranslations() {
     document.getElementById('summary-heading-desc').textContent = t.summaryDescHeading;
     document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
 
-    // TRADUÇÕES DO MODAL DE ESTATÍSTICAS
     document.getElementById('modal-stats-title').textContent = t.statsTitle;
     document.getElementById('modal-stats-sub').textContent = t.statsSub;
     document.getElementById('label-stat-crew').textContent = t.statCrew;
@@ -526,6 +559,9 @@ function applyTranslations() {
     document.getElementById('th-user').textContent = t.thUser;
     document.getElementById('th-progress').textContent = t.thProgress;
     document.getElementById('th-episodes').textContent = t.thEpisodes;
+
+    document.getElementById('modal-fleet-title').textContent = t.fleetTitle;
+    document.getElementById('modal-fleet-sub').textContent = t.fleetSub;
 }
 
 function checkUserSession() {
@@ -606,6 +642,95 @@ function openSummaryModal(arcId, isCompleted) {
 
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
+
+/* ⛵ LÓGICA DO MAPA DA FROTA (PONTOS CHAVE POR SAGA) */
+function openFleetMapModal() {
+    document.getElementById('fleet-map-modal').style.display = 'flex';
+    fetchFleetData();
+}
+
+function closeFleetMapModal() {
+    document.getElementById('fleet-map-modal').style.display = 'none';
+}
+
+function closeFleetMapOnOverlay(e) {
+    if (e.target.classList.contains('fleet-map-overlay')) closeFleetMapModal();
+}
+
+function fetchFleetData() {
+    const container = document.getElementById('fleet-timeline-container');
+    const t = i18n[currentLang] || i18n.pt;
+    container.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:20px;">${t.loadingData}</div>`;
+
+    firebase.database().ref('users').once('value').then((snapshot) => {
+        const usersData = snapshot.val() || {};
+        const userKeys = Object.keys(usersData);
+
+        // Mapear cada Saga e os utilizadores ancorados nela
+        let sagaMap = {};
+        opData.forEach(s => { sagaMap[s.saga] = { icon: s.icon, users: [] }; });
+
+        userKeys.forEach(username => {
+            const prog = usersData[username] || {};
+            let currentSagaName = opData[0].saga; // Por defeito no East Blue
+            let currentArcName = "";
+
+            // Descobrir em que Saga e Arco o utilizador está atualmente
+            for (let saga of opData) {
+                let sagaCompleted = true;
+                for (let arc of saga.arcs) {
+                    const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
+                    if (currentEps < arc.totalEps) {
+                        currentSagaName = saga.saga;
+                        currentArcName = arc.name;
+                        sagaCompleted = false;
+                        break;
+                    }
+                }
+                if (!sagaCompleted) break;
+                // Se completou a saga inteira, assume a última saga completada
+                currentSagaName = saga.saga;
+            }
+
+            sagaMap[currentSagaName].users.push({
+                username: username,
+                arcName: currentArcName
+            });
+        });
+
+        // Renderizar a Linha do Tempo das Sagas
+        container.innerHTML = opData.map(saga => {
+            const sagaData = sagaMap[saga.saga];
+            const hasUsers = sagaData.users.length > 0;
+
+            return `
+                <div class="fleet-saga-node">
+                    <div class="saga-badge">
+                        <div class="saga-icon-circle">${saga.icon}</div>
+                        <div class="saga-name-title">${saga.saga}</div>
+                    </div>
+                    <div class="ships-container">
+                        ${hasUsers ? sagaData.users.map(u => `
+                            <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" onclick="closeFleetMapModal(); switchUserToView('${u.username}')">
+                                ⛵ <strong>${u.username}</strong> ${u.arcName ? `<span style="opacity:0.75; font-size:0.85em;">(${u.arcName})</span>` : ''}
+                            </div>
+                        `).join('') : `<span style="font-size:0.75em; color:rgba(255,255,255,0.25); font-style:italic;">Nenhum navio ancorado</span>`}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+    }).catch((err) => {
+        console.error("Erro ao carregar frota:", err);
+        container.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:20px;">Erro ao carregar frota</div>`;
+    });
+}
+
+function switchUserToView(username) {
+    currentUser = username;
+    localStorage.setItem('op_current_user', currentUser);
+    checkUserSession();
+}
 
 /* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS */
 function openGlobalStatsModal() {

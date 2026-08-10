@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Piece Progress Tracker</title>
 
-<!-- 🏴‍☠️ PWA & FAVICON 🏴‍☠️ -->
+    <!-- 🏴‍☠️ PWA & FAVICON 🏴‍☠️ -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b132b'/><path d='M10,65 Q50,45 90,65 Q50,85 10,65 Z' fill='%23ffb703'/><path d='M30,60 Q50,15 70,60 Z' fill='%23ffb703'/><rect x='28' y='55' width='44' height='6' fill='%23d90429'/></svg>">
     
     <!-- Ícone específico para o ecrã principal do iPhone/Android -->
@@ -68,10 +68,32 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+
 .arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 130px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
-.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
-.arc-icon-bg { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 95px; height: 95px; z-index: 1; opacity: 0.16; pointer-events: none; transition: opacity 0.2s ease; }
+.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; opacity: 0.85; }
 .arc-card:hover { border-color: var(--accent-gold); }
+
+/* ESTILO DA IMAGEM COVER A OCUPAR TODO O RETÂNGULO DO CARTÃO */
+.arc-img-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
+    opacity: 0.40;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+}
+
+.arc-card:hover .arc-img-icon {
+    opacity: 0.65;
+    transform: scale(1.05);
+}
 
 /* BOTÃO ℹ️ SEM CÍRCULO / QUADRADO ESTRANHO */
 .arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: transparent; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 4px; line-height: 1; transition: transform 0.2s ease; opacity: 0.85; }
@@ -81,13 +103,13 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }
 .arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; padding-right: 25px; }
-.arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; }
-.arc-episodes { font-size: 0.8em; color: var(--text-dim); }
+.arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
+.arc-episodes { font-size: 0.8em; color: var(--text-dim); text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
 .ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
-.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.6); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
-.btn-ep { background-color: rgba(42, 58, 94, 0.9); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
+.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.75); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
+.btn-ep { background-color: rgba(42, 58, 94, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
 .btn-complete { background-color: var(--completed-border); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; margin-left: auto; }
-.arc-mini-progress { background-color: rgba(0, 0, 0, 0.5); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.arc-mini-progress { background-color: rgba(0, 0, 0, 0.6); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
@@ -270,7 +292,7 @@ const arcDetailsI18n = {
         "marineford": { summary: "A Maior Guerra do Século: Barba Branca e Luffy tentam resgatar Ace da Marinha.", highlights: ["Luffy despoleta o Haki do Conquistador (Haoshoku)", "A morte trágica de Portgas D. Ace protegendo Luffy de Akainu", "A morte lendária de Barba Branca em pé", "Shanks chega para pôr fim à guerra"] },
         "post-war": { summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
         "return-sabaody": { summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
-        "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
+        "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue symbolic entre Jinbe e Luffy"] },
         "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
@@ -347,26 +369,6 @@ const arcDetailsI18n = {
         "wano": { summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Almirantes y los Cinco Ancianos (Gorosei)"] }
     }
-};
-
-const svgIcons = {
-    hat: `<svg viewBox="0 0 100 100" fill="#ffb703"><path d="M10,65 Q50,45 90,65 Q50,85 10,65 Z"/><path d="M30,60 Q50,15 70,60 Z"/><rect x="28" y="55" width="44" height="6" fill="#d90429"/></svg>`,
-    buggy: `<svg viewBox="0 0 100 100" fill="#d90429"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="12" fill="#fff"/></svg>`,
-    slingshot: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="8" fill="none"><path d="M30,20 L50,60 L70,20 M50,60 L50,90"/></svg>`,
-    anchor: `<svg viewBox="0 0 100 100" stroke="#edf2f4" stroke-width="6" fill="none"><circle cx="50" cy="25" r="10"/><path d="M50,35 L50,85 M20,60 Q50,95 80,60 M15,60 L25,60 M75,60 L85,60"/></svg>`,
-    shark: `<svg viewBox="0 0 100 100" fill="#457b9d"><path d="M10,80 Q50,10 90,80 Q50,60 10,80 Z"/><polygon points="45,35 65,15 60,45"/></svg>`,
-    barrel: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="5" fill="none"><rect x="25" y="15" width="50" height="70" rx="10"/><line x1="25" y1="35" x2="75" y2="35"/><line x1="25" y1="65" x2="75" y2="65"/></svg>`,
-    mountain: `<svg viewBox="0 0 100 100" fill="#d90429"><polygon points="10,85 50,15 90,85"/><polygon points="35,40 50,15 65,40" fill="#fff"/></svg>`,
-    cactus: `<svg viewBox="0 0 100 100" fill="#52b788"><rect x="42" y="20" width="16" height="70" rx="8"/><path d="M20,40 L42,40 L42,55 L20,55 Z"/><path d="M58,50 L80,50 L80,65 L58,65 Z"/></svg>`,
-    dino: `<svg viewBox="0 0 100 100" fill="#52b788"><path d="M20,80 Q30,20 70,30 Q90,40 80,70 Z"/></svg>`,
-    sakura: `<svg viewBox="0 0 100 100" fill="#ffb703"><circle cx="50" cy="30" r="15"/><circle cx="30" cy="50" r="15"/><circle cx="70" cy="50" r="15"/><circle cx="40" cy="70" r="15"/><circle cx="60" cy="70" r="15"/></svg>`,
-    sun: `<svg viewBox="0 0 100 100" fill="#ffb703"><circle cx="50" cy="50" r="25"/><path d="M50,10 L50,0 M50,90 L50,100 M10,50 L0,50 M90,50 L100,50 M20,20 L10,10 M80,80 L90,90 M20,80 L10,90 M80,20 L90,10" stroke="#ffb703" stroke-width="6"/></svg>`,
-    cloud: `<svg viewBox="0 0 100 100" fill="#edf2f4"><path d="M20,65 Q10,65 10,50 Q10,35 30,35 Q40,15 65,25 Q95,50 90,65 Z"/></svg>`,
-    ship: `<svg viewBox="0 0 100 100" fill="#ffb703"><path d="M10,60 L90,60 L75,85 L25,85 Z"/><rect x="45" y="15" width="8" height="45"/><polygon points="53,20 85,35 53,50"/></svg>`,
-    ghost: `<svg viewBox="0 0 100 100" fill="#edf2f4"><path d="M25,80 Q25,20 50,20 Q75,20 75,80 L62,70 L50,80 L37,70 Z"/><circle cx="40" cy="40" r="5" fill="#000"/><circle cx="60" cy="40" r="5" fill="#000"/></svg>`,
-    swords: `<svg viewBox="0 0 100 100" stroke="#edf2f4" stroke-width="6"><line x1="15" y1="15" x2="85" y2="85"/><line x1="85" y1="15" x2="15" y2="85"/></svg>`,
-    wheel: `<svg viewBox="0 0 100 100" stroke="#ffb703" stroke-width="5" fill="none"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="8" fill="#ffb703"/><line x1="50" y1="10" x2="50" y2="90"/><line x1="10" y1="50" x2="90" y2="50"/></svg>`,
-    dragon: `<svg viewBox="0 0 100 100" fill="#d90429"><path d="M20,70 Q40,10 80,30 Q60,90 20,70 Z"/></svg>`
 };
 
 const opData = [
@@ -571,7 +573,7 @@ function renderApp() {
                 card.style.setProperty('--card-gradient', arc.grad);
                 card.innerHTML = `
                     <button class="arc-info-btn" onclick="openSummaryModal('${arc.id}', ${isCompleted})" title="Resumo / Cenas Marcantes">ℹ️</button>
-                    <div class="arc-icon-bg">${arc.icon}</div>
+                    ${arc.icon}
                     <div class="arc-card-content">
                         <div>
                             <div class="arc-header">

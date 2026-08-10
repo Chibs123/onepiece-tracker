@@ -27,75 +27,27 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 @keyframes dashMove { to { stroke-dashoffset: -200; } }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* HEADER */
-header { 
-    text-align: center; 
-    padding: 16px 12px; 
-    border-bottom: 2px solid var(--accent-red); 
-    margin-bottom: 20px; 
-    background: var(--header-bg); 
-    border-radius: 12px; 
-    backdrop-filter: blur(8px); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
-    position: relative; 
-}
-
+/* HEADER & USER BAR OPTIMIZADOS PARA PC E MOBILE */
+header { text-align: center; padding: 16px 12px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
 h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
-.user-bar { 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    gap: 10px; 
-    font-size: 0.85em; 
-    color: var(--text-dim); 
-    margin-top: 10px; 
-    flex-wrap: nowrap; /* No PC mantém sempre tudo na mesma linha! */
-}
-.user-bar-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
+
+.user-bar { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85em; color: var(--text-dim); margin-top: 10px; flex-wrap: nowrap; }
+.user-bar-controls { display: flex; align-items: center; gap: 8px; }
 .user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.05em; }
-.btn-switch-user, .btn-stats-user { 
-    background: rgba(255, 183, 3, 0.15); 
-    border: 1px solid var(--accent-gold); 
-    color: var(--accent-gold); 
-    padding: 5px 10px; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    font-size: 0.8em; 
-    font-weight: bold; 
-    transition: all 0.2s; 
-    white-space: nowrap; 
-}
-.btn-stats-user { 
-    background: rgba(82, 183, 136, 0.2); 
-    border-color: #52b788; 
-    color: #52b788; 
-}.btn-switch-user:hover, .btn-stats-user:hover { transform: scale(1.05); }
+
+.btn-switch-user, .btn-stats-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 10px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
+.btn-stats-user { background: rgba(82, 183, 136, 0.2); border-color: #52b788; color: #52b788; }
 .btn-switch-user:hover { background: var(--accent-gold); color: #000; }
 .btn-stats-user:hover { background: #52b788; color: #000; }
 
+.lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 4px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
+
 /* 📱 AJUSTES EXCLUSIVOS PARA TELEMÓVEL */
 @media (max-width: 600px) {
-    .user-bar {
-        flex-direction: column; /* No mobile divide em 2 linhas organizadas */
-        gap: 8px;
-    }
-    .user-bar-controls {
-        width: 100%;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-    .btn-switch-user, .btn-stats-user, .lang-select {
-        font-size: 0.75em;
-        padding: 4px 8px;
-    }
+    .user-bar { flex-direction: column; gap: 8px; }
+    .user-bar-controls { width: 100%; justify-content: center; flex-wrap: wrap; gap: 6px; }
+    .btn-switch-user, .btn-stats-user, .lang-select { font-size: 0.75em; padding: 4px 8px; }
 }
-        
-.lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 4px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
 
 .cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
 .status-online { color: #52b788; font-weight: bold; }
@@ -208,37 +160,37 @@ footer { margin-top: 40px; }
 <div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
     <div class="global-stats-box">
         <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
-        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;">📊 Estatísticas da Tripulação</h2>
-        <span style="font-size:0.8em; color:var(--text-dim);">Resumo geral de todos os navegadores registados</span>
+        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-stats-title">📊 Estatísticas da Tripulação</h2>
+        <span style="font-size:0.8em; color:var(--text-dim);" id="modal-stats-sub">Resumo geral de todos os navegadores registados</span>
 
         <div class="stats-grid" style="margin-top: 14px;">
             <div class="stat-card">
-                <span class="stat-label">TRIPULAÇÃO</span>
+                <span class="stat-label" id="label-stat-crew">TRIPULAÇÃO</span>
                 <span class="stat-value" id="global-users-count">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label">TOTAL EPS VISTOS</span>
+                <span class="stat-label" id="label-stat-toteps">TOTAL EPS VISTOS</span>
                 <span class="stat-value" id="global-eps-count">0</span>
             </div>
             <div class="stat-card">
-                <span class="stat-label">RECOMPENSA MÁXIMA</span>
+                <span class="stat-label" id="label-stat-maxbounty">RECOMPENSA MÁXIMA</span>
                 <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
             </div>
         </div>
 
-        <h3 style="color:#52b788; font-size:0.95em; margin: 16px 0 6px 0; text-transform:uppercase;">🏆 Tabela de Liderança</h3>
+        <h3 style="color:#52b788; font-size:0.95em; margin: 16px 0 6px 0; text-transform:uppercase;" id="label-leaderboard-heading">🏆 Tabela de Liderança</h3>
         <div style="overflow-x:auto;">
             <table class="leaderboard-table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Navegador</th>
-                        <th>Progresso</th>
-                        <th>Episódios</th>
+                        <th id="th-rank">#</th>
+                        <th id="th-user">Navegador</th>
+                        <th id="th-progress">Progresso</th>
+                        <th id="th-episodes">Episódios</th>
                     </tr>
                 </thead>
                 <tbody id="leaderboard-body">
-                    <tr><td colspan="4" style="text-align:center; color:var(--text-dim);">A carregar dados...</td></tr>
+                    <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -274,10 +226,9 @@ footer { margin-top: 40px; }
         <h1>☠️ One Piece Voyage Log ☠️</h1>
         <div class="user-bar">
             <span>👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span></span>
-            
             <div class="user-bar-controls">
                 <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
-                <button class="btn-stats-user" onclick="openGlobalStatsModal()">📊 Estatísticas</button>
+                <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas</button>
                 <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
                     <option value="pt">🇵🇹 PT</option>
                     <option value="en">🇬🇧 EN</option>
@@ -361,9 +312,18 @@ let dbRef = null;
 let currentFilter = 'all';
 
 const i18n = {
-    pt: { cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!" },
-    en: { cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!" },
-    es: { cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!" }
+    pt: { 
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        statsTitle: "📊 Estatísticas da Tripulação", statsSub: "Resumo geral de todos os navegadores registados", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)"
+    },
+    en: { 
+        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Global Stats", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBounty: "LUFFY'S BOUNTY", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        statsTitle: "📊 Crew Statistics", statsSub: "General overview of all registered navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)"
+    },
+    es: { 
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBounty: "RECOMPENSA DE LUFFY", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        statsTitle: "📊 Estadísticas de la Tripulación", statsSub: "Resumen general de todos los navegantes registrados", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)"
+    }
 };
 
 const arcDetailsI18n = {
@@ -396,7 +356,7 @@ const arcDetailsI18n = {
         "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -537,6 +497,7 @@ function applyTranslations() {
     document.getElementById('label-cloud').textContent = t.cloudState;
     document.getElementById('label-user').textContent = t.adventureOf;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
+    document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
     document.getElementById('label-current-adventure').textContent = t.currentAdventure;
     document.getElementById('label-stat-arcs').textContent = t.statArcs;
     document.getElementById('label-stat-eps').textContent = t.statEps;
@@ -553,6 +514,18 @@ function applyTranslations() {
     document.getElementById('modal-login-btn').textContent = t.enterBtn;
     document.getElementById('summary-heading-desc').textContent = t.summaryDescHeading;
     document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
+
+    // TRADUÇÕES DO MODAL DE ESTATÍSTICAS
+    document.getElementById('modal-stats-title').textContent = t.statsTitle;
+    document.getElementById('modal-stats-sub').textContent = t.statsSub;
+    document.getElementById('label-stat-crew').textContent = t.statCrew;
+    document.getElementById('label-stat-toteps').textContent = t.statTotEps;
+    document.getElementById('label-stat-maxbounty').textContent = t.statMaxBounty;
+    document.getElementById('label-leaderboard-heading').textContent = t.leaderboardHeading;
+    document.getElementById('th-rank').textContent = t.thRank;
+    document.getElementById('th-user').textContent = t.thUser;
+    document.getElementById('th-progress').textContent = t.thProgress;
+    document.getElementById('th-episodes').textContent = t.thEpisodes;
 }
 
 function checkUserSession() {
@@ -649,8 +622,10 @@ function closeGlobalStatsOnOverlay(e) {
 }
 
 function fetchGlobalStats() {
+    const t = i18n[currentLang] || i18n.pt;
     const totalSeriesEpisodes = opData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
     const tbody = document.getElementById('leaderboard-body');
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">${t.loadingData}</td></tr>`;
     
     firebase.database().ref('users').once('value').then((snapshot) => {
         const usersData = snapshot.val() || {};
@@ -683,7 +658,6 @@ function fetchGlobalStats() {
             });
         });
 
-        // Ordenar por episódios vistos (decrescente)
         leaderboard.sort((a, b) => b.watched - a.watched);
 
         document.getElementById('global-users-count').textContent = totalUsers;
@@ -691,7 +665,7 @@ function fetchGlobalStats() {
         document.getElementById('global-top-bounty').textContent = formatBounty(maxBounty);
 
         if (leaderboard.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">Nenhum utilizador encontrado</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">No data</td></tr>`;
             return;
         }
 
@@ -701,7 +675,7 @@ function fetchGlobalStats() {
             return `
                 <tr>
                     <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
-                    <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? '<span style="color:var(--accent-gold); font-size:0.8em;">(Tu)</span>' : ''}</td>
+                    <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? `<span style="color:var(--accent-gold); font-size:0.8em;">${t.youTag}</span>` : ''}</td>
                     <td><span style="color:#52b788; font-weight:bold;">${item.percent}%</span></td>
                     <td>${item.watched} eps</td>
                 </tr>
@@ -710,7 +684,7 @@ function fetchGlobalStats() {
 
     }).catch((err) => {
         console.error("Erro ao carregar estatísticas gerais:", err);
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro ao carregar dados do Firebase</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro Firebase (.read Rules)</td></tr>`;
     });
 }
 

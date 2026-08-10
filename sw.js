@@ -1,4 +1,4 @@
-const CACHE_NAME = 'op-tracker-v2';
+const CACHE_NAME = 'op-tracker-v5';
 const urlsToCache = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {

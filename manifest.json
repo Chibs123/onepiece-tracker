@@ -2,8 +2,8 @@
   "name": "One Piece Voyage Log",
   "short_name": "OP Tracker",
   "description": "Progress Tracker de One Piece em tempo real",
-  "start_url": "./OnePace.html",
-  "display": "standalone",
+"start_url": "./index.html"
+"display": "standalone",
   "background_color": "#0b132b",
   "theme_color": "#0b132b",
   "orientation": "portrait",

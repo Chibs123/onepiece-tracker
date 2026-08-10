@@ -120,22 +120,98 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-/* ESTILOS REFORMULADOS DO MAPA DA FROTA (PONTOS CHAVE DA GRAND LINE) */
-.fleet-timeline { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; position: relative; padding-left: 18px; }
-.fleet-timeline::before { content: ''; position: absolute; top: 10px; bottom: 10px; left: 34px; width: 4px; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); border-radius: 2px; }
+/* ⛵ ESTILOS REFORMULADOS E ANIMADOS DA FROTA PIRATA */
+.fleet-timeline { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 24px; 
+    margin-top: 20px; 
+    position: relative; 
+    padding-left: 10px; 
+}
+
+/* ROTA/CANAL DE ÁGUA COM ANIMAÇÃO DE FLUXO */
+.fleet-timeline::before { 
+    content: ''; 
+    position: absolute; 
+    top: 10px; 
+    bottom: 10px; 
+    left: 28px; 
+    width: 6px; 
+    background: linear-gradient(180deg, var(--accent-gold), var(--accent-red), #52b788, #457b9d); 
+    border-radius: 3px; 
+    box-shadow: 0 0 12px rgba(255, 183, 3, 0.5);
+}
 
 .fleet-saga-node { display: flex; flex-direction: column; position: relative; z-index: 2; }
+
 .saga-badge { display: flex; align-items: center; gap: 12px; }
-.saga-icon-circle { width: 36px; height: 36px; border-radius: 50%; background: #0b132b; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 1em; box-shadow: 0 0 10px rgba(255,183,3,0.5); }
-.saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 1em; letter-spacing: 0.5px; }
 
-.ships-container { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 48px; margin-top: 8px; }
-.user-ship-tag { background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; font-size: 0.85em; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-.user-ship-tag:hover { transform: translateY(-2px) scale(1.05); border-color: var(--accent-gold); box-shadow: 0 6px 15px rgba(255,183,3,0.3); }
-.user-ship-tag.is-me { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.9), rgba(11,19,43,0.95)); }
+.saga-icon-circle { 
+    width: 42px; 
+    height: 42px; 
+    border-radius: 50%; 
+    background: #0b132b; 
+    border: 2px solid var(--accent-gold); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 1.2em; 
+    box-shadow: 0 0 14px rgba(255,183,3,0.6); 
+    transition: transform 0.3s ease;
+}
+.fleet-saga-node:hover .saga-icon-circle { transform: scale(1.15) rotate(10deg); }
 
-.ship-anim-icon { font-size: 1.1em; animation: waveBob 2.5s ease-in-out infinite alternate; display: inline-block; }
-@keyframes waveBob { 0% { transform: translateY(0) rotate(-4deg); } 100% { transform: translateY(-3px) rotate(4deg); } }
+.saga-name-title { font-weight: 800; color: var(--accent-gold); font-size: 1.05em; letter-spacing: 0.5px; text-shadow: 0 2px 4px #000; }
+
+.ships-container { display: flex; flex-wrap: wrap; gap: 10px; margin-left: 52px; margin-top: 10px; }
+
+/* NAVIOS COM FLUTUAÇÃO E RASTO DE ÁGUA */
+.user-ship-tag { 
+    background: linear-gradient(135deg, rgba(28,37,65,0.95), rgba(11,19,43,0.98)); 
+    border: 1.5px solid var(--accent-gold); 
+    border-radius: 12px; 
+    padding: 8px 14px; 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-size: 0.88em; 
+    cursor: pointer; 
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+    position: relative;
+}
+
+.user-ship-tag:hover { 
+    transform: translateY(-5px) scale(1.06); 
+    border-color: #52b788; 
+    box-shadow: 0 8px 20px rgba(82, 183, 136, 0.4); 
+}
+
+.user-ship-tag.is-me { 
+    border-color: #52b788; 
+    background: linear-gradient(135deg, rgba(27,67,50,0.95), rgba(11,19,43,0.98)); 
+    box-shadow: 0 0 15px rgba(82,183,136,0.3);
+}
+
+/* ONDULAÇÃO DINÂMICA DO BARCO E DA BANDEIRA */
+.ship-anim-icon { 
+    font-size: 1.4em; 
+    display: inline-block; 
+    animation: floatBoat 3s ease-in-out infinite alternate; 
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+
+@keyframes floatBoat { 
+    0% { transform: translateY(0px) rotate(-5deg); } 
+    50% { transform: translateY(-4px) rotate(3deg); }
+    100% { transform: translateY(-1px) rotate(-2deg); } 
+}
+
+.ship-info-box { display: flex; flex-direction: column; text-align: left; }
+.ship-captain-name { color: #fff; font-weight: bold; font-size: 0.95em; }
+.ship-bounty-tag { color: var(--accent-gold); font-family: 'Courier New', monospace; font-size: 0.8em; font-weight: bold; }
+.ship-arc-location { color: var(--text-dim); font-size: 0.75em; }
 
 /* ESTILOS TABELA ESTATÍSTICAS GERAIS */
 .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85em; }
@@ -661,6 +737,7 @@ function closeFleetMapOnOverlay(e) {
     if (e.target.classList.contains('fleet-map-overlay')) closeFleetMapModal();
 }
 
+/* ⛵ LÓGICA REFORMULADA DA FROTA COM EFEITOS DINÂMICOS */
 function fetchFleetData() {
     const container = document.getElementById('fleet-timeline-container');
     const t = i18n[currentLang] || i18n.pt;
@@ -693,13 +770,16 @@ function fetchFleetData() {
                 currentSagaName = saga.saga;
             }
 
+            const userBounty = calculateBountyForProgress(prog);
+
             sagaMap[currentSagaName].users.push({
                 username: username,
-                arcName: currentArcName
+                arcName: currentArcName,
+                bounty: userBounty
             });
         });
 
-        container.innerHTML = opData.map(saga => {
+        container.innerHTML = opData.map((saga, sIdx) => {
             const sagaData = sagaMap[saga.saga];
             const hasUsers = sagaData.users.length > 0;
 
@@ -710,11 +790,23 @@ function fetchFleetData() {
                         <div class="saga-name-title">${saga.saga}</div>
                     </div>
                     <div class="ships-container">
-                        ${hasUsers ? sagaData.users.map(u => `
-                            <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" onclick="closeFleetMapModal(); switchUserToView('${u.username}')">
-                                <span class="ship-anim-icon">⛵</span> <strong>${u.username}</strong> ${u.arcName ? `<span style="opacity:0.75; font-size:0.85em;">(${u.arcName})</span>` : ''}
+                        ${hasUsers ? sagaData.users.map((u, uIdx) => `
+                            <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" 
+                                 style="animation-delay: ${uIdx * 0.2}s;"
+                                 onclick="closeFleetMapModal(); switchUserToView('${u.username}')"
+                                 title="Clicar para espiar aventura de ${u.username}">
+                                
+                                <span class="ship-anim-icon" style="animation-delay: ${(sIdx + uIdx) * 0.3}s;">⛵</span>
+                                
+                                <div class="ship-info-box">
+                                    <span class="ship-captain-name">
+                                        ${u.username} ${u.username === currentUser ? '🏴‍☠️' : ''}
+                                    </span>
+                                    <span class="ship-bounty-tag">${formatBounty(u.bounty)}</span>
+                                    ${u.arcName ? `<span class="ship-arc-location">📍 ${u.arcName}</span>` : ''}
+                                </div>
                             </div>
-                        `).join('') : `<span style="font-size:0.75em; color:rgba(255,255,255,0.25); font-style:italic;">Nenhum navio ancorado</span>`}
+                        `).join('') : `<span style="font-size:0.75em; color:rgba(255,255,255,0.25); font-style:italic;">Nenhum navio ancorado neste mar</span>`}
                     </div>
                 </div>
             `;
@@ -722,7 +814,7 @@ function fetchFleetData() {
 
     }).catch((err) => {
         console.error("Erro ao carregar frota:", err);
-        container.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:20px;">Erro ao carregar frota</div>`;
+        container.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:20px;">Erro ao carregar dados da frota</div>`;
     });
 }
 

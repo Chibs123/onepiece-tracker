@@ -70,10 +70,10 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
 
 .arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 130px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
-.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; opacity: 0.85; }
+.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.65), rgba(11,19,43,0.85))); z-index: 1; opacity: 0.5; }
 .arc-card:hover { border-color: var(--accent-gold); }
 
-/* ESTILO DA IMAGEM COVER A OCUPAR TODO O RETÂNGULO DO CARTÃO */
+/* IMAGEM MUITO MAIS VISÍVEL E NÍTIDA */
 .arc-img-icon {
     position: absolute;
     top: 0;
@@ -83,33 +83,35 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
     object-fit: cover;
     object-position: center;
     z-index: 1;
-    opacity: 0.40;
+    opacity: 0.70; /* Aumentada a opacidade para ver claramente as imagens */
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
-    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.9) 100%);
+    /* Degradê suave apenas à esquerda para garantir legibilidade dos textos */
+    mask-image: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 65%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 65%);
 }
 
 .arc-card:hover .arc-img-icon {
-    opacity: 0.65;
-    transform: scale(1.05);
+    opacity: 0.88;
+    transform: scale(1.04);
 }
 
 /* BOTÃO ℹ️ SEM CÍRCULO / QUADRADO ESTRANHO */
-.arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: transparent; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 4px; line-height: 1; transition: transform 0.2s ease; opacity: 0.85; }
-.arc-info-btn:hover { transform: scale(1.25); opacity: 1; }
+.arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: rgba(0,0,0,0.4); border-radius: 50%; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 4px 6px; line-height: 1; transition: transform 0.2s ease, background 0.2s ease; }
+.arc-info-btn:hover { transform: scale(1.2); background: rgba(0,0,0,0.7); }
 
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }
 .arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; padding-right: 25px; }
-.arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 4px rgba(0,0,0,0.9); }
-.arc-episodes { font-size: 0.8em; color: var(--text-dim); text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
-.ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
-.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.75); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
-.btn-ep { background-color: rgba(42, 58, 94, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.25); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
+.arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
+.arc-episodes { font-size: 0.8em; color: #d0d7de; text-shadow: 0 1px 4px rgba(0,0,0,0.95); font-weight: 600; }
+.ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+.ep-controls span { color: #fff !important; font-weight: 600; }
+.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
+.btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
 .btn-complete { background-color: var(--completed-border); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; margin-left: auto; }
-.arc-mini-progress { background-color: rgba(0, 0, 0, 0.6); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
@@ -130,6 +132,7 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 
 footer { margin-top: 40px; }
     </style>
+    
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>

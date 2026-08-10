@@ -30,10 +30,14 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 /* HEADER */
 header { text-align: center; padding: 16px 10px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
 h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
-.user-bar { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 0.85em; color: var(--text-dim); margin-top: 5px; flex-wrap: wrap; }
+.user-bar { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.85em; color: var(--text-dim); margin-top: 5px; flex-wrap: wrap; }
 .user-name-tag { color: var(--accent-gold); font-weight: bold; font-size: 1.05em; }
-.btn-switch-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 12px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
-.btn-switch-user:hover { background: var(--accent-gold); color: #000; transform: scale(1.03); }
+.btn-switch-user, .btn-stats-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 5px 10px; border-radius: 12px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
+.btn-stats-user { background: rgba(82, 183, 136, 0.2); border-color: #52b788; color: #52b788; }
+.btn-switch-user:hover, .btn-stats-user:hover { transform: scale(1.05); }
+.btn-switch-user:hover { background: var(--accent-gold); color: #000; }
+.btn-stats-user:hover { background: #52b788; color: #000; }
+
 .lang-select { background: rgba(0, 0, 0, 0.5); border: 1px solid var(--text-dim); color: var(--accent-gold); padding: 4px 8px; border-radius: 8px; font-size: 0.85em; font-weight: bold; cursor: pointer; outline: none; }
 
 .cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
@@ -98,20 +102,21 @@ h1 { margin: 0 0 8px 0; color: var(--accent-gold); letter-spacing: 1px; text-tra
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
 /* MODAIS */
-.user-modal-overlay, .summary-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
-.user-modal-box, .summary-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 450px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
-
-.summary-modal-box h2 { margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.25em; padding-right: 20px; }
-.summary-modal-box h4 { margin: 14px 0 6px 0; color: #52b788; text-transform: uppercase; font-size: 0.8em; letter-spacing: 0.5px; }
-.summary-modal-box p { font-size: 0.88em; color: var(--text-main); line-height: 1.45; margin: 0; }
-.summary-highlights { list-style: none; padding: 0; margin: 0; }
-.summary-highlights li { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.85em; color: #d0d7de; }
+.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
+.user-modal-box, .summary-modal-box, .global-stats-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 500px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
-.user-modal-box { text-align: center; }
-.user-input { width: 90%; background: rgba(0,0,0,0.5); border: 1.5px solid var(--text-dim); color: #fff; padding: 10px; border-radius: 6px; font-size: 0.95em; text-align: center; font-weight: bold; margin-bottom: 14px; outline: none; box-sizing: border-box; }
-.btn-login { background: var(--accent-gold); color: #000; border: none; padding: 10px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95em; width: 90%; box-sizing: border-box; }
+
+/* ESTILOS TABELA ESTATÍSTICAS GERAIS */
+.leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85em; }
+.leaderboard-table th, .leaderboard-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.leaderboard-table th { color: var(--accent-gold); text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.5px; }
+.leaderboard-table tr:nth-child(even) { background: rgba(0,0,0,0.2); }
+.rank-badge { font-weight: bold; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.1); }
+.rank-1 { color: #ffb703; }
+.rank-2 { color: #e0e0e0; }
+.rank-3 { color: #cd7f32; }
 
 footer { margin-top: 40px; }
     </style>
@@ -140,6 +145,47 @@ footer { margin-top: 40px; }
             <polygon points="205,160 172,152 160,160 172,168" fill="#edf2f4" stroke="none"/>
         </g>
     </svg>
+</div>
+
+<!-- 📊 MODAL DE ESTATÍSTICAS GERAIS -->
+<div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
+    <div class="global-stats-box">
+        <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
+        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;">📊 Estatísticas da Tripulação</h2>
+        <span style="font-size:0.8em; color:var(--text-dim);">Resumo geral de todos os navegadores registados</span>
+
+        <div class="stats-grid" style="margin-top: 14px;">
+            <div class="stat-card">
+                <span class="stat-label">TRIPULAÇÃO</span>
+                <span class="stat-value" id="global-users-count">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">TOTAL EPS VISTOS</span>
+                <span class="stat-value" id="global-eps-count">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">RECOMPENSA MÁXIMA</span>
+                <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
+            </div>
+        </div>
+
+        <h3 style="color:#52b788; font-size:0.95em; margin: 16px 0 6px 0; text-transform:uppercase;">🏆 Tabela de Liderança</h3>
+        <div style="overflow-x:auto;">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Navegador</th>
+                        <th>Progresso</th>
+                        <th>Episódios</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <tr><td colspan="4" style="text-align:center; color:var(--text-dim);">A carregar dados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <div class="user-modal-overlay" id="user-modal">
@@ -172,6 +218,7 @@ footer { margin-top: 40px; }
         <div class="user-bar">
             <span>👤 <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span></span>
             <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
+            <button class="btn-stats-user" onclick="openGlobalStatsModal()">📊 Estatísticas Gerais</button>
             <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
                 <option value="pt">🇵🇹 PT</option>
                 <option value="en">🇬🇧 EN</option>
@@ -350,7 +397,7 @@ const arcDetailsI18n = {
         "sabaody": { summary: "Llegada a la antesala del Nuevo Mundo y encuentro con la Peor Generación.", highlights: ["Luffy golpea a un Tenryuubito", "Aparición de Silvers Rayleigh", "Separación trágica de la tripulación causada por Kuma"] },
         "amazon-lily": { summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
         "impel-down": { summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive al veneno de Magellan con ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
-        "marineford": { summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegiendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
+        "marineford": { summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
         "post-war": { summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace y Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
@@ -483,10 +530,11 @@ function setFilter(filterType, btnEl) { currentFilter = filterType; document.que
 function saveData() { if (dbRef) { dbRef.set(userProgress); } }
 function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
-function getLuffyBounty() {
+function calculateBountyForProgress(progressObj) {
+    let allArcs = opData.flatMap(s => s.arcs);
     let isDone = (arcId) => {
-        let arc = opData.flatMap(s => s.arcs).find(a => a.id === arcId);
-        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
+        let arc = allArcs.find(a => a.id === arcId);
+        return arc && (progressObj[arcId] || 0) >= arc.totalEps;
     };
     if (isDone('wano') || isDone('egghead')) return 3000000000;
     if (isDone('whole-cake') || isDone('reverie')) return 1500000000;
@@ -497,6 +545,8 @@ function getLuffyBounty() {
     if (isDone('arlong-park') || isDone('loguetown') || isDone('reverse-mountain') || isDone('whiskey-peak') || isDone('little-garden') || isDone('drum-island')) return 30000000;
     return 0;
 }
+
+function getLuffyBounty() { return calculateBountyForProgress(userProgress); }
 
 function openSummaryModal(arcId, isCompleted) {
     const arc = opData.flatMap(s => s.arcs).find(a => a.id === arcId);
@@ -523,6 +573,86 @@ function openSummaryModal(arcId, isCompleted) {
 
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
+
+/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS */
+function openGlobalStatsModal() {
+    document.getElementById('global-stats-modal').style.display = 'flex';
+    fetchGlobalStats();
+}
+
+function closeGlobalStatsModal() {
+    document.getElementById('global-stats-modal').style.display = 'none';
+}
+
+function closeGlobalStatsOnOverlay(e) {
+    if (e.target.classList.contains('global-stats-overlay')) closeGlobalStatsModal();
+}
+
+function fetchGlobalStats() {
+    const totalSeriesEpisodes = opData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
+    const tbody = document.getElementById('leaderboard-body');
+    
+    firebase.database().ref('users').once('value').then((snapshot) => {
+        const usersData = snapshot.val() || {};
+        const userKeys = Object.keys(usersData);
+
+        let totalUsers = userKeys.length;
+        let grandTotalEps = 0;
+        let maxBounty = 0;
+        let leaderboard = [];
+
+        userKeys.forEach(username => {
+            const prog = usersData[username] || {};
+            let watched = 0;
+
+            opData.flatMap(s => s.arcs).forEach(arc => {
+                watched += Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
+            });
+
+            grandTotalEps += watched;
+            const bounty = calculateBountyForProgress(prog);
+            if (bounty > maxBounty) maxBounty = bounty;
+
+            const percent = Math.round((watched / totalSeriesEpisodes) * 100) || 0;
+
+            leaderboard.push({
+                username: username,
+                watched: watched,
+                percent: percent,
+                bounty: bounty
+            });
+        });
+
+        // Ordenar por episódios vistos (decrescente)
+        leaderboard.sort((a, b) => b.watched - a.watched);
+
+        document.getElementById('global-users-count').textContent = totalUsers;
+        document.getElementById('global-eps-count').textContent = grandTotalEps;
+        document.getElementById('global-top-bounty').textContent = formatBounty(maxBounty);
+
+        if (leaderboard.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">Nenhum utilizador encontrado</td></tr>`;
+            return;
+        }
+
+        tbody.innerHTML = leaderboard.map((item, index) => {
+            let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
+            let medal = index === 0 ? '🥇 ' : (index === 1 ? '🥈 ' : (index === 2 ? '🥉 ' : ''));
+            return `
+                <tr>
+                    <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
+                    <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? '<span style="color:var(--accent-gold); font-size:0.8em;">(Tu)</span>' : ''}</td>
+                    <td><span style="color:#52b788; font-weight:bold;">${item.percent}%</span></td>
+                    <td>${item.watched} eps</td>
+                </tr>
+            `;
+        }).join('');
+
+    }).catch((err) => {
+        console.error("Erro ao carregar estatísticas gerais:", err);
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro ao carregar dados do Firebase</td></tr>`;
+    });
+}
 
 function renderApp() {
     const t = i18n[currentLang] || i18n.pt;

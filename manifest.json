@@ -2,8 +2,8 @@
   "name": "One Piece Voyage Log",
   "short_name": "OP Tracker",
   "description": "Progress Tracker de One Piece em tempo real",
-"start_url": "./index.html"
-"display": "standalone",
+  "start_url": "./index.html",
+  "display": "standalone",
   "background_color": "#0b132b",
   "theme_color": "#0b132b",
   "orientation": "portrait",
@@ -11,7 +11,8 @@
     {
       "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230b132b'/><path d='M10,65 Q50,45 90,65 Q50,85 10,65 Z' fill='%23ffb703'/><path d='M30,60 Q50,15 70,60 Z' fill='%23ffb703'/><rect x='28' y='55' width='44' height='6' fill='%23d90429'/></svg>",
       "sizes": "192x192 512x512",
-      "type": "image/svg+xml"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }

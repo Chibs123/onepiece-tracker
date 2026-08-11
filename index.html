@@ -95,32 +95,57 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* BARRA SUPERIOR DISCRETA DO PERFIL */
+/* BARRA SUPERIOR DO PERFIL COM GEARS E MEDALHAS */
 .top-user-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(11, 19, 43, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 6px 14px;
+    background: rgba(11, 19, 43, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 14px;
     border-radius: 20px;
     margin-bottom: 12px;
-    font-size: 0.85em;
+    font-size: 0.88em;
     backdrop-filter: blur(6px);
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .top-user-profile {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: var(--text-dim);
+    flex-wrap: wrap;
 }
 
 .user-name-tag {
     color: var(--accent-gold);
     font-weight: 800;
-    font-size: 1.05em;
+    font-size: 1.1em;
     letter-spacing: 0.5px;
+}
+
+.gears-inline {
+    display: inline-flex;
+    gap: 4px;
+}
+
+.gear-badge {
+    background: var(--accent-red);
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.75em;
+    padding: 1px 5px;
+    border-radius: 4px;
+    box-shadow: 0 0 6px var(--accent-red);
+}
+
+.user-medals-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 1.1em;
 }
 
 .sync-status-indicator {
@@ -573,10 +598,12 @@ footer {
 </div>
 
 <div class="container">
-    <!-- BARRA SUPERIOR DISCRETA -->
+    <!-- BARRA SUPERIOR DO PERFIL COM GEARS E MEDALHAS -->
     <div class="top-user-bar">
         <div class="top-user-profile">
-            🏴‍☠️ <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
+            <span class="user-name-tag" id="current-user-display">---</span>
+            <span class="gears-inline" id="user-gears-display"></span>
+            <span class="user-medals-container" id="user-medals-display"></span>
         </div>
         <div class="sync-status-indicator">
             <span class="sync-dot" id="sync-dot"></span>
@@ -694,21 +721,21 @@ function applyCrewTheme(member) {
 
 const i18n = {
     pt: { 
-        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "📊 Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface",
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
-        cloudState: "Synced", adventureOf: "Adventure of:", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "📊 Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
-        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "📊 Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz",
@@ -730,7 +757,7 @@ const arcDetailsI18n = {
         "drum-island": { name: "Drum Island", summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
         "alabasta": { name: "Alabasta", summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
         "jaya": { name: "Jaya", summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
-        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlled pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
@@ -777,7 +804,7 @@ const arcDetailsI18n = {
         "post-war": { name: "Post-War", summary: "Luffy's grief, childhood story with Ace and Sabo, and start of 2-year training.", highlights: ["Luffy, Ace, and Sabo brotherhood backstory", "Jinbe helps Luffy remember what remains: his crew", "Secret message 3D2Y in the newspaper for 2 years of training with Rayleigh"] },
         "return-sabaody": { name: "Return to Sabaody", summary: "2 years later, the Straw Hats reunite at Sabaody much stronger.", highlights: ["Epic crew reunion after the timeskip", "Destroying the Fake Straw Hats with ease"] },
         "fishman-island": { name: "Fishman Island", summary: "Journey to the ocean floor to stop Hody Jones' coup d'état.", highlights: ["Luffy knocks out 50,000 fish-men with Conqueror's Haki", "Princess Shirahoshi revealed as Ancient Weapon Poseidon", "Symbolic blood transfusion between Jinbe and Luffy"] },
-        "punk-hazard": { name: "Punk Hazard", summary: "On an island split between fire and ice, the crew forms an alliance with Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Defeat of Caesar Clown and SAD factory destroyed", "Zoro slices Monet in half without Haki"] },
+        "punk-hazard": { name: "Punk Hazard", summary: "On an island split between fire and ice, the crew forms an alliance with Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro cuts Monet in half without Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operation to overthrow tyrant Doflamingo and free the kingdom of toys.", highlights: ["Sabo returns alive and wins Mera Mera no Mi", "Luffy reveals Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formation of the Straw Hat Grand Fleet (5,600 members)"] },
         "zou": { name: "Zou", summary: "A city built on the back of a giant elephant over 1,000 years old.", highlights: ["Secret of Road Poneglyphs leading to One Piece revealed", "Iconic Mink line: 'Raizo is safe!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Sanji rescue mission in Yonko Big Mom's territory.", highlights: ["Luffy vs Sanji painful duel", "Luffy vs Katakuri in Mirror World and Future Sight Haki upgrade", "Sanji reconciles with the crew", "Luffy declared 5th Emperor with ฿1.5B bounty"] },
@@ -817,7 +844,7 @@ const arcDetailsI18n = {
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
-        "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Admirales y los Cinco Ancianos (Gorosei)"] }
+        "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Awakened", "Llegada de Admirales y los Cinco Anciances (Gorosei)"] }
     }
 };
 
@@ -906,7 +933,6 @@ function applyTranslations() {
     const t = i18n[currentLang] || i18n.pt;
     document.getElementById('lang-select').value = currentLang;
     document.getElementById('crew-select').value = selectedCrewMember;
-    document.getElementById('label-user').textContent = t.adventureOf;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
     document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
     document.getElementById('btn-settings-txt').textContent = t.settingsBtn;
@@ -1314,6 +1340,37 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
+/* 🏆 LÓGICA DE MEDALHAS & GEARS DO PERFIL 🏆 */
+function updateProfileBadgesAndGears(totalWatchedEps) {
+    const gearsEl = document.getElementById('user-gears-display');
+    const medalsEl = document.getElementById('user-medals-display');
+
+    let gearsHTML = '';
+    if (totalWatchedEps >= 1071) gearsHTML += '<span class="gear-badge" title="Gear 5th (Nika)">G⁵</span> ';
+    else if (totalWatchedEps >= 726) gearsHTML += '<span class="gear-badge" title="Gear 4th (Boundman)">G⁴</span> ';
+    else if (totalWatchedEps >= 304) gearsHTML += '<span class="gear-badge" title="Gear 3rd">G³</span> ';
+    else if (totalWatchedEps >= 272) gearsHTML += '<span class="gear-badge" title="Gear 2nd">G²</span> ';
+
+    gearsEl.innerHTML = gearsHTML;
+
+    let allArcs = opData.flatMap(s => s.arcs);
+    let isDone = (arcId) => (userProgress[arcId] || 0) >= (allArcs.find(a => a.id === arcId)?.totalEps || 9999);
+
+    let medals = [];
+    if (isDone('loguetown')) medals.push('<span title="Navegador do East Blue">🌊</span>');
+    if (isDone('alabasta')) medals.push('<span title="Herói do Deserto de Alabasta">🏜️</span>');
+    if (isDone('skypiea')) medals.push('<span title="Conquistador dos Céus">☁️</span>');
+    if (isDone('enies-lobby')) medals.push('<span title="Invasor de Enies Lobby">🚂</span>');
+    if (isDone('thriller-bark')) medals.push('<span title="Sobrevivente de Thriller Bark">👻</span>');
+    if (isDone('post-war')) medals.push('<span title="Veterano da Guerra de Marineford">⚓</span>');
+    if (isDone('fishman-island')) medals.push('<span title="Protetor da Ilha dos Homens-Peixe">🧜‍♂️</span>');
+    if (isDone('dressrosa')) medals.push('<span title="Libertador de Dressrosa">🧸</span>');
+    if (isDone('whole-cake')) medals.push('<span title="Infiltrado de Whole Cake Island">🍰</span>');
+    if (isDone('wano')) medals.push('<span title="Libertador do País de Wano">⚔️</span>');
+
+    medalsEl.innerHTML = medals.join(' ');
+}
+
 function renderApp() {
     const t = i18n[currentLang] || i18n.pt;
     const sagaListContainer = document.getElementById('saga-list');
@@ -1420,6 +1477,9 @@ function renderApp() {
     
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
+
+    // ATUALIZAR GEARS E MEDALHAS DO PERFIL NA BARRA SUPERIOR
+    updateProfileBadgesAndGears(watchedEpisodes);
 
     // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA
     setTimeout(() => {

@@ -267,12 +267,13 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: border-color 0.3s, color 0.3s; }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
 
+/* CARTÕES DOS ARCOS COM FALLBACK ROBUSTO */
 .arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 130px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
-.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.65), rgba(11,19,43,0.85))); z-index: 1; opacity: 0.5; }
+.arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
 .arc-card:hover { border-color: var(--accent-gold); }
 
-.arc-img-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; opacity: 0.70; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,1) 65%); }
-.arc-card:hover .arc-img-icon { opacity: 0.88; transform: scale(1.04); }
+.arc-img-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; opacity: 0.65; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); }
+.arc-card:hover .arc-img-icon { opacity: 0.85; transform: scale(1.04); }
 
 .arc-info-btn { position: absolute; top: 10px; right: 10px; z-index: 3; background: transparent !important; border: none; outline: none; color: var(--accent-gold); font-size: 1.1em; cursor: pointer; padding: 0; line-height: 1; transition: transform 0.2s ease, opacity 0.2s ease; opacity: 0.85; box-shadow: none !important; }
 .arc-info-btn:hover { transform: scale(1.25); opacity: 1; }
@@ -503,7 +504,7 @@ footer {
     <header id="main-header">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
         <div class="header-action-controls">
-            <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
+<button class="btn-settings-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
             <button class="btn-settings-user" id="btn-settings-txt" onclick="openSettingsModal()">⚙️ Definições</button>
         </div>
     </header>
@@ -586,7 +587,6 @@ let userProgress = {};
 let dbRef = null;
 let currentFilter = 'all';
 
-/* 🎨 PALETAS DE CORES DINÂMICAS POR MEMBRO DA TRIPULAÇÃO */
 const crewThemes = {
     luffy: { primary: "#d90429", secondary: "#ffb703", trans: "rgba(217, 4, 41, 0.2)" },
     zoro: { primary: "#2d6a4f", secondary: "#52b788", trans: "rgba(82, 183, 136, 0.2)" },
@@ -719,7 +719,7 @@ const arcDetailsI18n = {
         "thriller-bark": { name: "Thriller Bark", summary: "Barco fantasma gigante dominado por Gecko Moria que roba sombras humanas.", highlights: ["Reclutamiento del esqueleto músico Brook", "Luffy se transforma en Nightmare Luffy", "Zoro absorbe todo el dolor de Luffy ante Kuma: '¡AQUÍ NO HA PASADO NADA!'"] },
         "sabaody": { name: "Archipiélago Sabaody", summary: "Llegada a la antesala del Nuevo Mundo y encuentro con la Peor Generación.", highlights: ["Luffy golpea a un Tenryuubito", "Aparición de Silvers Rayleigh", "Separación trágica de la tripulación causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
-        "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ajuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
+        "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
         "marineford": { name: "Marineford", summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace y Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },

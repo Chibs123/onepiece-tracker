@@ -41,6 +41,60 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 @keyframes dashMove { to { stroke-dashoffset: -200; } }
 .container { max-width: 1100px; margin: 0 auto; }
 
+/* 🧭 BÚSSOLA / LOG POSE LOADER 🧭 */
+.app-loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0b132b;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.app-loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.loader-compass {
+    font-size: 3.8em;
+    animation: spinCompass 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    filter: drop-shadow(0 0 12px var(--accent-gold));
+}
+
+@keyframes spinCompass {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.15); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.loader-text {
+    color: var(--accent-gold);
+    font-weight: 800;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    animation: pulseText 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes pulseText {
+    from { opacity: 0.4; }
+    to { opacity: 1; }
+}
+
 /* BARRA SUPERIOR DISCRETA DO PERFIL */
 .top-user-bar {
     display: flex;
@@ -96,7 +150,7 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
     gap: 10px;
 }
 
-/* BOTÕES DO HEADER */
+/* BOTÕES DO HEADER COM TEMA DINÂMICO */
 .btn-stats-user, .btn-settings-user {
     height: 36px;
     box-sizing: border-box;
@@ -112,13 +166,15 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
     white-space: nowrap;
     outline: none;
     line-height: 1;
+    background: rgba(255, 183, 3, 0.15); 
+    border: 1px solid var(--accent-gold); 
+    color: var(--accent-gold);
 }
 
-.btn-stats-user { background: rgba(82, 183, 136, 0.2); border: 1px solid #52b788; color: #52b788; }
-.btn-settings-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
-
-.btn-stats-user:hover { background: #52b788; color: #000; }
-.btn-settings-user:hover { background: var(--accent-gold); color: #000; }
+.btn-stats-user:hover, .btn-settings-user:hover { 
+    background: var(--accent-gold); 
+    color: #000; 
+}
 
 /* MODAL DE DEFINIÇÕES */
 .settings-form-group {
@@ -267,10 +323,15 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: border-color 0.3s, color 0.3s; }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
 
-/* CARTÕES DOS ARCOS COM FALLBACK ROBUSTO */
+/* CARTÕES DOS ARCOS E BOTÕES COM TEMA DINÂMICO */
 .arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 130px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
 .arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
 .arc-card:hover { border-color: var(--accent-gold); }
+
+.arc-card.status-completed { 
+    background-color: var(--completed-bg); 
+    border-color: var(--accent-gold); 
+}
 
 .arc-img-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; opacity: 0.65; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); }
 .arc-card:hover .arc-img-icon { opacity: 0.85; transform: scale(1.04); }
@@ -279,10 +340,6 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .arc-info-btn:hover { transform: scale(1.25); opacity: 1; }
 
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-.arc-card.status-completed { 
-    background-color: var(--completed-bg); 
-    border-color: var(--accent-gold); 
-}
 .arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; padding-right: 25px; }
 .arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
@@ -291,6 +348,8 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .ep-controls span { color: #fff !important; font-weight: 600; }
 .ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
+
+/* BOTÃO COMPLETO E BARRA COM A COR DO TEMA */
 .btn-complete { 
     background-color: var(--accent-gold); 
     color: #000; 
@@ -301,20 +360,13 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
     font-size: 0.75em; 
     font-weight: bold; 
     margin-left: auto; 
-    transition: background-color 0.2s;
+    transition: filter 0.2s;
 }
-.btn-complete:hover {
-    filter: brightness(1.1);
-}.arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
-.arc-mini-fill { 
-    height: 100%; 
-    width: 0%; 
-    background-color: var(--accent-gold); 
-    transition: width 0.3s ease; 
-}
-.arc-card.status-completed .arc-mini-fill { 
-    background-color: var(--accent-gold); 
-}
+.btn-complete:hover { filter: brightness(1.15); }
+
+.arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
+.arc-card.status-completed .arc-mini-fill { background-color: var(--accent-gold); }
 
 /* MODAIS */
 .user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
@@ -373,6 +425,15 @@ footer {
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
+
+<!-- 🧭 OVERLAY DO LOADER (LOG POSE A GIRAR) 🧭 -->
+<div id="app-loader" class="app-loader-overlay">
+    <div class="loader-content">
+        <div class="loader-compass">🧭</div>
+        <div class="loader-text" id="loader-status-txt">A traçar rota na Grand Line...</div>
+    </div>
+</div>
+
 <div class="bg-map-container">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -527,7 +588,7 @@ footer {
     <header id="main-header">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
         <div class="header-action-controls">
-<button class="btn-settings-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
+            <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
             <button class="btn-settings-user" id="btn-settings-txt" onclick="openSettingsModal()">⚙️ Definições</button>
         </div>
     </header>
@@ -636,19 +697,22 @@ const i18n = {
         cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "📊 Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
-        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface"
+        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface",
+        loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
         cloudState: "Synced", adventureOf: "Adventure of:", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "📊 Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
-        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language"
+        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language",
+        loaderText: "Navigating the Grand Line..."
     },
     es: { 
         cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "📊 Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
-        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz"
+        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz",
+        loaderText: "Navegando por la Grand Line..."
     }
 };
 
@@ -747,12 +811,12 @@ const arcDetailsI18n = {
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace y Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
-        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Alianza Pirata entre Luffy y Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
+        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo derrotado con el King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
-        "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy awakens GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
+        "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Admirales y los Cinco Ancianos (Gorosei)"] }
     }
 };
@@ -880,6 +944,9 @@ function applyTranslations() {
     document.getElementById('label-set-profile').textContent = t.setProfile;
     document.getElementById('label-set-crew').textContent = t.setCrew;
     document.getElementById('label-set-lang').textContent = t.setLang;
+
+    const loaderTxt = document.getElementById('loader-status-txt');
+    if (loaderTxt) loaderTxt.textContent = t.loaderText;
 }
 
 function checkUserSession() {
@@ -1353,6 +1420,12 @@ function renderApp() {
     
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
+
+    // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA
+    setTimeout(() => {
+        const loader = document.getElementById('app-loader');
+        if (loader) loader.classList.add('hidden');
+    }, 300);
 }
 
 function renderNextUpCard(arc) {

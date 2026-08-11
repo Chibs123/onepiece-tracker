@@ -27,26 +27,71 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 @keyframes dashMove { to { stroke-dashoffset: -200; } }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* HEADER & USER BAR DESTAQUE */
-header { text-align: center; padding: 16px 12px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
-h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
+/* BARRA SUPERIOR DISCRETA DO PERFIL */
+.top-user-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(11, 19, 43, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    font-size: 0.85em;
+    backdrop-filter: blur(6px);
+}
 
-.user-bar { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 0.88em; color: var(--text-dim); margin-top: 6px; }
-.user-info-label { font-size: 1.05em; color: var(--text-dim); margin-bottom: 4px; font-weight: 600; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
-.user-name-tag { color: var(--accent-gold); font-weight: 900; font-size: 1.25em; text-shadow: 0 2px 5px rgba(0,0,0,0.9); letter-spacing: 0.5px; }
+.top-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-dim);
+}
 
-.user-bar-controls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; }
+.user-name-tag {
+    color: var(--accent-gold);
+    font-weight: 800;
+    font-size: 1.05em;
+    letter-spacing: 0.5px;
+}
 
-/* ESTILIZAÇÃO UNIFORME DE TODOS OS BOTÕES E SELECTS */
-.btn-switch-user, .btn-stats-user, .lang-select, .crew-select {
-    height: 34px;
+.sync-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78em;
+    font-weight: 600;
+}
+
+.sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-red);
+}
+.sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
+
+/* HEADER PRINCIPAL LIMPO */
+header { text-align: center; padding: 18px 14px; border-bottom: 2px solid var(--accent-red); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; }
+h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.2em, 5vw, 1.8em); white-space: nowrap; }
+
+.header-action-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* BOTÕES DO HEADER */
+.btn-stats-user, .btn-settings-user {
+    height: 36px;
     box-sizing: border-box;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 12px;
+    padding: 0 14px;
     border-radius: 8px;
-    font-size: 0.8em;
+    font-size: 0.82em;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -55,42 +100,46 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
     line-height: 1;
 }
 
-.btn-switch-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
 .btn-stats-user { background: rgba(82, 183, 136, 0.2); border: 1px solid #52b788; color: #52b788; }
+.btn-settings-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
 
-.lang-select, .crew-select {
-    background: rgba(11, 19, 43, 0.85);
+.btn-stats-user:hover { background: #52b788; color: #000; }
+.btn-settings-user:hover { background: var(--accent-gold); color: #000; }
+
+/* MODAL DE DEFINIÇÕES (⚙️ RODA DENTADA) */
+.settings-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 16px;
+    text-align: left;
+}
+.settings-form-group label {
+    font-size: 0.8em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.settings-select, .btn-settings-action {
+    width: 100%;
+    height: 38px;
+    background: rgba(11, 19, 43, 0.9);
     border: 1px solid var(--accent-gold);
     color: var(--accent-gold);
-    padding-right: 6px;
+    border-radius: 8px;
+    padding: 0 10px;
+    font-size: 0.9em;
+    font-weight: bold;
+    outline: none;
+    box-sizing: border-box;
 }
-
-.lang-select option, .crew-select option {
-    background: #0b132b;
-    color: var(--accent-gold);
+.btn-settings-action {
+    background: rgba(255, 183, 3, 0.15);
+    cursor: pointer;
+    transition: all 0.2s;
 }
-
-.btn-switch-user:hover { background: var(--accent-gold); color: #000; }
-.btn-stats-user:hover { background: #52b788; color: #000; }
-.lang-select:hover, .crew-select:hover { border-color: #fff; }
-
-@media (max-width: 650px) {
-    .user-bar-controls {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 6px;
-        width: 100%;
-    }
-    .btn-switch-user, .btn-stats-user {
-        flex: 1 1 35%;
-        min-width: 110px;
-    }
-    .crew-select, .lang-select {
-        flex: 0 1 45%;
-        min-width: 130px;
-    }
-}
+.btn-settings-action:hover { background: var(--accent-gold); color: #000; }
 
 .cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
 .status-online { color: #52b788; font-weight: bold; }
@@ -154,8 +203,8 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
 /* MODAIS */
-.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
-.user-modal-box, .summary-modal-box, .global-stats-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
+.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
+.user-modal-box, .summary-modal-box, .global-stats-box, .settings-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
@@ -192,7 +241,6 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .rank-2 { color: #e0e0e0; }
 .rank-3 { color: #cd7f32; }
 
-/* 🏴‍☠️ ESTILO DO FOOTER "MADE BY CHIBS" 🏴‍☠️ */
 footer {
     margin-top: 45px;
     padding: 16px 0;
@@ -233,6 +281,44 @@ footer {
             <polygon points="205,160 172,152 160,160 172,168" fill="#edf2f4" stroke="none"/>
         </g>
     </svg>
+</div>
+
+<!-- ⚙️ MODAL DE DEFINIÇÕES (GERENCIADO PELA RODA DENTADA) -->
+<div class="settings-modal-overlay" id="settings-modal" style="display:none;" onclick="closeSettingsOnOverlay(event)">
+    <div class="settings-modal-box">
+        <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
+        <h2 style="margin: 0 0 16px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-settings-title">⚙️ Definições do Tracker</h2>
+
+        <div class="settings-form-group">
+            <label id="label-set-profile">Perfil de Navegador</label>
+            <button class="btn-settings-action" onclick="closeSettingsModal(); switchUserPrompt();" id="btn-switch-txt">👤 Trocar Perfil</button>
+        </div>
+
+        <div class="settings-form-group">
+            <label id="label-set-crew">Membro para Recompensa</label>
+            <select class="settings-select" id="crew-select" onchange="changeCrewMember(this.value)">
+                <option value="luffy">👒 Luffy</option>
+                <option value="zoro">⚔️ Zoro</option>
+                <option value="nami">🍊 Nami</option>
+                <option value="usopp">🎯 Usopp</option>
+                <option value="sanji">🍳 Sanji</option>
+                <option value="chopper">🌸 Chopper</option>
+                <option value="robin">📖 Robin</option>
+                <option value="franky">🤖 Franky</option>
+                <option value="brook">🎻 Brook</option>
+                <option value="jinbe">🥋 Jinbe</option>
+            </select>
+        </div>
+
+        <div class="settings-form-group">
+            <label id="label-set-lang">Idioma da Interface</label>
+            <select class="settings-select" id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="pt">🌐 Português (PT)</option>
+                <option value="en">🌐 English (EN)</option>
+                <option value="es">🌐 Español (ES)</option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <!-- 📊 MODAL DE ESTATÍSTICAS GERAIS E FROTA UNIFICADAS -->
@@ -305,41 +391,23 @@ footer {
 </div>
 
 <div class="container">
-    <div class="cloud-status" id="cloud-status">
-        ☁️ <span id="label-cloud">Estado Firebase:</span> <span id="sync-text" class="status-offline">A ligar...</span>
+    <!-- 🏴‍☠️ BARRA SUPERIOR DISCRETA DO PERFIL & SYNC 🏴‍☠️ -->
+    <div class="top-user-bar">
+        <div class="top-user-profile">
+            🏴‍☠️ <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
+        </div>
+        <div class="sync-status-indicator">
+            <span class="sync-dot" id="sync-dot"></span>
+            <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+        </div>
     </div>
+
+    <!-- HEADER PRINCIPAL LIMPO -->
     <header>
         <h1>☠️ One Piece Voyage Log ☠️</h1>
-        <div class="user-bar">
-            <!-- NOME DO UTILIZADOR DESTACADO NA LINHA DE CIMA -->
-            <div class="user-info-label">
-                🏴‍☠️ <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
-            </div>
-            
-            <div class="user-bar-controls">
-                <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
-                <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
-                
-                <select class="crew-select" id="crew-select" onchange="changeCrewMember(this.value)">
-                    <option value="luffy">👒 Luffy</option>
-                    <option value="zoro">⚔️ Zoro</option>
-                    <option value="nami">🍊 Nami</option>
-                    <option value="usopp">🎯 Usopp</option>
-                    <option value="sanji">🍳 Sanji</option>
-                    <option value="chopper">🌸 Chopper</option>
-                    <option value="robin">📖 Robin</option>
-                    <option value="franky">🤖 Franky</option>
-                    <option value="brook">🎻 Brook</option>
-                    <option value="jinbe">🥋 Jinbe</option>
-                </select>
-
-                <!-- OPTIMIZAÇÃO DO SELECT DE LÍNGUA (UNIVERSAL PARA WINDOWS / PC E MOBILE) -->
-                <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="pt">🌐 PT</option>
-                    <option value="en">🌐 EN</option>
-                    <option value="es">🌐 ES</option>
-                </select>
-            </div>
+        <div class="header-action-controls">
+            <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
+            <button class="btn-settings-user" id="btn-settings-txt" onclick="openSettingsModal()">⚙️ Definições</button>
         </div>
     </header>
 
@@ -388,7 +456,7 @@ footer {
 
     <div id="saga-list"></div>
 
-    <!-- 🏴‍☠️ FOOTER MADE BY CHIBS 🏴‍☠️ -->
+    <!-- FOOTER MADE BY CHIBS -->
     <footer>
         ⚓ Made by <span class="footer-chibs">Chibs</span> 🏴‍☠️
     </footer>
@@ -423,19 +491,22 @@ let currentFilter = 'all';
 
 const i18n = {
     pt: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "📊 Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
-        fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line"
+        fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
+        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface"
     },
     en: { 
-        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Stats & Fleet", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        cloudState: "Synced", adventureOf: "Adventure of:", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "📊 Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
-        fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line"
+        fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
+        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language"
     },
     es: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "📊 Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
-        fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line"
+        fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
+        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz"
     }
 };
 
@@ -457,7 +528,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
@@ -469,7 +540,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -601,7 +672,11 @@ const opData = [
     ]}
 ];
 
-try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-text').className = 'status-offline'; document.getElementById('sync-text').textContent = 'Modo Offline (Verifica as chaves firebaseConfig)'; }
+try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-dot').className = 'sync-dot'; document.getElementById('sync-text').textContent = 'Erro Firebase'; }
+
+function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
+function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
+function closeSettingsOnOverlay(e) { if (e.target.classList.contains('settings-modal-overlay')) closeSettingsModal(); }
 
 function changeLanguage(lang) { currentLang = lang; localStorage.setItem('op_current_lang', lang); applyTranslations(); renderApp(); }
 
@@ -624,10 +699,10 @@ function applyTranslations() {
     const t = i18n[currentLang] || i18n.pt;
     document.getElementById('lang-select').value = currentLang;
     document.getElementById('crew-select').value = selectedCrewMember;
-    document.getElementById('label-cloud').textContent = t.cloudState;
     document.getElementById('label-user').textContent = t.adventureOf;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
     document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
+    document.getElementById('btn-settings-txt').textContent = t.settingsBtn;
     document.getElementById('label-current-adventure').textContent = t.currentAdventure;
     document.getElementById('label-stat-arcs').textContent = t.statArcs;
     document.getElementById('label-stat-eps').textContent = t.statEps;
@@ -657,6 +732,11 @@ function applyTranslations() {
 
     document.getElementById('modal-fleet-title').textContent = t.fleetTitle;
     document.getElementById('modal-fleet-sub').textContent = t.fleetSub;
+
+    document.getElementById('modal-settings-title').textContent = t.settingsTitle;
+    document.getElementById('label-set-profile').textContent = t.setProfile;
+    document.getElementById('label-set-crew').textContent = t.setCrew;
+    document.getElementById('label-set-lang').textContent = t.setLang;
 }
 
 function checkUserSession() {
@@ -679,13 +759,16 @@ function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
         userProgress = snapshot.val() || {};
-        document.getElementById('sync-text').className = 'status-online';
-        document.getElementById('sync-text').textContent = `Sincronizado (Perfil: ${username}) ✓`;
+        const t = i18n[currentLang] || i18n.pt;
+        document.getElementById('sync-dot').className = 'sync-dot online';
+        document.getElementById('sync-text').style.color = '#52b788';
+        document.getElementById('sync-text').textContent = t.cloudState;
         renderApp();
     }, (error) => {
         console.error(error);
-        document.getElementById('sync-text').className = 'status-offline';
-        document.getElementById('sync-text').textContent = 'Erro de permissões no Firebase';
+        document.getElementById('sync-dot').className = 'sync-dot';
+        document.getElementById('sync-text').style.color = 'var(--accent-red)';
+        document.getElementById('sync-text').textContent = 'Offline';
         renderApp();
     });
 }

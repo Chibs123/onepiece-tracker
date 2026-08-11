@@ -106,7 +106,7 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .btn-stats-user:hover { background: #52b788; color: #000; }
 .btn-settings-user:hover { background: var(--accent-gold); color: #000; }
 
-/* 🏴‍☠️ MODAL DE LOGIN / TROCA DE PERFIL REDESENHADA COM PIN 🏴‍☠️ */
+/* MODAL DE LOGIN COM PIN ENCRIPTADO */
 .user-modal-box {
     background: linear-gradient(135deg, #1c2541, #0b132b);
     border: 2px solid var(--accent-gold);
@@ -412,12 +412,12 @@ footer {
     </div>
 </div>
 
-<!-- 🏴‍☠️ MODAL DE LOGIN / LOGIN COM PIN DE SEGURANÇA 🏴‍☠️ -->
+<!-- 🏴‍☠️ MODAL DE LOGIN COM PIN ENCRIPTADO 🏴‍☠️ -->
 <div class="user-modal-overlay" id="user-modal">
     <div class="user-modal-box">
         <div class="login-header-icon">🏴‍☠️</div>
         <h2 id="modal-welcome-title" style="margin:0 0 6px 0; color:var(--accent-gold); font-size:1.3em;">BEM-VINDO Á TRIPULAÇÃO</h2>
-        <p id="modal-welcome-desc" style="margin:0; font-size:0.85em; color:var(--text-dim);">Escolhe o teu nome de pirata e o teu PIN secreto para protegeres o teu progresso:</p>
+        <p id="modal-welcome-desc" style="margin:0; font-size:0.85em; color:var(--text-dim);">Escolhe o teu nome e PIN secreto para protegeres o teu progresso:</p>
         
         <div class="login-input-group">
             <input type="text" class="user-input" id="username-input" placeholder="O teu nome..." autocomplete="off">
@@ -575,7 +575,7 @@ const arcDetailsI18n = {
         "drum-island": { name: "Drum Island", summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
         "alabasta": { name: "Alabasta", summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
         "jaya": { name: "Jaya", summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
-        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlled pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
@@ -796,7 +796,18 @@ function checkUserSession() {
     else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
 }
 
-function processUserLogin() {
+/* 🔒 FUNÇÃO AUXILIAR PARA CRIAR HASH SHA-256 NATIVO DO PIN 🔒 */
+async function hashPIN(pinText) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(pinText);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}
+
+/* 🏴‍☠️ PROCESSAMENTO DE LOGIN COM PIN ENCRIPTADO 🏴‍☠️ */
+async function processUserLogin() {
     const inputUser = document.getElementById('username-input').value.trim();
     const inputPin = document.getElementById('pin-input').value.trim();
     const hintEl = document.getElementById('login-msg-hint');
@@ -814,15 +825,20 @@ function processUserLogin() {
     }
 
     const cleanUsername = inputUser.replace(/[.#$\[\]]/g, "_");
+    const pinHash = await hashPIN(inputPin);
 
     firebase.database().ref('users/' + cleanUsername).once('value').then((snapshot) => {
         const val = snapshot.val();
         
         if (val) {
-            // O UTILIZADOR JÁ EXISTE NO FIREBASE
+            // UTILIZADOR EXISTE
             if (val.pin) {
-                // Caso A: Já tem PIN registado -> Verificar se o PIN coincide
-                if (val.pin === inputPin) {
+                // Caso 1: Verificar Hash do PIN
+                if (val.pin === pinHash || val.pin === inputPin) {
+                    // Se ainda estivesse em texto limpo antigo, migra automaticamente para Hash SHA-256
+                    if (val.pin === inputPin) {
+                        firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash);
+                    }
                     currentUser = cleanUsername;
                     localStorage.setItem('op_current_user', currentUser);
                     checkUserSession();
@@ -831,18 +847,18 @@ function processUserLogin() {
                     hintEl.style.color = 'var(--accent-red)';
                 }
             } else {
-                // Caso B: É um utilizador antigo sem PIN -> Registar o PIN agora!
-                firebase.database().ref('users/' + cleanUsername + '/pin').set(inputPin).then(() => {
+                // Caso 2: Utilizador antigo sem PIN -> Guardar Hash SHA-256
+                firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash).then(() => {
                     currentUser = cleanUsername;
                     localStorage.setItem('op_current_user', currentUser);
                     checkUserSession();
                 });
             }
         } else {
-            // UTILIZADOR COMPLETAMENTE NOVO
+            // UTILIZADOR NOVO
             currentUser = cleanUsername;
             localStorage.setItem('op_current_user', currentUser);
-            firebase.database().ref('users/' + cleanUsername + '/pin').set(inputPin);
+            firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash);
             checkUserSession();
         }
     }).catch(err => {
@@ -864,7 +880,8 @@ function switchUserPrompt() {
 function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
-        userProgress = snapshot.val() || {};
+        const val = snapshot.val() || {};
+        userProgress = val.progress || val || {};
         const t = i18n[currentLang] || i18n.pt;
         document.getElementById('sync-dot').className = 'sync-dot online';
         document.getElementById('sync-text').style.color = '#52b788';
@@ -880,12 +897,13 @@ function bindFirebaseUser(username) {
 }
 
 function setFilter(filterType, btnEl) { currentFilter = filterType; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnEl.classList.add('active'); renderApp(); }
+
 function saveData() { 
     if (dbRef) { 
-        // Manter o PIN ao guardar progresso de episódios
         dbRef.child('progress').set(userProgress);
     } 
 }
+
 function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
 /* CÁLCULO DE RECOMPENSA MULTI-PERSONAGEM */
@@ -1059,7 +1077,7 @@ function fetchGlobalStatsAndFleet() {
                 bounty: bounty
             });
 
-            // Lógica da Frota por Saga
+            // Lógica da Frota por Saga (com tradução)
             let currentSagaKey = opData[0].sagaKey;
             let currentArcId = "";
 

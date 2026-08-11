@@ -106,44 +106,88 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .btn-stats-user:hover { background: #52b788; color: #000; }
 .btn-settings-user:hover { background: var(--accent-gold); color: #000; }
 
-/* MODAL DE DEFINIÇÕES */
-.settings-form-group {
+/* 🏴‍☠️ MODAL DE LOGIN / TROCA DE PERFIL REDESENHADA COM PIN 🏴‍☠️ */
+.user-modal-box {
+    background: linear-gradient(135deg, #1c2541, #0b132b);
+    border: 2px solid var(--accent-gold);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.9);
+    position: relative;
+    text-align: center;
+}
+
+.login-header-icon {
+    font-size: 2.2em;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 2px 8px rgba(255, 183, 3, 0.4));
+}
+
+.login-input-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-    text-align: left;
+    gap: 12px;
+    margin: 18px 0;
 }
-.settings-form-group label {
-    font-size: 0.8em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-.settings-select, .btn-settings-action {
+
+.user-input, .pin-input {
     width: 100%;
-    height: 38px;
-    background: rgba(11, 19, 43, 0.9);
-    border: 1px solid var(--accent-gold);
+    height: 44px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1.5px solid var(--text-dim);
     color: var(--accent-gold);
-    border-radius: 8px;
-    padding: 0 10px;
-    font-size: 0.9em;
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 1.05em;
     font-weight: bold;
+    text-align: center;
     outline: none;
     box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
-.btn-settings-action {
-    background: rgba(255, 183, 3, 0.15);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.btn-settings-action:hover { background: var(--accent-gold); color: #000; }
 
-.cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
-.status-online { color: #52b788; font-weight: bold; }
-.status-offline { color: var(--accent-red); font-weight: bold; }
+.user-input:focus, .pin-input:focus {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
+}
+
+.pin-input {
+    letter-spacing: 6px;
+    font-size: 1.2em;
+}
+
+.btn-login {
+    width: 100%;
+    height: 44px;
+    background: linear-gradient(135deg, var(--accent-gold), #e0a100);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.2s;
+}
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
+}
+
+.login-msg-hint {
+    font-size: 0.8em;
+    color: var(--text-dim);
+    margin-top: 8px;
+    min-height: 18px;
+}
+
+/* MODAL DE DEFINIÇÕES */
+.settings-form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; text-align: left; }
+.settings-form-group label { font-size: 0.8em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+.settings-select, .btn-settings-action { width: 100%; height: 38px; background: rgba(11, 19, 43, 0.9); border: 1px solid var(--accent-gold); color: var(--accent-gold); border-radius: 8px; padding: 0 10px; font-size: 0.9em; font-weight: bold; outline: none; box-sizing: border-box; }
+.btn-settings-action { background: rgba(255, 183, 3, 0.15); cursor: pointer; transition: all 0.2s; }
+.btn-settings-action:hover { background: var(--accent-gold); color: #000; }
 
 .next-up-container { background: linear-gradient(135deg, rgba(217, 4, 41, 0.2), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .next-up-info h2 { margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.2em; }
@@ -219,20 +263,7 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 0.95em; letter-spacing: 0.5px; }
 
 .ships-container { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 48px; margin-top: 8px; }
-
-/* CARTÕES DA FROTA APENAS INFORMATIVOS (SEM CURSOR DE CLIQUE) */
-.user-ship-tag { 
-    background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); 
-    border: 1.5px solid rgba(255,255,255,0.2); 
-    border-radius: 20px; 
-    padding: 6px 12px; 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    font-size: 0.85em; 
-    cursor: default; 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-}
+.user-ship-tag { background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; font-size: 0.85em; cursor: default; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 .user-ship-tag.is-me { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.9), rgba(11,19,43,0.95)); }
 
 .ship-anim-icon { font-size: 1.1em; animation: waveBob 2.5s ease-in-out infinite alternate; display: inline-block; }
@@ -381,12 +412,20 @@ footer {
     </div>
 </div>
 
+<!-- 🏴‍☠️ MODAL DE LOGIN / LOGIN COM PIN DE SEGURANÇA 🏴‍☠️ -->
 <div class="user-modal-overlay" id="user-modal">
     <div class="user-modal-box">
-        <h2 id="modal-welcome-title">☠️ BEM-VINDO Á TRIPULAÇÃO ☠️</h2>
-        <p id="modal-welcome-desc">Introduz o teu nome para carregar ou criar o teu progresso no tracker:</p>
-        <input type="text" class="user-input" id="username-input" placeholder="O teu nome..." autocomplete="off">
-        <button class="btn-login" id="modal-login-btn" onclick="loginUser()">Entrar na Aventura ▶</button>
+        <div class="login-header-icon">🏴‍☠️</div>
+        <h2 id="modal-welcome-title" style="margin:0 0 6px 0; color:var(--accent-gold); font-size:1.3em;">BEM-VINDO Á TRIPULAÇÃO</h2>
+        <p id="modal-welcome-desc" style="margin:0; font-size:0.85em; color:var(--text-dim);">Escolhe o teu nome de pirata e o teu PIN secreto para protegeres o teu progresso:</p>
+        
+        <div class="login-input-group">
+            <input type="text" class="user-input" id="username-input" placeholder="O teu nome..." autocomplete="off">
+            <input type="password" class="pin-input" id="pin-input" placeholder="PIN (4 dígitos)" maxlength="4" pattern="[0-9]*" inputmode="numeric">
+        </div>
+
+        <button class="btn-login" id="modal-login-btn" onclick="processUserLogin()">Entrar na Aventura ▶</button>
+        <div class="login-msg-hint" id="login-msg-hint">Pede PIN ao entrar ou cria um PIN novo se fores novo!</div>
     </div>
 </div>
 
@@ -503,19 +542,19 @@ let currentFilter = 'all';
 
 const i18n = {
     pt: { 
-        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "📊 Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface"
     },
     en: { 
-        cloudState: "Synced", adventureOf: "Adventure of:", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        cloudState: "Synced", adventureOf: "Adventure of:", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "📊 Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language"
     },
     es: { 
-        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        cloudState: "Sincronizado", adventureOf: "Aventura de:", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "📊 Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz"
@@ -536,7 +575,7 @@ const arcDetailsI18n = {
         "drum-island": { name: "Drum Island", summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
         "alabasta": { name: "Alabasta", summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
         "jaya": { name: "Jaya", summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
-        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlled pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
@@ -757,15 +796,61 @@ function checkUserSession() {
     else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
 }
 
-function loginUser() {
-    const inputVal = document.getElementById('username-input').value.trim();
-    if (!inputVal) return alert('Por favor, introduz o teu nome!');
-    currentUser = inputVal.replace(/[.#$\[\]]/g, "_");
-    localStorage.setItem('op_current_user', currentUser);
-    checkUserSession();
+/* 🏴‍☠️ PROCESSAMENTO DE LOGIN E CRIAÇÃO/VERIFICAÇÃO DE PIN 🏴‍☠️ */
+function processUserLogin() {
+    const inputUser = document.getElementById('username-input').value.trim();
+    const inputPin = document.getElementById('pin-input').value.trim();
+    const hintEl = document.getElementById('login-msg-hint');
+
+    if (!inputUser) {
+        hintEl.textContent = '❌ Introduz o teu nome de pirata!';
+        hintEl.style.color = 'var(--accent-red)';
+        return;
+    }
+
+    if (!inputPin || inputPin.length < 4) {
+        hintEl.textContent = '❌ O PIN precisa ter exatamente 4 dígitos!';
+        hintEl.style.color = 'var(--accent-red)';
+        return;
+    }
+
+    const cleanUsername = inputUser.replace(/[.#$\[\]]/g, "_");
+
+    firebase.database().ref('users/' + cleanUsername).once('value').then((snapshot) => {
+        const val = snapshot.val();
+        
+        if (val && val.pin) {
+            // Utilizador existe -> Verificar PIN
+            if (val.pin === inputPin) {
+                currentUser = cleanUsername;
+                localStorage.setItem('op_current_user', currentUser);
+                checkUserSession();
+            } else {
+                hintEl.textContent = '❌ PIN Incorreto para este utilizador!';
+                hintEl.style.color = 'var(--accent-red)';
+            }
+        } else {
+            // Utilizador Novo -> Guardar PIN e criar perfil
+            currentUser = cleanUsername;
+            localStorage.setItem('op_current_user', currentUser);
+            firebase.database().ref('users/' + cleanUsername + '/pin').set(inputPin);
+            checkUserSession();
+        }
+    }).catch(err => {
+        console.error(err);
+        currentUser = cleanUsername;
+        localStorage.setItem('op_current_user', currentUser);
+        checkUserSession();
+    });
 }
 
-function switchUserPrompt() { document.getElementById('user-modal').style.display = 'flex'; document.getElementById('username-input').value = currentUser; }
+function switchUserPrompt() { 
+    document.getElementById('user-modal').style.display = 'flex'; 
+    document.getElementById('username-input').value = currentUser; 
+    document.getElementById('pin-input').value = '';
+    document.getElementById('login-msg-hint').textContent = 'Pede PIN ao entrar ou cria um PIN novo se fores novo!';
+    document.getElementById('login-msg-hint').style.color = 'var(--text-dim)';
+}
 
 function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
@@ -786,7 +871,12 @@ function bindFirebaseUser(username) {
 }
 
 function setFilter(filterType, btnEl) { currentFilter = filterType; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnEl.classList.add('active'); renderApp(); }
-function saveData() { if (dbRef) { dbRef.set(userProgress); } }
+function saveData() { 
+    if (dbRef) { 
+        // Manter o PIN ao guardar progresso de episódios
+        dbRef.child('progress').set(userProgress);
+    } 
+}
 function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
 /* CÁLCULO DE RECOMPENSA MULTI-PERSONAGEM */
@@ -939,7 +1029,8 @@ function fetchGlobalStatsAndFleet() {
         opData.forEach(s => { sagaMap[s.sagaKey] = { icon: s.icon, sagaObj: s, users: [] }; });
 
         userKeys.forEach(username => {
-            const prog = usersData[username] || {};
+            const rawVal = usersData[username] || {};
+            const prog = rawVal.progress || rawVal || {};
             let watched = 0;
 
             opData.flatMap(s => s.arcs).forEach(arc => {
@@ -959,7 +1050,7 @@ function fetchGlobalStatsAndFleet() {
                 bounty: bounty
             });
 
-            // Lógica da Frota por Saga (com tradução)
+            // Lógica da Frota por Saga
             let currentSagaKey = opData[0].sagaKey;
             let currentArcId = "";
 

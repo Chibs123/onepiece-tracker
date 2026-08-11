@@ -279,7 +279,10 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .arc-info-btn:hover { transform: scale(1.25); opacity: 1; }
 
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-.arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--completed-border); }
+.arc-card.status-completed { 
+    background-color: var(--completed-bg); 
+    border-color: var(--accent-gold); 
+}
 .arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; padding-right: 25px; }
 .arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
@@ -288,10 +291,30 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .ep-controls span { color: #fff !important; font-weight: 600; }
 .ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
-.btn-complete { background-color: var(--completed-border); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; margin-left: auto; }
-.arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
-.arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
-.arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
+.btn-complete { 
+    background-color: var(--accent-gold); 
+    color: #000; 
+    border: none; 
+    padding: 4px 8px; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 0.75em; 
+    font-weight: bold; 
+    margin-left: auto; 
+    transition: background-color 0.2s;
+}
+.btn-complete:hover {
+    filter: brightness(1.1);
+}.arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
+.arc-mini-fill { 
+    height: 100%; 
+    width: 0%; 
+    background-color: var(--accent-gold); 
+    transition: width 0.3s ease; 
+}
+.arc-card.status-completed .arc-mini-fill { 
+    background-color: var(--accent-gold); 
+}
 
 /* MODAIS */
 .user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }

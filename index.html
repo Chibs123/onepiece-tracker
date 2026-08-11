@@ -796,7 +796,6 @@ function checkUserSession() {
     else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
 }
 
-/* 🏴‍☠️ PROCESSAMENTO DE LOGIN E CRIAÇÃO/VERIFICAÇÃO DE PIN 🏴‍☠️ */
 function processUserLogin() {
     const inputUser = document.getElementById('username-input').value.trim();
     const inputPin = document.getElementById('pin-input').value.trim();
@@ -819,18 +818,28 @@ function processUserLogin() {
     firebase.database().ref('users/' + cleanUsername).once('value').then((snapshot) => {
         const val = snapshot.val();
         
-        if (val && val.pin) {
-            // Utilizador existe -> Verificar PIN
-            if (val.pin === inputPin) {
-                currentUser = cleanUsername;
-                localStorage.setItem('op_current_user', currentUser);
-                checkUserSession();
+        if (val) {
+            // O UTILIZADOR JÁ EXISTE NO FIREBASE
+            if (val.pin) {
+                // Caso A: Já tem PIN registado -> Verificar se o PIN coincide
+                if (val.pin === inputPin) {
+                    currentUser = cleanUsername;
+                    localStorage.setItem('op_current_user', currentUser);
+                    checkUserSession();
+                } else {
+                    hintEl.textContent = '❌ PIN Incorreto para este utilizador!';
+                    hintEl.style.color = 'var(--accent-red)';
+                }
             } else {
-                hintEl.textContent = '❌ PIN Incorreto para este utilizador!';
-                hintEl.style.color = 'var(--accent-red)';
+                // Caso B: É um utilizador antigo sem PIN -> Registar o PIN agora!
+                firebase.database().ref('users/' + cleanUsername + '/pin').set(inputPin).then(() => {
+                    currentUser = cleanUsername;
+                    localStorage.setItem('op_current_user', currentUser);
+                    checkUserSession();
+                });
             }
         } else {
-            // Utilizador Novo -> Guardar PIN e criar perfil
+            // UTILIZADOR COMPLETAMENTE NOVO
             currentUser = cleanUsername;
             localStorage.setItem('op_current_user', currentUser);
             firebase.database().ref('users/' + cleanUsername + '/pin').set(inputPin);

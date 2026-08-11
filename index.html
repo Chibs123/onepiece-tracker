@@ -192,7 +192,21 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .rank-2 { color: #e0e0e0; }
 .rank-3 { color: #cd7f32; }
 
-footer { margin-top: 40px; }
+/* 🏴‍☠️ ESTILO DO FOOTER "MADE BY CHIBS" 🏴‍☠️ */
+footer {
+    margin-top: 45px;
+    padding: 16px 0;
+    text-align: center;
+    font-size: 0.85em;
+    color: var(--text-dim);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.footer-chibs {
+    color: var(--accent-gold);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 8px rgba(255, 183, 3, 0.4);
+}
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
@@ -373,8 +387,12 @@ footer { margin-top: 40px; }
     </div>
 
     <div id="saga-list"></div>
+
+    <!-- 🏴‍☠️ FOOTER MADE BY CHIBS 🏴‍☠️ -->
+    <footer>
+        ⚓ Made by <span class="footer-chibs">Chibs</span> 🏴‍☠️
+    </footer>
 </div>
-<footer></footer>
 
 <script>
   if ('serviceWorker' in navigator) {
@@ -439,7 +457,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy revela o Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },

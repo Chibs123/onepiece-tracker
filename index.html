@@ -106,7 +106,7 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .btn-stats-user:hover { background: #52b788; color: #000; }
 .btn-settings-user:hover { background: var(--accent-gold); color: #000; }
 
-/* MODAL DE DEFINIÇÕES (⚙️ RODA DENTADA) */
+/* MODAL DE DEFINIÇÕES */
 .settings-form-group {
     display: flex;
     flex-direction: column;
@@ -219,8 +219,20 @@ h1 { margin: 0 0 12px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 0.95em; letter-spacing: 0.5px; }
 
 .ships-container { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 48px; margin-top: 8px; }
-.user-ship-tag { background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; font-size: 0.85em; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-.user-ship-tag:hover { transform: translateY(-2px) scale(1.05); border-color: var(--accent-gold); box-shadow: 0 6px 15px rgba(255,183,3,0.3); }
+
+/* CARTÕES DA FROTA APENAS INFORMATIVOS (SEM CURSOR DE CLIQUE) */
+.user-ship-tag { 
+    background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); 
+    border: 1.5px solid rgba(255,255,255,0.2); 
+    border-radius: 20px; 
+    padding: 6px 12px; 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-size: 0.85em; 
+    cursor: default; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+}
 .user-ship-tag.is-me { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.9), rgba(11,19,43,0.95)); }
 
 .ship-anim-icon { font-size: 1.1em; animation: waveBob 2.5s ease-in-out infinite alternate; display: inline-block; }
@@ -283,7 +295,7 @@ footer {
     </svg>
 </div>
 
-<!-- ⚙️ MODAL DE DEFINIÇÕES (GERENCIADO PELA RODA DENTADA) -->
+<!-- ⚙️ MODAL DE DEFINIÇÕES -->
 <div class="settings-modal-overlay" id="settings-modal" style="display:none;" onclick="closeSettingsOnOverlay(event)">
     <div class="settings-modal-box">
         <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -391,7 +403,7 @@ footer {
 </div>
 
 <div class="container">
-    <!-- 🏴‍☠️ BARRA SUPERIOR DISCRETA DO PERFIL & SYNC 🏴‍☠️ -->
+    <!-- BARRA SUPERIOR DISCRETA -->
     <div class="top-user-bar">
         <div class="top-user-profile">
             🏴‍☠️ <span id="label-user">Aventura de:</span> <span class="user-name-tag" id="current-user-display">---</span>
@@ -540,7 +552,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -998,7 +1010,7 @@ function fetchGlobalStatsAndFleet() {
             }).join('');
         }
 
-        // 2. Renderizar Frota (Ocultando sagas sem navios e traduzindo nomes)
+        // 2. Renderizar Frota (Sem clique interativo)
         fleetContainer.innerHTML = opData.map(saga => {
             const sagaData = sagaMap[saga.sagaKey];
             const hasUsers = sagaData.users.length > 0;
@@ -1016,9 +1028,7 @@ function fetchGlobalStatsAndFleet() {
                         ${sagaData.users.map(u => {
                             const arcTranslated = getArcTranslation(u.arcId);
                             return `
-                                <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" 
-                                     onclick="closeGlobalStatsModal(); switchUserToView('${u.username}')"
-                                     title="Espiar aventura de ${u.username}">
+                                <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}">
                                     <span class="ship-anim-icon">⛵</span>
                                     <div class="ship-info-box">
                                         <span class="ship-captain-name">${u.username} ${u.username === currentUser ? '🏴‍☠️' : ''}</span>
@@ -1038,12 +1048,6 @@ function fetchGlobalStatsAndFleet() {
         tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro Firebase (.read Rules)</td></tr>`;
         fleetContainer.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:15px;">Erro ao carregar frota</div>`;
     });
-}
-
-function switchUserToView(username) {
-    currentUser = username;
-    localStorage.setItem('op_current_user', currentUser);
-    checkUserSession();
 }
 
 function renderApp() {

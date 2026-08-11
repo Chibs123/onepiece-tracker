@@ -37,6 +37,7 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 
 .user-bar-controls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; }
 
+/* ESTILIZAÇÃO UNIFORME DE TODOS OS BOTÕES E SELECTS */
 .btn-switch-user, .btn-stats-user, .lang-select, .crew-select {
     height: 34px;
     box-sizing: border-box;
@@ -318,10 +319,11 @@ footer { margin-top: 40px; }
                     <option value="jinbe">🥋 Jinbe</option>
                 </select>
 
+                <!-- OPTIMIZAÇÃO DO SELECT DE LÍNGUA (UNIVERSAL PARA WINDOWS / PC E MOBILE) -->
                 <select class="lang-select" id="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="pt">🇵🇹 PT</option>
-                    <option value="en">🇬🇧 EN</option>
-                    <option value="es">🇪🇸 ES</option>
+                    <option value="pt">🌐 PT</option>
+                    <option value="en">🌐 EN</option>
+                    <option value="es">🌐 ES</option>
                 </select>
             </div>
         </div>

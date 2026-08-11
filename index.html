@@ -38,7 +38,7 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .user-bar-controls { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: nowrap; }
 
 /* ESTILIZAÇÃO UNIFORME DE TODOS OS BOTÕES E SELECTS */
-.btn-switch-user, .btn-stats-user, .btn-fleet-user, .lang-select, .crew-select {
+.btn-switch-user, .btn-stats-user, .lang-select, .crew-select {
     height: 34px;
     box-sizing: border-box;
     display: inline-flex;
@@ -57,7 +57,6 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 
 .btn-switch-user { background: rgba(255, 183, 3, 0.15); border: 1px solid var(--accent-gold); color: var(--accent-gold); }
 .btn-stats-user { background: rgba(82, 183, 136, 0.2); border: 1px solid #52b788; color: #52b788; }
-.btn-fleet-user { background: rgba(217, 4, 41, 0.2); border: 1px solid var(--accent-red); color: #ff6b6b; }
 
 .lang-select, .crew-select {
     background: rgba(11, 19, 43, 0.85);
@@ -73,10 +72,8 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 
 .btn-switch-user:hover { background: var(--accent-gold); color: #000; }
 .btn-stats-user:hover { background: #52b788; color: #000; }
-.btn-fleet-user:hover { background: var(--accent-red); color: #fff; }
 .lang-select:hover, .crew-select:hover { border-color: #fff; }
 
-/* 📱 TELEMÓVEL: CENTRALIZAÇÃO DOS 2 BOTÕES FINAIS */
 @media (max-width: 650px) {
     .user-bar-controls {
         display: flex;
@@ -85,9 +82,9 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
         gap: 6px;
         width: 100%;
     }
-    .btn-switch-user, .btn-stats-user, .btn-fleet-user {
-        flex: 1 1 30%;
-        min-width: 100px;
+    .btn-switch-user, .btn-stats-user {
+        flex: 1 1 35%;
+        min-width: 110px;
     }
     .crew-select, .lang-select {
         flex: 0 1 45%;
@@ -157,57 +154,27 @@ h1 { margin: 0 0 10px 0; color: var(--accent-gold); letter-spacing: 1px; text-tr
 .arc-card.status-completed .arc-mini-fill { background-color: var(--completed-border); }
 
 /* MODAIS */
-.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .fleet-map-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
-.user-modal-box, .summary-modal-box, .global-stats-box, .fleet-map-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
+.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
+.user-modal-box, .summary-modal-box, .global-stats-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-/* ⛵ ESTILOS MELHORADOS DO MAPA DA FROTA */
-.fleet-timeline { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 16px; 
-    margin-top: 18px; 
-    position: relative; 
-    padding-left: 18px; 
-}
-.fleet-timeline::before { 
-    content: ''; 
-    position: absolute; 
-    top: 10px; 
-    bottom: 10px; 
-    left: 34px; 
-    width: 4px; 
-    background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); 
-    border-radius: 2px; 
-}
+/* ESTILOS DA FROTA DENTRO DAS ESTATÍSTICAS */
+.fleet-timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; position: relative; padding-left: 18px; }
+.fleet-timeline::before { content: ''; position: absolute; top: 10px; bottom: 10px; left: 34px; width: 4px; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); border-radius: 2px; }
 
-.fleet-saga-node { display: flex; flex-direction: column; position: relative; z-index: 2; margin-bottom: 6px; }
+.fleet-saga-node { display: flex; flex-direction: column; position: relative; z-index: 2; }
 .saga-badge { display: flex; align-items: center; gap: 12px; }
-.saga-icon-circle { width: 36px; height: 36px; border-radius: 50%; background: #0b132b; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 1em; box-shadow: 0 0 10px rgba(255,183,3,0.5); }
-.saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 1em; letter-spacing: 0.5px; }
+.saga-icon-circle { width: 34px; height: 34px; border-radius: 50%; background: #0b132b; border: 2px solid var(--accent-gold); display: flex; align-items: center; justify-content: center; font-size: 0.95em; box-shadow: 0 0 10px rgba(255,183,3,0.5); }
+.saga-name-title { font-weight: bold; color: var(--accent-gold); font-size: 0.95em; letter-spacing: 0.5px; }
 
-.ships-container { display: flex; flex-wrap: wrap; gap: 10px; margin-left: 48px; margin-top: 8px; }
+.ships-container { display: flex; flex-wrap: wrap; gap: 8px; margin-left: 48px; margin-top: 8px; }
+.user-ship-tag { background: linear-gradient(135deg, rgba(28,37,65,0.9), rgba(11,19,43,0.95)); border: 1.5px solid rgba(255,255,255,0.2); border-radius: 20px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; font-size: 0.85em; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.user-ship-tag:hover { transform: translateY(-2px) scale(1.05); border-color: var(--accent-gold); box-shadow: 0 6px 15px rgba(255,183,3,0.3); }
+.user-ship-tag.is-me { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.9), rgba(11,19,43,0.95)); }
 
-/* CARTÃO DE NAVIO MAIS ELEGANTE */
-.user-ship-tag { 
-    background: linear-gradient(135deg, rgba(28,37,65,0.95), rgba(11,19,43,0.98)); 
-    border: 1.5px solid var(--accent-gold); 
-    border-radius: 12px; 
-    padding: 8px 14px; 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-    font-size: 0.85em; 
-    cursor: pointer; 
-    transition: all 0.25s ease; 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
-}
-.user-ship-tag:hover { transform: translateY(-3px) scale(1.04); border-color: #52b788; box-shadow: 0 6px 18px rgba(82, 183, 136, 0.4); }
-.user-ship-tag.is-me { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.95), rgba(11,19,43,0.98)); }
-
-.ship-anim-icon { font-size: 1.3em; animation: waveBob 2.5s ease-in-out infinite alternate; display: inline-block; }
+.ship-anim-icon { font-size: 1.1em; animation: waveBob 2.5s ease-in-out infinite alternate; display: inline-block; }
 @keyframes waveBob { 0% { transform: translateY(0) rotate(-4deg); } 100% { transform: translateY(-3px) rotate(4deg); } }
 
 .ship-info-box { display: flex; flex-direction: column; text-align: left; }
@@ -254,20 +221,7 @@ footer { margin-top: 40px; }
     </svg>
 </div>
 
-<!-- ⛵ MODAL DO MAPA DA FROTA DA TRIPULAÇÃO -->
-<div class="fleet-map-overlay" id="fleet-map-modal" style="display:none;" onclick="closeFleetMapOnOverlay(event)">
-    <div class="fleet-map-box">
-        <button class="modal-close-btn" onclick="closeFleetMapModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
-        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h2>
-        <span style="font-size:0.8em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
-
-        <div class="fleet-timeline" id="fleet-timeline-container">
-            <div style="text-align:center; color:var(--text-dim); padding:20px;">A carregar rota dos navios...</div>
-        </div>
-    </div>
-</div>
-
-<!-- 📊 MODAL DE ESTATÍSTICAS GERAIS -->
+<!-- 📊 MODAL DE ESTATÍSTICAS GERAIS E FROTA UNIFICADAS -->
 <div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
     <div class="global-stats-box">
         <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -304,6 +258,13 @@ footer { margin-top: 40px; }
                     <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
+        <h3 style="color:var(--accent-gold); font-size:0.95em; margin: 24px 0 6px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
+        <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
+        <div class="fleet-timeline" id="fleet-timeline-container">
+            <div style="text-align:center; color:var(--text-dim); padding:15px;" id="loading-fleet">A carregar rota dos navios...</div>
         </div>
     </div>
 </div>
@@ -343,8 +304,7 @@ footer { margin-top: 40px; }
             
             <div class="user-bar-controls">
                 <button class="btn-switch-user" id="btn-switch-txt" onclick="switchUserPrompt()">Trocar Perfil</button>
-                <button class="btn-fleet-user" id="btn-fleet-txt" onclick="openFleetMapModal()">⛵ Frota</button>
-                <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas</button>
+                <button class="btn-stats-user" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">📊 Estatísticas & Frota</button>
                 
                 <select class="crew-select" id="crew-select" onchange="changeCrewMember(this.value)">
                     <option value="luffy">👒 Luffy</option>
@@ -444,18 +404,18 @@ let currentFilter = 'all';
 
 const i18n = {
     pt: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas", fleetBtn: "⛵ Frota", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
-        statsTitle: "📊 Estatísticas da Tripulação", statsSub: "Resumo geral de todos os navegadores registados", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Introduz o teu nome para carregar ou criar o teu progresso no tracker:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        statsTitle: "📊 Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line"
     },
     en: { 
-        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Global Stats", fleetBtn: "⛵ Fleet", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
-        statsTitle: "📊 Crew Statistics", statsSub: "General overview of all registered navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
+        cloudState: "Firebase Status:", adventureOf: "Adventure of:", switchProfile: "Switch Profile", globalStatsBtn: "📊 Stats & Fleet", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name to load or create your progress in the tracker:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        statsTitle: "📊 Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line"
     },
     es: { 
-        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas", fleetBtn: "⛵ Flota", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "📊 Estadísticas de la Tripulación", statsSub: "Resumen general de todos los navegantes registrados", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        cloudState: "Estado Firebase:", adventureOf: "Aventura de:", switchProfile: "Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre para cargar o crear tu progreso en el tracker:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        statsTitle: "📊 Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line"
     }
 };
@@ -487,7 +447,7 @@ const arcDetailsI18n = {
         "post-war": { summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
         "return-sabaody": { summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
         "fishman-island": { summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
-        "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
+        "punk-hazard": { summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
         "whole-cake": { summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
@@ -561,7 +521,7 @@ const arcDetailsI18n = {
         "whole-cake": { summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconcilia con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
-        "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Almirantes y los Cinco Ancianos (Gorosei)"] }
+        "egghead": { summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Llegada de Admirales y los Cinco Ancianos (Gorosei)"] }
     }
 };
 
@@ -640,7 +600,6 @@ function applyTranslations() {
     document.getElementById('label-user').textContent = t.adventureOf;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
     document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
-    document.getElementById('btn-fleet-txt').textContent = t.fleetBtn;
     document.getElementById('label-current-adventure').textContent = t.currentAdventure;
     document.getElementById('label-stat-arcs').textContent = t.statArcs;
     document.getElementById('label-stat-eps').textContent = t.statEps;
@@ -822,110 +781,10 @@ function openSummaryModal(arcId, isCompleted) {
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
 
-/* ⛵ LÓGICA DO MAPA DA FROTA DA TRIPULAÇÃO */
-function openFleetMapModal() {
-    document.getElementById('fleet-map-modal').style.display = 'flex';
-    fetchFleetData();
-}
-
-function closeFleetMapModal() {
-    document.getElementById('fleet-map-modal').style.display = 'none';
-}
-
-function closeFleetMapOnOverlay(e) {
-    if (e.target.classList.contains('fleet-map-overlay')) closeFleetMapModal();
-}
-
-function fetchFleetData() {
-    const container = document.getElementById('fleet-timeline-container');
-    const t = i18n[currentLang] || i18n.pt;
-    container.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:20px;">${t.loadingData}</div>`;
-
-    firebase.database().ref('users').once('value').then((snapshot) => {
-        const usersData = snapshot.val() || {};
-        const userKeys = Object.keys(usersData);
-
-        let sagaMap = {};
-        opData.forEach(s => { sagaMap[s.saga] = { icon: s.icon, users: [] }; });
-
-        userKeys.forEach(username => {
-            const prog = usersData[username] || {};
-            let currentSagaName = opData[0].saga;
-            let currentArcName = "";
-
-            for (let saga of opData) {
-                let sagaCompleted = true;
-                for (let arc of saga.arcs) {
-                    const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
-                    if (currentEps < arc.totalEps) {
-                        currentSagaName = saga.saga;
-                        currentArcName = arc.name;
-                        sagaCompleted = false;
-                        break;
-                    }
-                }
-                if (!sagaCompleted) break;
-                currentSagaName = saga.saga;
-                // Se completou a saga, apanha o último arco dela por defeito
-                currentArcName = saga.arcs[saga.arcs.length - 1].name;
-            }
-
-            const userBounty = calculateBountyForProgress(prog, selectedCrewMember);
-
-            sagaMap[currentSagaName].users.push({
-                username: username,
-                arcName: currentArcName,
-                bounty: userBounty
-            });
-        });
-
-        container.innerHTML = opData.map(saga => {
-            const sagaData = sagaMap[saga.saga];
-            const hasUsers = sagaData.users.length > 0;
-
-            // Se não houver utilizadores nesta saga, nem sequer mostramos o texto a cinzento para poupar espaço
-            if (!hasUsers) return '';
-
-            return `
-                <div class="fleet-saga-node">
-                    <div class="saga-badge">
-                        <div class="saga-icon-circle">${saga.icon}</div>
-                        <div class="saga-name-title">${saga.saga}</div>
-                    </div>
-                    <div class="ships-container">
-                        ${sagaData.users.map(u => `
-                            <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" 
-                                 onclick="closeFleetMapModal(); switchUserToView('${u.username}')"
-                                 title="Espiar aventura de ${u.username}">
-                                <span class="ship-anim-icon">⛵</span>
-                                <div class="ship-info-box">
-                                    <span class="ship-captain-name">${u.username} ${u.username === currentUser ? '🏴‍☠️' : ''}</span>
-                                    <span class="ship-bounty-tag">${formatBounty(u.bounty)}</span>
-                                    ${u.arcName ? `<span class="ship-arc-location">📍 ${u.arcName}</span>` : ''}
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-    }).catch((err) => {
-        console.error("Erro ao carregar frota:", err);
-        container.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:20px;">Erro ao carregar frota</div>`;
-    });
-}
-
-function switchUserToView(username) {
-    currentUser = username;
-    localStorage.setItem('op_current_user', currentUser);
-    checkUserSession();
-}
-
-/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS */
+/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS E FROTA UNIFICADAS */
 function openGlobalStatsModal() {
     document.getElementById('global-stats-modal').style.display = 'flex';
-    fetchGlobalStats();
+    fetchGlobalStatsAndFleet();
 }
 
 function closeGlobalStatsModal() {
@@ -936,11 +795,14 @@ function closeGlobalStatsOnOverlay(e) {
     if (e.target.classList.contains('global-stats-overlay')) closeGlobalStatsModal();
 }
 
-function fetchGlobalStats() {
+function fetchGlobalStatsAndFleet() {
     const t = i18n[currentLang] || i18n.pt;
     const totalSeriesEpisodes = opData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
     const tbody = document.getElementById('leaderboard-body');
+    const fleetContainer = document.getElementById('fleet-timeline-container');
+    
     tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">${t.loadingData}</td></tr>`;
+    fleetContainer.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:15px;">${t.loadingData}</div>`;
     
     firebase.database().ref('users').once('value').then((snapshot) => {
         const usersData = snapshot.val() || {};
@@ -950,6 +812,8 @@ function fetchGlobalStats() {
         let grandTotalEps = 0;
         let maxBounty = 0;
         let leaderboard = [];
+        let sagaMap = {};
+        opData.forEach(s => { sagaMap[s.saga] = { icon: s.icon, users: [] }; });
 
         userKeys.forEach(username => {
             const prog = usersData[username] || {};
@@ -971,8 +835,35 @@ function fetchGlobalStats() {
                 percent: percent,
                 bounty: bounty
             });
+
+            // Lógica da Frota por Saga
+            let currentSagaName = opData[0].saga;
+            let currentArcName = "";
+
+            for (let saga of opData) {
+                let sagaCompleted = true;
+                for (let arc of saga.arcs) {
+                    const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
+                    if (currentEps < arc.totalEps) {
+                        currentSagaName = saga.saga;
+                        currentArcName = arc.name;
+                        sagaCompleted = false;
+                        break;
+                    }
+                }
+                if (!sagaCompleted) break;
+                currentSagaName = saga.saga;
+                currentArcName = saga.arcs[saga.arcs.length - 1].name;
+            }
+
+            sagaMap[currentSagaName].users.push({
+                username: username,
+                arcName: currentArcName,
+                bounty: bounty
+            });
         });
 
+        // 1. Renderizar Leaderboard
         leaderboard.sort((a, b) => b.watched - a.watched);
 
         document.getElementById('global-users-count').textContent = totalUsers;
@@ -981,26 +872,62 @@ function fetchGlobalStats() {
 
         if (leaderboard.length === 0) {
             tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">No data</td></tr>`;
-            return;
+        } else {
+            tbody.innerHTML = leaderboard.map((item, index) => {
+                let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
+                let medal = index === 0 ? '🥇 ' : (index === 1 ? '🥈 ' : (index === 2 ? '🥉 ' : ''));
+                return `
+                    <tr>
+                        <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
+                        <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? `<span style="color:var(--accent-gold); font-size:0.8em;">${t.youTag}</span>` : ''}</td>
+                        <td><span style="color:#52b788; font-weight:bold;">${item.percent}%</span></td>
+                        <td>${item.watched} eps</td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        tbody.innerHTML = leaderboard.map((item, index) => {
-            let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
-            let medal = index === 0 ? '🥇 ' : (index === 1 ? '🥈 ' : (index === 2 ? '🥉 ' : ''));
+        // 2. Renderizar Frota (Ocultando sagas sem navios)
+        fleetContainer.innerHTML = opData.map(saga => {
+            const sagaData = sagaMap[saga.saga];
+            const hasUsers = sagaData.users.length > 0;
+            if (!hasUsers) return '';
+
             return `
-                <tr>
-                    <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
-                    <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? `<span style="color:var(--accent-gold); font-size:0.8em;">${t.youTag}</span>` : ''}</td>
-                    <td><span style="color:#52b788; font-weight:bold;">${item.percent}%</span></td>
-                    <td>${item.watched} eps</td>
-                </tr>
+                <div class="fleet-saga-node">
+                    <div class="saga-badge">
+                        <div class="saga-icon-circle">${saga.icon}</div>
+                        <div class="saga-name-title">${saga.saga}</div>
+                    </div>
+                    <div class="ships-container">
+                        ${sagaData.users.map(u => `
+                            <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}" 
+                                 onclick="closeGlobalStatsModal(); switchUserToView('${u.username}')"
+                                 title="Espiar aventura de ${u.username}">
+                                <span class="ship-anim-icon">⛵</span>
+                                <div class="ship-info-box">
+                                    <span class="ship-captain-name">${u.username} ${u.username === currentUser ? '🏴‍☠️' : ''}</span>
+                                    <span class="ship-bounty-tag">${formatBounty(u.bounty)}</span>
+                                    ${u.arcName ? `<span class="ship-arc-location">📍 ${u.arcName}</span>` : ''}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
             `;
         }).join('');
 
     }).catch((err) => {
         console.error("Erro ao carregar estatísticas gerais:", err);
         tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro Firebase (.read Rules)</td></tr>`;
+        fleetContainer.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:15px;">Erro ao carregar frota</div>`;
     });
+}
+
+function switchUserToView(username) {
+    currentUser = username;
+    localStorage.setItem('op_current_user', currentUser);
+    checkUserSession();
 }
 
 function renderApp() {

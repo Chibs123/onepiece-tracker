@@ -95,55 +95,81 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* BARRA SUPERIOR DO PERFIL COM GEAR MODERNO */
+/* BARRA SUPERIOR ESTRUTURADA E PREENCHIDA */
 .top-user-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(11, 19, 43, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 8px 14px;
-    border-radius: 20px;
-    margin-bottom: 12px;
+    background: rgba(11, 19, 43, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 18px;
+    border-radius: 12px;
+    margin-bottom: 16px;
     font-size: 0.88em;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    gap: 12px;
 }
 
 .top-user-profile {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--text-dim);
+    gap: 10px;
 }
 
 .user-name-tag {
     color: var(--accent-gold);
     font-weight: 800;
-    font-size: 1.1em;
+    font-size: 1.15em;
     letter-spacing: 0.5px;
 }
 
-/* ⚡ DESIGN DESTACADO DO GEAR ⚡ */
+/* NOVO DESIGN MAIS ROBUSTO PARA O GEAR */
 .gear-badge {
-    background: linear-gradient(135deg, var(--accent-red), #990000);
+    background: linear-gradient(135deg, var(--accent-red), #800000);
     color: #fff;
     font-weight: 900;
-    font-size: 0.78em;
-    padding: 2px 7px;
+    font-size: 0.72em;
+    padding: 3px 9px;
     border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 0 8px var(--accent-red);
-    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 10px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-    animation: gearGlow 2.5s infinite alternate;
+    gap: 4px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
 }
 
-@keyframes gearGlow {
-    from { box-shadow: 0 0 4px var(--accent-red); }
-    to { box-shadow: 0 0 12px var(--accent-red); }
+/* ESPAÇO CENTRAL DE INFORMAÇÕES RÁPIDAS */
+.top-user-quick-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-dim);
+    font-size: 0.9em;
+    font-weight: 600;
+}
+
+.quick-stat-item {
+    color: var(--text-main);
+}
+
+#top-quick-bounty {
+    color: var(--accent-gold);
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
+
+.quick-stat-divider {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .top-user-quick-stats {
+        display: none;
+    }
 }
 
 .sync-status-indicator {
@@ -596,12 +622,21 @@ footer {
 </div>
 
 <div class="container">
-    <!-- BARRA SUPERIOR DO PERFIL COM O GEAR EXCLUSIVO -->
+    <!-- BARRA SUPERIOR DO PERFIL PREENCHIDA E RICA -->
     <div class="top-user-bar">
         <div class="top-user-profile">
+            <span class="user-avatar-icon">🏴‍☠️</span>
             <span class="user-name-tag" id="current-user-display">---</span>
             <span id="user-gears-display"></span>
         </div>
+
+        <!-- INFORMAÇÕES RÁPIDAS NO MEIO (PREENCHIMENTO DE ESPAÇO) -->
+        <div class="top-user-quick-stats">
+            <span class="quick-stat-item" id="top-quick-bounty">฿ 0</span>
+            <span class="quick-stat-divider">•</span>
+            <span class="quick-stat-item" id="top-quick-location">📍 Grand Line</span>
+        </div>
+
         <div class="sync-status-indicator">
             <span class="sync-dot" id="sync-dot"></span>
             <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
@@ -664,7 +699,7 @@ footer {
 
     <!-- FOOTER MADE BY CHIBS -->
     <footer>
-        ⚓ Made by <span class="footer-chibs">Chibs</span> ⚓
+        ⚓ Made by <span class="footer-chibs">Chibs</span> 🏴‍☠️
     </footer>
 </div>
 
@@ -773,7 +808,7 @@ const arcDetailsI18n = {
         "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
-        "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
+        "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos misterios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
     },
     en: {
         "romance-dawn": { name: "Romance Dawn", summary: "Luffy begins his journey to become the Pirate King, recruits Zoro, and faces Captain Morgan.", highlights: ["Luffy receives the Straw Hat from Shanks", "Roronoa Zoro recruitment", "Captain Morgan defeated"] },
@@ -1337,17 +1372,29 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ LÓGICA EXCLUSIVA DO GEAR EXIBIDO AO LADO DO NOME ⚡ */
-function updateProfileGear(totalWatchedEps) {
+/* ⚡ ATUALIZA O GEAR E AS INFOS RÁPIDAS DA BARRA SUPERIOR ⚡ */
+function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
+    const bountyEl = document.getElementById('top-quick-bounty');
+    const locationEl = document.getElementById('top-quick-location');
 
     let gearTag = '';
-    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-badge" title="Gear 5th Awakened">G⁵</span>';
-    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-badge" title="Gear 4th Boundman">G⁴</span>';
-    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-badge" title="Gear 3rd">G³</span>';
-    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-badge" title="Gear 2nd">G²</span>';
+    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-badge" title="Gear 5th Awakened">⚡ GEAR 5TH</span>';
+    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-badge" title="Gear 4th Boundman">🔥 GEAR 4TH</span>';
+    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-badge" title="Gear 3rd">🔥 GEAR 3RD</span>';
+    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-badge" title="Gear 2nd">💨 GEAR 2ND</span>';
 
     gearsEl.innerHTML = gearTag;
+
+    if (bountyEl) bountyEl.textContent = formatBounty(getLuffyBounty());
+    if (locationEl) {
+        if (activeArc) {
+            const arcName = getArcTranslation(activeArc.id);
+            locationEl.textContent = `📍 ${arcName}`;
+        } else {
+            locationEl.textContent = `📍 Raftel / Em dia!`;
+        }
+    }
 }
 
 function renderApp() {
@@ -1457,8 +1504,8 @@ function renderApp() {
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
 
-    // ATUALIZAR O GEAR NO TOPO AO LADO DO NOME
-    updateProfileGear(watchedEpisodes);
+    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS NA BARRA SUPERIOR
+    updateProfileGear(watchedEpisodes, activeArc);
 
     // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA
     setTimeout(() => {

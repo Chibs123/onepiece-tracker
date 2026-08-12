@@ -95,7 +95,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* 📜 VIVRE CARD / PASSAPORTE DE PIRATA RESPONSIVO 📜 */
+/* 📜 VIVRE CARD RESPONSIVO 📜 */
 .top-vivre-card {
     display: flex;
     flex-direction: column;
@@ -130,7 +130,6 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     letter-spacing: 0.5px;
 }
 
-/* GEAR CLICÁVEL COM EFEITO HOVER E ACESSO ÀS DEFINIÇÕES */
 .gear-text-clean {
     color: var(--accent-gold);
     font-weight: 800;
@@ -208,17 +207,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
 
-/* REGRAS RESPONSIVAS DE MOBILE */
-@media (max-width: 680px) {
-    .vivre-card-stats-desktop {
-        display: none;
-    }
-    .vivre-card-subbar {
-        display: flex;
-    }
-}
-
-/* HEADER PRINCIPAL COMPACTO E LIMPO */
+/* HEADER BANNER */
 header.main-header-banner { 
     padding: 14px 20px; 
     border-bottom: 2px solid var(--accent-gold); 
@@ -254,7 +243,6 @@ h1#main-title {
     gap: 10px;
 }
 
-/* BOTÃO DE ESTATÍSTICAS INTEGRAÇÃO ELEGANTE */
 .btn-header-action {
     height: 36px;
     box-sizing: border-box;
@@ -284,138 +272,39 @@ h1#main-title {
     box-shadow: 0 4px 12px rgba(255, 183, 3, 0.25);
 }
 
-@media (max-width: 680px) {
-    .header-content-flex {
-        justify-content: center;
-        text-align: center;
-    }
-    .header-action-controls {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* MODAL DE DEFINIÇÕES */
-.settings-form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-    text-align: left;
-}
-.settings-form-group label {
-    font-size: 0.8em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-.settings-select, .btn-settings-action {
-    width: 100%;
-    height: 38px;
-    background: rgba(11, 19, 43, 0.9);
-    border: 1px solid var(--accent-gold);
-    color: var(--accent-gold);
-    border-radius: 8px;
-    padding: 0 10px;
-    font-size: 0.9em;
-    font-weight: bold;
-    outline: none;
-    box-sizing: border-box;
-}
-.btn-settings-action {
-    background: rgba(255, 183, 3, 0.15);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.btn-settings-action:hover { background: var(--accent-gold); color: #000; }
-
-/* MODAL DE LOGIN COM PIN */
-.user-modal-box {
-    background: linear-gradient(135deg, #1c2541, #0b132b);
-    border: 2px solid var(--accent-gold);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 420px;
-    padding: 24px 20px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.9);
-    position: relative;
-    text-align: center;
-}
-
-.login-header-icon {
-    font-size: 2.2em;
-    margin-bottom: 6px;
-    filter: drop-shadow(0 2px 8px rgba(255, 183, 3, 0.4));
-}
-
-.login-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 18px 0;
-}
-
-.user-input, .pin-input {
-    width: 100%;
-    height: 44px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1.5px solid var(--text-dim);
-    color: var(--accent-gold);
-    border-radius: 10px;
-    padding: 0 12px;
-    font-size: 1.05em;
-    font-weight: bold;
-    text-align: center;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.user-input:focus, .pin-input:focus {
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 10px rgba(255, 183, 3, 0.3);
-}
-
-.pin-input {
-    letter-spacing: 6px;
-    font-size: 1.2em;
-}
-
-.btn-login {
-    width: 100%;
-    height: 44px;
-    background: linear-gradient(135deg, var(--accent-gold), #e0a100);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 0.95em;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.2s;
-}
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
-}
-
-.login-msg-hint {
-    font-size: 0.8em;
-    color: var(--text-dim);
-    margin-top: 8px;
-    min-height: 18px;
-}
-
-.cloud-status { text-align: center; font-size: 0.8em; margin-bottom: 15px; padding: 6px; border-radius: 6px; background: rgba(0,0,0,0.4); }
-.status-online { color: #52b788; font-weight: bold; }
-.status-offline { color: var(--accent-red); font-weight: bold; }
-
+/* CARTÃO DA AVENTURA ATUAL COM SUPORTE MOBILE CENTRADO */
 .next-up-container { background: linear-gradient(135deg, var(--accent-red-trans, rgba(217, 4, 41, 0.2)), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; transition: border-color 0.3s; }
 .next-up-info h2 { margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.2em; }
 .next-up-info p { margin: 0; color: var(--text-main); font-size: 0.9em; }
 .next-up-actions { display: flex; align-items: center; gap: 8px; }
 .btn-quick-add { background-color: var(--accent-gold); color: #000; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85em; transition: transform 0.15s ease, background-color 0.2s; }
 .btn-quick-add:hover { transform: scale(1.05); background-color: #ffe066; }
+
+/* AJUSTES RESPONSIVOS DE MOBILE */
+@media (max-width: 680px) {
+    .vivre-card-stats-desktop { display: none; }
+    .vivre-card-subbar { display: flex; }
+
+    .header-content-flex { justify-content: center; text-align: center; }
+    .header-action-controls { width: 100%; justify-content: center; }
+
+    .next-up-container {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    .next-up-info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .next-up-actions {
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+    }
+}
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
@@ -442,16 +331,11 @@ h1#main-title {
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: border-color 0.3s, color 0.3s; }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
 
-/* CARTÕES DOS ARCOS E BOTÕES COM TEMA DINÂMICO */
 .arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 14px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 130px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); backdrop-filter: blur(6px); }
 .arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
 .arc-card:hover { border-color: var(--accent-gold); }
 
-.arc-card.status-completed { 
-    background-color: var(--completed-bg); 
-    border-color: var(--accent-gold); 
-}
-
+.arc-card.status-completed { background-color: var(--completed-bg); border-color: var(--accent-gold); }
 .arc-img-icon { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 1; opacity: 0.65; pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease; mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,1) 60%); }
 .arc-card:hover .arc-img-icon { opacity: 0.85; transform: scale(1.04); }
 
@@ -468,33 +352,19 @@ h1#main-title {
 .ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
 
-/* BOTÃO COMPLETO E BARRA COM A COR DO TEMA */
-.btn-complete { 
-    background-color: var(--accent-gold); 
-    color: #000; 
-    border: none; 
-    padding: 4px 8px; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-size: 0.75em; 
-    font-weight: bold; 
-    margin-left: auto; 
-    transition: filter 0.2s;
-}
+.btn-complete { background-color: var(--accent-gold); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; margin-left: auto; transition: filter 0.2s; }
 .btn-complete:hover { filter: brightness(1.15); }
 
 .arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 5px; border-radius: 3px; margin-top: 8px; overflow: hidden; }
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--accent-gold); }
 
-/* MODAIS */
 .user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
 .user-modal-box, .summary-modal-box, .global-stats-box, .settings-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; transition: border-color 0.3s; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-/* ESTILOS DA FROTA */
 .fleet-timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; position: relative; padding-left: 18px; }
 .fleet-timeline::before { content: ''; position: absolute; top: 10px; bottom: 10px; left: 34px; width: 4px; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); border-radius: 2px; }
 
@@ -515,7 +385,6 @@ h1#main-title {
 .ship-bounty-tag { color: var(--accent-gold); font-family: 'Courier New', monospace; font-size: 0.8em; font-weight: bold; }
 .ship-arc-location { color: var(--text-dim); font-size: 0.75em; margin-top: 1px; }
 
-/* ESTILOS TABELA ESTATÍSTICAS GERAIS */
 .leaderboard-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 0.85em; }
 .leaderboard-table th, .leaderboard-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.08); }
 .leaderboard-table th { color: var(--accent-gold); text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.5px; }
@@ -525,27 +394,15 @@ h1#main-title {
 .rank-2 { color: #e0e0e0; }
 .rank-3 { color: #cd7f32; }
 
-footer {
-    margin-top: 45px;
-    padding: 16px 0;
-    text-align: center;
-    font-size: 0.85em;
-    color: var(--text-dim);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-.footer-chibs {
-    color: var(--accent-gold);
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    text-shadow: 0 0 8px rgba(255, 183, 3, 0.4);
-}
+footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85em; color: var(--text-dim); border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.footer-chibs { color: var(--accent-gold); font-weight: 800; letter-spacing: 0.5px; text-shadow: 0 0 8px rgba(255, 183, 3, 0.4); }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 </head>
 <body>
 
-<!-- 🧭 OVERLAY DO LOADER (LOG POSE A GIRAR) 🧭 -->
+<!-- 🧭 OVERLAY DO LOADER 🧭 -->
 <div id="app-loader" class="app-loader-overlay">
     <div class="loader-content">
         <div class="loader-compass">🧭</div>
@@ -614,7 +471,7 @@ footer {
     </div>
 </div>
 
-<!-- MODAL DE ESTATÍSTICAS GERAIS E FROTA UNIFICADAS -->
+<!-- 📊 MODAL DE ESTATÍSTICAS GERAIS E FROTA UNIFICADAS -->
 <div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
     <div class="global-stats-box">
         <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -868,11 +725,11 @@ const arcDetailsI18n = {
         "drum-island": { name: "Drum Island", summary: "O bando procura um médico para salvar Nami numa ilha gelada dominada pelo tirano Wapol.", highlights: ["História comovente de Tony Tony Chopper e Dr. Hiriluk", "Luffy a escalar a montanha a carregar Nami e Sanji", "Flores de cerejeira a florir na neve e recrutamento de Chopper"] },
         "alabasta": { name: "Alabasta", summary: "A grande guerra no reino do deserto para derrotar o Shichibukai Crocodile e salvar o povo de Vivi.", highlights: ["Introdução do irmão de Luffy, Portgas D. Ace", "Zoro aprende a cortar aço contra Mr. 1", "Luffy vs Crocodile no subsolo", "A despedida silenciosa com a marca da amizade nos braços (X)", "Nico Robin junta-se ao bando"] },
         "jaya": { name: "Jaya", summary: "O bando procura uma forma de subir ao céu enquanto enfrenta os piratas de Mock Town.", highlights: ["Discurso lendário de Blackbeard sobre os sonhos dos homens", "Luffy derrota Bellamy com apenas um soco", "Introdução do Barba Branca (Whitebeard) e Doflamingo"] },
-        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlled pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
+        "skypiea": { name: "Skypiea", summary: "A aventura na ilha nos céus e o confronto com o 'Deus' Enel, controlado pelos poderes do trovão.", highlights: ["A subida espetacular pela Knock Up Stream", "Luffy imune à eletricidade de Enel por ser de borracha", "Luffy a tocar o sino de ouro de Shandora cumprindo a promessa de 400 anos"] },
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy reveals Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
@@ -1303,7 +1160,7 @@ function openSummaryModal(arcId, isCompleted) {
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
 
-/* LÓGICA DAS ESTATÍSTICAS GERAIS E FROTA UNIFICADAS */
+/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS E FROTA UNIFICADAS */
 function openGlobalStatsModal() {
     document.getElementById('global-stats-modal').style.display = 'flex';
     fetchGlobalStatsAndFleet();
@@ -1450,7 +1307,7 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (COM ELEVADO PERFEITO) ⚡ */
+/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
@@ -1462,7 +1319,7 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
-    // Design Limpo: Gear ⚙️ com o número elevado perfeito (<sup class="gear-sup">)
+    // Gear ⚙️ com o número elevado perfeito (<sup class="gear-sup">)
     let gearTag = '';
     if (totalWatchedEps >= 1071) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
     else if (totalWatchedEps >= 726) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
@@ -1598,7 +1455,7 @@ function renderApp() {
     // ATUALIZAR O GEAR E AS INFOS RÁPIDAS
     updateProfileGear(watchedEpisodes, activeArc);
 
-    // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA
+    // ESCONDER O LOADER COM 500MS DE SEGURANÇA
     setTimeout(() => {
         const loader = document.getElementById('app-loader');
         if (loader) loader.classList.add('hidden');

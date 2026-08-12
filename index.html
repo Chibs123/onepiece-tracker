@@ -95,26 +95,32 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* BARRA SUPERIOR ESTRUTURADA E PREENCHIDA */
-.top-user-bar {
+/* 📜 VIVRE CARD / PASSAPORTE DE PIRATA (BARRA SUPERIOR RESPONSIVA) 📜 */
+.top-vivre-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(11, 19, 43, 0.88);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    overflow: hidden;
+}
+
+.vivre-card-main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(11, 19, 43, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    padding: 8px 18px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    font-size: 0.88em;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 10px 16px;
     gap: 12px;
 }
 
-.top-user-profile {
+.vivre-user-info {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .user-name-tag {
@@ -124,16 +130,16 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     letter-spacing: 0.5px;
 }
 
-/* NOVO DESIGN MAIS ROBUSTO PARA O GEAR */
+/* GEAR BADGE ESTILIZADO */
 .gear-badge {
     background: linear-gradient(135deg, var(--accent-red), #800000);
     color: #fff;
     font-weight: 900;
-    font-size: 0.72em;
-    padding: 3px 9px;
+    font-size: 0.7em;
+    padding: 3px 8px;
     border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 10px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
+    box-shadow: 0 0 8px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
     letter-spacing: 0.8px;
     text-transform: uppercase;
     display: inline-flex;
@@ -142,34 +148,34 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     text-shadow: 0 1px 2px rgba(0,0,0,0.8);
 }
 
-/* ESPAÇO CENTRAL DE INFORMAÇÕES RÁPIDAS */
-.top-user-quick-stats {
+.vivre-card-stats-desktop {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: var(--text-dim);
-    font-size: 0.9em;
+    gap: 14px;
+    font-size: 0.88em;
+}
+
+.vivre-card-subbar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6px 16px;
+    font-size: 0.82em;
+}
+
+.vivre-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-weight: 600;
 }
 
-.quick-stat-item {
-    color: var(--text-main);
-}
-
-#top-quick-bounty {
+.vivre-bounty-val {
     color: var(--accent-gold);
     font-family: 'Courier New', monospace;
     font-weight: bold;
-}
-
-.quick-stat-divider {
-    color: rgba(255, 255, 255, 0.2);
-}
-
-@media (max-width: 768px) {
-    .top-user-quick-stats {
-        display: none;
-    }
 }
 
 .sync-status-indicator {
@@ -178,6 +184,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     gap: 6px;
     font-size: 0.78em;
     font-weight: 600;
+    margin-left: auto;
 }
 
 .sync-dot {
@@ -187,6 +194,16 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     background-color: var(--accent-red);
 }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
+
+/* REGRAS RESPONSIVAS DE MOBILE */
+@media (max-width: 680px) {
+    .vivre-card-stats-desktop {
+        display: none; /* Esconde do meio no telemóvel */
+    }
+    .vivre-card-subbar {
+        display: flex; /* Revela a sub-barra de baixo no telemóvel */
+    }
+}
 
 /* HEADER PRINCIPAL DINÂMICO */
 header { text-align: center; padding: 18px 14px; border-bottom: 2px solid var(--accent-gold); margin-bottom: 20px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); position: relative; transition: border-color 0.3s; }
@@ -622,24 +639,32 @@ footer {
 </div>
 
 <div class="container">
-    <!-- BARRA SUPERIOR DO PERFIL PREENCHIDA E RICA -->
-    <div class="top-user-bar">
-        <div class="top-user-profile">
-            <span class="user-avatar-icon">🏴‍☠️</span>
-            <span class="user-name-tag" id="current-user-display">---</span>
-            <span id="user-gears-display"></span>
+    <!-- 📜 VIVRE CARD / PASSAPORTE DE PIRATA RESPONSIVO 📜 -->
+    <div class="top-vivre-card">
+        <div class="vivre-card-main">
+            <div class="vivre-user-info">
+                <span>🏴‍☠️</span>
+                <span class="user-name-tag" id="current-user-display">---</span>
+                <span id="user-gears-display"></span>
+            </div>
+
+            <!-- INFORMAÇÕES RÁPIDAS NO PC (NO MEIO) -->
+            <div class="vivre-card-stats-desktop">
+                <span class="vivre-stat-item">Recompensa: <span class="vivre-bounty-val" id="top-quick-bounty">฿ 0</span></span>
+                <span style="color:rgba(255,255,255,0.2)">•</span>
+                <span class="vivre-stat-item" id="top-quick-location">📍 Grand Line</span>
+            </div>
+
+            <div class="sync-status-indicator">
+                <span class="sync-dot" id="sync-dot"></span>
+                <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+            </div>
         </div>
 
-        <!-- INFORMAÇÕES RÁPIDAS NO MEIO (PREENCHIMENTO DE ESPAÇO) -->
-        <div class="top-user-quick-stats">
-            <span class="quick-stat-item" id="top-quick-bounty">฿ 0</span>
-            <span class="quick-stat-divider">•</span>
-            <span class="quick-stat-item" id="top-quick-location">📍 Grand Line</span>
-        </div>
-
-        <div class="sync-status-indicator">
-            <span class="sync-dot" id="sync-dot"></span>
-            <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+        <!-- SUB-BARRA REVELADA APENAS NO TELEMÓVEL (GARANTE TUDO VISÍVEL) -->
+        <div class="vivre-card-subbar">
+            <span class="vivre-stat-item" id="top-mobile-location">📍 Grand Line</span>
+            <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
         </div>
     </div>
 
@@ -808,7 +833,7 @@ const arcDetailsI18n = {
         "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
-        "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos misterios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
+        "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
     },
     en: {
         "romance-dawn": { name: "Romance Dawn", summary: "Luffy begins his journey to become the Pirate King, recruits Zoro, and faces Captain Morgan.", highlights: ["Luffy receives the Straw Hat from Shanks", "Roronoa Zoro recruitment", "Captain Morgan defeated"] },
@@ -1186,6 +1211,7 @@ function calculateBountyForProgress(progressObj, member = 'luffy') {
             if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 100000000;
             if (isDone('arlong-park') || isDone('loguetown') || isDone('reverse-mountain') || isDone('whiskey-peak') || isDone('little-garden') || isDone('drum-island')) return 30000000;
             return 0;
+
     }
 }
 
@@ -1372,11 +1398,17 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR E AS INFOS RÁPIDAS DA BARRA SUPERIOR ⚡ */
+/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (DESKTOP E MOBILE) ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
+    
+    // Elementos Desktop
     const bountyEl = document.getElementById('top-quick-bounty');
     const locationEl = document.getElementById('top-quick-location');
+
+    // Elementos Mobile
+    const mobileBountyEl = document.getElementById('top-mobile-bounty');
+    const mobileLocationEl = document.getElementById('top-mobile-location');
 
     let gearTag = '';
     if (totalWatchedEps >= 1071) gearTag = '<span class="gear-badge" title="Gear 5th Awakened">⚡ GEAR 5TH</span>';
@@ -1386,15 +1418,21 @@ function updateProfileGear(totalWatchedEps, activeArc) {
 
     gearsEl.innerHTML = gearTag;
 
-    if (bountyEl) bountyEl.textContent = formatBounty(getLuffyBounty());
-    if (locationEl) {
-        if (activeArc) {
-            const arcName = getArcTranslation(activeArc.id);
-            locationEl.textContent = `📍 ${arcName}`;
-        } else {
-            locationEl.textContent = `📍 Raftel / Em dia!`;
-        }
+    const formattedBounty = formatBounty(getLuffyBounty());
+    let locationText = '📍 Grand Line';
+
+    if (activeArc) {
+        const arcName = getArcTranslation(activeArc.id);
+        locationText = `📍 ${arcName}`;
+    } else {
+        locationText = `📍 Raftel / Em dia!`;
     }
+
+    if (bountyEl) bountyEl.textContent = formattedBounty;
+    if (locationEl) locationEl.textContent = locationText;
+
+    if (mobileBountyEl) mobileBountyEl.textContent = formattedBounty;
+    if (mobileLocationEl) mobileLocationEl.textContent = locationText;
 }
 
 function renderApp() {
@@ -1504,7 +1542,7 @@ function renderApp() {
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
 
-    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS NA BARRA SUPERIOR
+    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS NO VIVRE CARD (PC E MOBILE)
     updateProfileGear(watchedEpisodes, activeArc);
 
     // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA

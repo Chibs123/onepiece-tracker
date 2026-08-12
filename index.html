@@ -95,25 +95,53 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* 📜 VIVRE CARD RESPONSIVO 📜 */
+/* HEADER PRINCIPAL NO TOPO (PADRONIZADO) */
+header.main-header-banner { 
+    text-align: center;
+    padding: 16px 20px; 
+    border: 1.5px solid var(--accent-gold); 
+    margin-bottom: 12px; 
+    background: var(--header-bg); 
+    border-radius: 12px; 
+    backdrop-filter: blur(8px); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    transition: border-color 0.3s;
+}
+
+h1#main-title { 
+    margin: 0; 
+    color: var(--accent-gold); 
+    letter-spacing: 1.5px; 
+    text-transform: uppercase; 
+    font-size: clamp(1.2em, 3vw, 1.6em); 
+    white-space: nowrap; 
+    transition: color 0.3s; 
+}
+
+/* 📜 VIVRE CARD LOGO DEBAIXO DO VOYAGE LOG 📜 */
 .top-vivre-card {
     display: flex;
     flex-direction: column;
     background: rgba(11, 19, 43, 0.88);
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     backdrop-filter: blur(8px);
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.top-vivre-card:hover {
+    border-color: var(--accent-gold);
 }
 
 .vivre-card-main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    gap: 20px;
+    padding: 10px 18px;
+    gap: 16px;
 }
 
 .vivre-user-info {
@@ -126,7 +154,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .user-name-tag {
     color: var(--accent-gold);
     font-weight: 800;
-    font-size: 1.2em;
+    font-size: 1.15em;
     letter-spacing: 0.5px;
 }
 
@@ -162,8 +190,8 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    font-size: 0.92em;
+    gap: 20px;
+    font-size: 0.9em;
     flex-grow: 1;
 }
 
@@ -190,6 +218,40 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     font-weight: bold;
 }
 
+.vivre-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* BOTÃO DE ESTATÍSTICAS INTEGRADO NO VIVRE CARD */
+.btn-header-action {
+    height: 32px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    outline: none;
+    line-height: 1;
+    background: rgba(255, 183, 3, 0.12); 
+    border: 1px solid var(--accent-gold); 
+    color: var(--accent-gold);
+    backdrop-filter: blur(4px);
+}
+
+.btn-header-action:hover { 
+    background: var(--accent-gold); 
+    color: #000; 
+    box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3);
+}
+
 .sync-status-indicator {
     display: flex;
     align-items: center;
@@ -207,69 +269,10 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
 
-/* HEADER BANNER */
-header.main-header-banner { 
-    padding: 14px 20px; 
-    border-bottom: 2px solid var(--accent-gold); 
-    margin-bottom: 20px; 
-    background: var(--header-bg); 
-    border-radius: 12px; 
-    backdrop-filter: blur(8px); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
-    transition: border-color 0.3s;
-}
-
-.header-content-flex {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-h1#main-title { 
-    margin: 0; 
-    color: var(--accent-gold); 
-    letter-spacing: 1px; 
-    text-transform: uppercase; 
-    font-size: clamp(1.1em, 2.5vw, 1.5em); 
-    white-space: nowrap; 
-    transition: color 0.3s; 
-}
-
-.header-action-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.btn-header-action {
-    height: 36px;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 16px;
-    border-radius: 8px;
-    font-size: 0.85em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    outline: none;
-    line-height: 1;
-    background: rgba(255, 255, 255, 0.05); 
-    border: 1px solid rgba(255, 183, 3, 0.3); 
-    color: var(--accent-gold);
-    backdrop-filter: blur(4px);
-}
-
-.btn-header-action:hover { 
-    background: var(--accent-gold); 
-    color: #000; 
-    border-color: var(--accent-gold);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 183, 3, 0.25);
+/* REGRAS RESPONSIVAS DE MOBILE */
+@media (max-width: 680px) {
+    .vivre-card-stats-desktop { display: none; }
+    .vivre-card-subbar { display: flex; }
 }
 
 /* CARTÃO DA AVENTURA ATUAL COM SUPORTE MOBILE CENTRADO */
@@ -280,14 +283,7 @@ h1#main-title {
 .btn-quick-add { background-color: var(--accent-gold); color: #000; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85em; transition: transform 0.15s ease, background-color 0.2s; }
 .btn-quick-add:hover { transform: scale(1.05); background-color: #ffe066; }
 
-/* AJUSTES RESPONSIVOS DE MOBILE */
 @media (max-width: 680px) {
-    .vivre-card-stats-desktop { display: none; }
-    .vivre-card-subbar { display: flex; }
-
-    .header-content-flex { justify-content: center; text-align: center; }
-    .header-action-controls { width: 100%; justify-content: center; }
-
     .next-up-container {
         flex-direction: column;
         text-align: center;
@@ -549,12 +545,17 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- 📜 VIVRE CARD RESPONSIVO COM GEAR CLICÁVEL 📜 -->
+    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
+    <header id="main-header" class="main-header-banner">
+        <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
+    </header>
+
+    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
                 <span class="user-name-tag" id="current-user-display">---</span>
-                <!-- O GEAR PASSA A SER CLICÁVEL PARA ABRIR DEFINIÇÕES -->
+                <!-- O GEAR ABRE AS DEFINIÇÕES -->
                 <span id="user-gears-display" onclick="openSettingsModal()"></span>
             </div>
 
@@ -565,9 +566,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
                 <span class="vivre-stat-item" id="top-quick-location">📍 Grand Line</span>
             </div>
 
-            <div class="sync-status-indicator">
-                <span class="sync-dot" id="sync-dot"></span>
-                <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+            <div class="vivre-right-controls">
+                <button class="btn-header-action" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">Estatísticas & Frota</button>
+                <div class="sync-status-indicator">
+                    <span class="sync-dot" id="sync-dot"></span>
+                    <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+                </div>
             </div>
         </div>
 
@@ -577,16 +581,6 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
         </div>
     </div>
-
-    <!-- HEADER PRINCIPAL COMPACTO COM BOTÃO DE ESTATÍSTICAS INTEGRADO -->
-    <header id="main-header" class="main-header-banner">
-        <div class="header-content-flex">
-            <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
-            <div class="header-action-controls">
-                <button class="btn-header-action" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">Estatísticas & Frota</button>
-            </div>
-        </div>
-    </header>
 
     <div class="next-up-container" id="next-up-card">
         <div class="next-up-info">
@@ -729,7 +723,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy reveals Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
@@ -741,7 +735,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy l Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }

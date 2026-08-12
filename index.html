@@ -95,7 +95,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     to { opacity: 1; }
 }
 
-/* 📜 VIVRE CARD / PASSAPORTE DE PIRATA (BARRA SUPERIOR RESPONSIVA) 📜 */
+/* 📜 VIVRE CARD / PASSAPORTE DE PIRATA RESPONSIVO 📜 */
 .top-vivre-card {
     display: flex;
     flex-direction: column;
@@ -112,47 +112,43 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 16px;
-    gap: 12px;
+    padding: 10px 20px;
+    gap: 20px;
 }
 
 .vivre-user-info {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
 .user-name-tag {
     color: var(--accent-gold);
     font-weight: 800;
-    font-size: 1.15em;
+    font-size: 1.2em;
     letter-spacing: 0.5px;
 }
 
-/* GEAR BADGE ESTILIZADO */
-.gear-badge {
-    background: linear-gradient(135deg, var(--accent-red), #800000);
-    color: #fff;
+/* NOVO ESTILO DO GEAR SEM FUNDO (TEXTO E RODA DENTADA SOBREPOSTA) */
+.gear-text-clean {
+    color: var(--accent-red);
     font-weight: 900;
-    font-size: 0.7em;
-    padding: 3px 8px;
-    border-radius: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 8px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    text-shadow: 0 0 8px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
 }
 
 .vivre-card-stats-desktop {
     display: flex;
     align-items: center;
-    gap: 14px;
-    font-size: 0.88em;
+    justify-content: center;
+    gap: 24px;
+    font-size: 0.92em;
+    flex-grow: 1;
 }
 
 .vivre-card-subbar {
@@ -168,7 +164,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 .vivre-stat-item {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     font-weight: 600;
 }
 
@@ -184,7 +180,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     gap: 6px;
     font-size: 0.78em;
     font-weight: 600;
-    margin-left: auto;
+    white-space: nowrap;
 }
 
 .sync-dot {
@@ -198,10 +194,10 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 /* REGRAS RESPONSIVAS DE MOBILE */
 @media (max-width: 680px) {
     .vivre-card-stats-desktop {
-        display: none; /* Esconde do meio no telemóvel */
+        display: none;
     }
     .vivre-card-subbar {
-        display: flex; /* Revela a sub-barra de baixo no telemóvel */
+        display: flex;
     }
 }
 
@@ -643,12 +639,11 @@ footer {
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
-                <span>🏴‍☠️</span>
                 <span class="user-name-tag" id="current-user-display">---</span>
                 <span id="user-gears-display"></span>
             </div>
 
-            <!-- INFORMAÇÕES RÁPIDAS NO PC (NO MEIO) -->
+            <!-- INFORMAÇÕES RÁPIDAS NO PC (NO MEIO AJUSTADO) -->
             <div class="vivre-card-stats-desktop">
                 <span class="vivre-stat-item">Recompensa: <span class="vivre-bounty-val" id="top-quick-bounty">฿ 0</span></span>
                 <span style="color:rgba(255,255,255,0.2)">•</span>
@@ -661,7 +656,7 @@ footer {
             </div>
         </div>
 
-        <!-- SUB-BARRA REVELADA APENAS NO TELEMÓVEL (GARANTE TUDO VISÍVEL) -->
+        <!-- SUB-BARRA REVELADA APENAS NO TELEMÓVEL -->
         <div class="vivre-card-subbar">
             <span class="vivre-stat-item" id="top-mobile-location">📍 Grand Line</span>
             <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
@@ -827,7 +822,7 @@ const arcDetailsI18n = {
         "post-war": { name: "Pós-Guerra", summary: "O luto de Luffy, a história da infância com Ace e Sabo, e o início dos 2 anos de treino.", highlights: ["Passado de Luffy, Ace e Sabo (Irmãos de Copo)", "Jinbe ajuda Luffy a lembrar-se do que ainda lhe resta: a sua tripulação", "Mensagem secreta no jornal 3D2Y: Treino de 2 anos com Rayleigh"] },
         "return-sabaody": { name: "Regresso a Sabaody", summary: "2 anos depois, o bando do Chapéu de Palha reencontra-se em Sabaody muito mais forte.", highlights: ["Reencontro épico da tripulação após o timeskip", "Demolição dos Falsos Mugiwara com apenas um golpe"] },
         "fishman-island": { name: "Ilha dos Homens-Peixe", summary: "A viagem ao fundo do oceano e o confronto para impedir o golpe de estado de Hody Jones.", highlights: ["Luffy derruba 50.000 piratas de uma vez com Haki do Conquistador", "Transformação da Princesa Shirahoshi na Arma Ancestral Poseidon", "Transfusão de sangue simbólica entre Jinbe e Luffy"] },
-        "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy e Trafalgar Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
+        "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy l Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
@@ -1211,7 +1206,6 @@ function calculateBountyForProgress(progressObj, member = 'luffy') {
             if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 100000000;
             if (isDone('arlong-park') || isDone('loguetown') || isDone('reverse-mountain') || isDone('whiskey-peak') || isDone('little-garden') || isDone('drum-island')) return 30000000;
             return 0;
-
     }
 }
 
@@ -1398,7 +1392,7 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (DESKTOP E MOBILE) ⚡ */
+/* ⚡ ATUALIZA O GEAR COM RODA DENTADA E EXPOSENTE, E INFOS DO VIVRE CARD ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
@@ -1410,11 +1404,12 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
+    // Design Limpo: Gear ⚙️ com o número em expoente
     let gearTag = '';
-    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-badge" title="Gear 5th Awakened">⚡ GEAR 5TH</span>';
-    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-badge" title="Gear 4th Boundman">🔥 GEAR 4TH</span>';
-    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-badge" title="Gear 3rd">🔥 GEAR 3RD</span>';
-    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-badge" title="Gear 2nd">💨 GEAR 2ND</span>';
+    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-text-clean" title="Gear 5th Awakened">Gear ⚙️⁵</span>';
+    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-text-clean" title="Gear 4th Boundman">Gear ⚙️⁴</span>';
+    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-text-clean" title="Gear 3rd">Gear ⚙️³</span>';
+    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-text-clean" title="Gear 2nd">Gear ⚙️²</span>';
 
     gearsEl.innerHTML = gearTag;
 
@@ -1542,7 +1537,7 @@ function renderApp() {
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
 
-    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS NO VIVRE CARD (PC E MOBILE)
+    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS
     updateProfileGear(watchedEpisodes, activeArc);
 
     // ESCONDER O LOADER ASSIM QUE A APP FOR RENDERIZADA

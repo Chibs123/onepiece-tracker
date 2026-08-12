@@ -130,16 +130,16 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     letter-spacing: 0.5px;
 }
 
-/* NOVO ESTILO DO GEAR SEM FUNDO (TEXTO E RODA DENTADA SOBREPOSTA) */
+/* ESTILO DO GEAR COM A MESMA COR DOURADA DO NOME E TAMANHO MAIOR */
 .gear-text-clean {
-    color: var(--accent-red);
-    font-weight: 900;
-    font-size: 0.9em;
+    color: var(--accent-gold);
+    font-weight: 800;
+    font-size: 1.05em; /* Aumentado para sobressair melhor ao lado do nome */
     letter-spacing: 0.5px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    text-shadow: 0 0 8px var(--accent-red-trans, rgba(217, 4, 41, 0.4));
+    gap: 2px;
+    text-shadow: 0 0 8px rgba(255, 183, 3, 0.3);
 }
 
 .vivre-card-stats-desktop {
@@ -1392,7 +1392,7 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR COM RODA DENTADA E EXPOSENTE, E INFOS DO VIVRE CARD ⚡ */
+/* ⚡ ATUALIZA O GEAR COM RODA DENTADA E EXPOSENTE AUMENTADO ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
@@ -1404,12 +1404,12 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
-    // Design Limpo: Gear ⚙️ com o número em expoente
+    // Design Limpo: Gear ⚙️ com o número em expoente maior (<sup>)
     let gearTag = '';
-    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-text-clean" title="Gear 5th Awakened">⚙️⁵</span>';
-    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-text-clean" title="Gear 4th Boundman">⚙️⁴</span>';
-    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-text-clean" title="Gear 3rd">⚙️³</span>';
-    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-text-clean" title="Gear 2nd">⚙️²</span>';
+    if (totalWatchedEps >= 1071) gearTag = '<span class="gear-text-clean" title="Gear 5th Awakened">⚙️<sup style="font-size:1.1em; margin-left:1px;">5</sup></span>';
+    else if (totalWatchedEps >= 726) gearTag = '<span class="gear-text-clean" title="Gear 4th Boundman">⚙️<sup style="font-size:1.1em; margin-left:1px;">4</sup></span>';
+    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-text-clean" title="Gear 3rd">⚙️<sup style="font-size:1.1em; margin-left:1px;">3</sup></span>';
+    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-text-clean" title="Gear 2nd">⚙️<sup style="font-size:1.1em; margin-left:1px;">2</sup></span>';
 
     gearsEl.innerHTML = gearTag;
 

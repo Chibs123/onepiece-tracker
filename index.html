@@ -385,7 +385,7 @@ h1#main-title {
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-/* 🔑 RESTAURAÇÃO DOS ESTILOS DO MODAL DE LOGIN/PIN 🔑 */
+/* ESTILOS DO MODAL DE LOGIN/PIN */
 .user-modal-box {
     background: linear-gradient(135deg, #1c2541, #0b132b);
     border: 2px solid var(--accent-gold);
@@ -714,7 +714,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </div>
 </div>
 
-<!-- 🏴‍☠️ MODAL DE LOGIN COM PIN (RESTAURADO E ESTILIZADO) 🏴‍☠️ -->
+<!-- 🏴‍☠️ MODAL DE LOGIN COM PIN 🏴‍☠️ -->
 <div class="user-modal-overlay" id="user-modal">
     <div class="user-modal-box">
         <div class="login-header-icon">🏴‍☠️</div>
@@ -877,6 +877,19 @@ const crewThemes = {
     jinbe: { primary: "#1d3557", secondary: "#457b9d", trans: "rgba(29, 53, 87, 0.2)" }
 };
 
+/* GUARDA E APLICA AS DEFINIÇÕES LOCALMENTE E NA FIREBASE */
+function saveSettingsToFirebase() {
+    if (dbRef) {
+        dbRef.child('settings').set({
+            lang: currentLang,
+            crewMember: selectedCrewMember,
+            themeMode: selectedThemeMode,
+            customPrimary: customPrimaryColor,
+            customSecondary: customSecondaryColor
+        });
+    }
+}
+
 function applyCrewTheme() {
     const root = document.documentElement;
     const customGroup = document.getElementById('custom-color-group');
@@ -899,6 +912,7 @@ function changeThemeMode(mode) {
     selectedThemeMode = mode;
     localStorage.setItem('op_theme_mode', mode);
     applyCrewTheme();
+    saveSettingsToFirebase();
     renderApp();
 }
 
@@ -908,12 +922,14 @@ function setCustomColors() {
     localStorage.setItem('op_custom_primary', customPrimaryColor);
     localStorage.setItem('op_custom_secondary', customSecondaryColor);
     applyCrewTheme();
+    saveSettingsToFirebase();
 }
 
 function changeCrewMember(member) {
     selectedCrewMember = member;
     localStorage.setItem('op_current_crew', member);
     applyCrewTheme();
+    saveSettingsToFirebase();
     renderApp();
 }
 
@@ -965,7 +981,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy reveals Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },

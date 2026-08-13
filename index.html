@@ -355,7 +355,7 @@ h1#main-title {
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--accent-gold); }
 
-/* ESTILOS DOS MODAIS E DAS DEFINIÇÕES (CORRIGIDO) */
+/* ESTILOS DOS MODAIS E DAS DEFINIÇÕES */
 .user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
 .user-modal-box, .summary-modal-box, .global-stats-box, .settings-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; transition: border-color 0.3s; }
 
@@ -471,7 +471,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </svg>
 </div>
 
-<!-- ⚙️ MODAL DE DEFINIÇÕES (ESTILIZADO) -->
+<!-- ⚙️ MODAL DE DEFINIÇÕES -->
 <div class="settings-modal-overlay" id="settings-modal" style="display:none;" onclick="closeSettingsOnOverlay(event)">
     <div class="settings-modal-box">
         <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -740,7 +740,7 @@ const i18n = {
     },
     es: { 
         cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        statsTitle: "Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz",
         loaderText: "Navegando por la Grand Line..."
@@ -1440,7 +1440,8 @@ function renderApp() {
                         <div>
                             <div class="ep-controls">
                                 <span style="font-size:0.8em; color:var(--text-dim)">${t.watchedLabel}</span>
-                                <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" />
+                                <!-- PROTEÇÃO DO INPUT CONTRA VALORES INVÁLIDOS / MAIORES QUE O MÁXIMO -->
+                                <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" oninput="if(parseInt(this.value) > ${arc.totalEps}) this.value = ${arc.totalEps}; if(this.value < 0 || isNaN(this.value)) this.value = 0;" />
                                 <span style="font-size:0.8em; color:var(--text-dim)">/ ${arc.totalEps}</span>
                                 <button class="btn-ep" id="btn-add-${arc.id}">+5</button>
                                 <button class="btn-complete" id="btn-comp-${arc.id}">

@@ -385,7 +385,6 @@ h1#main-title {
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-/* ESTILOS DO MODAL DE LOGIN/PIN */
 .user-modal-box {
     background: linear-gradient(135deg, #1c2541, #0b132b);
     border: 2px solid var(--accent-gold);
@@ -706,6 +705,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             </table>
         </div>
 
+        <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
         <h3 style="color:var(--accent-gold); font-size:0.95em; margin: 24px 0 6px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
         <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
         <div class="fleet-timeline" id="fleet-timeline-container">
@@ -744,12 +744,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
+    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS INTEGRADO) -->
+    <!-- VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS INTEGRADO) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -877,7 +877,7 @@ const crewThemes = {
     jinbe: { primary: "#1d3557", secondary: "#457b9d", trans: "rgba(29, 53, 87, 0.2)" }
 };
 
-/* GUARDA E APLICA AS DEFINIÇÕES LOCALMENTE E NA FIREBASE */
+/* GUARDA AS DEFINIÇÕES NA FIREBASE E LOCALSTORAGE */
 function saveSettingsToFirebase() {
     if (dbRef) {
         dbRef.child('settings').set({
@@ -981,7 +981,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "O bando participa nos jogos Davy Back Fight contra os Piratas de Foxy.", highlights: ["Afro Luffy nos combates de boxe", "Aparição assustadora do Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "A crise interna no bando: a reforma do Going Merry, o duelo entre Luffy e Usopp e o desaparecimento de Robin.", highlights: ["Confronto dramático: Luffy vs Usopp pelo Going Merry", "Traição do CP9 nos estaleiros da Galley-La", "Nico Robin entrega-se ao Governo Mundial para proteger o bando"] },
         "enies-lobby": { name: "Enies Lobby", summary: "A invasão à ilha judiciária do Governo Mundial para resgatar Nico Robin a todo o custo.", highlights: ["Luffy reveals Gear 2nd contra Blueno", "Sogeking queima a bandeira do Governo Mundial", "Robin grita: 'I WANT TO LIVE!'", "Luffy vs Rob Lucci e o ataque final Jet Gatling", "O funeral e despedida emocionante do Going Merry"] },
-        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se officially ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
+        "post-enies": { name: "Pós-Enies Lobby", summary: "As consequências de Enies Lobby: o novo navio Thousand Sunny, novas recompensas e a revelação da família de Luffy.", highlights: ["Garp revela que Dragon é o pai de Luffy e Shanks é um Yonko", "Franky junta-se oficialmente ao bando como carpinteiro", "Usopp pede desculpas em lágrimas para voltar ao bando", "Ace vs Barba Negra na Ilha Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "O navio fantasma gigante dominado pelo Shichibukai Gecko Moria que rouba sombras humanas.", highlights: ["Recrutamento do esqueleto músico Brook", "Luffy transforma-se em Nightmare Luffy", "Zoro absorve toda a dor de Luffy contra Bartholomew Kuma: 'NOTHING HAPPENED!'"] },
         "sabaody": { name: "Arquipélago Sabaody", summary: "A chegada à paragem que antecede o Novo Mundo e o encontro com os Piores da Geração.", highlights: ["Luffy dá um soco a um Tenryuubito (Nobre Mundial)", "Aparição de Silvers Rayleigh (Vice-Capitão do Roger)", "A separação trágica do bando causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy é enviado para a ilha das mulheres dominada pela Shichibukai Boa Hancock.", highlights: ["Boa Hancock apaixona-se por Luffy", "Luffy descobre que o seu irmão Ace vai ser executado em Marineford"] },
@@ -1142,7 +1142,13 @@ function openSettingsModal() {
 function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
 function closeSettingsOnOverlay(e) { if (e.target.classList.contains('settings-modal-overlay')) closeSettingsModal(); }
 
-function changeLanguage(lang) { currentLang = lang; localStorage.setItem('op_current_lang', lang); applyTranslations(); renderApp(); }
+function changeLanguage(lang) { 
+    currentLang = lang; 
+    localStorage.setItem('op_current_lang', lang); 
+    saveSettingsToFirebase();
+    applyTranslations(); 
+    renderApp(); 
+}
 
 function getArcTranslation(arcId) {
     const langData = arcDetailsI18n[currentLang] || arcDetailsI18n.pt;
@@ -1196,7 +1202,6 @@ function applyTranslations() {
     document.getElementById('label-set-theme').textContent = t.setTheme;
     document.getElementById('label-set-lang').textContent = t.setLang;
 
-    // TRADUÇÃO DOS CAMPOS DE TEMA E CUSTOM PICKER
     document.getElementById('opt-theme-crew').textContent = t.optCrewTheme;
     document.getElementById('opt-theme-custom').textContent = t.optCustomTheme;
     document.getElementById('label-custom-picker').textContent = t.lblCustomPicker;
@@ -1287,11 +1292,39 @@ function switchUserPrompt() {
     document.getElementById('login-msg-hint').style.color = 'var(--text-dim)';
 }
 
+/* 🔑 LEITURA E SINCRONIZAÇÃO COMPLETA DAS DEFINIÇÕES DA FIREBASE 🔑 */
 function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
         const val = snapshot.val() || {};
         userProgress = val.progress || val || {};
+        
+        // LEITURA DAS DEFINIÇÕES DA NUVEM (TEMA, IDIOMA E CORES)
+        if (val.settings) {
+            const set = val.settings;
+            if (set.lang && set.lang !== currentLang) {
+                currentLang = set.lang;
+                localStorage.setItem('op_current_lang', currentLang);
+                applyTranslations();
+            }
+            if (set.crewMember && set.crewMember !== selectedCrewMember) {
+                selectedCrewMember = set.crewMember;
+                localStorage.setItem('op_current_crew', selectedCrewMember);
+            }
+            if (set.themeMode && set.themeMode !== selectedThemeMode) {
+                selectedThemeMode = set.themeMode;
+                localStorage.setItem('op_theme_mode', selectedThemeMode);
+            }
+            if (set.customPrimary) {
+                customPrimaryColor = set.customPrimary;
+                localStorage.setItem('op_custom_primary', customPrimaryColor);
+            }
+            if (set.customSecondary) {
+                customSecondaryColor = set.customSecondary;
+                localStorage.setItem('op_custom_secondary', customSecondaryColor);
+            }
+            applyCrewTheme();
+        }
         
         const currentJSON = JSON.stringify(userProgress);
         if (currentJSON !== lastProgressJSON) {

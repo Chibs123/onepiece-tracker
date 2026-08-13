@@ -224,7 +224,6 @@ h1#main-title {
     gap: 12px;
 }
 
-/* BOTÃO DE ESTATÍSTICAS INTEGRADO NO VIVRE CARD */
 .btn-header-action {
     height: 32px;
     box-sizing: border-box;
@@ -269,13 +268,11 @@ h1#main-title {
 }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
 
-/* REGRAS RESPONSIVAS DE MOBILE */
 @media (max-width: 680px) {
     .vivre-card-stats-desktop { display: none; }
     .vivre-card-subbar { display: flex; }
 }
 
-/* CARTÃO DA AVENTURA ATUAL COM SUPORTE MOBILE CENTRADO */
 .next-up-container { background: linear-gradient(135deg, var(--accent-red-trans, rgba(217, 4, 41, 0.2)), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; transition: border-color 0.3s; }
 .next-up-info h2 { margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.2em; }
 .next-up-info p { margin: 0; color: var(--text-main); font-size: 0.9em; }
@@ -284,22 +281,9 @@ h1#main-title {
 .btn-quick-add:hover { transform: scale(1.05); background-color: #ffe066; }
 
 @media (max-width: 680px) {
-    .next-up-container {
-        flex-direction: column;
-        text-align: center;
-        justify-content: center;
-    }
-    .next-up-info {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .next-up-actions {
-        width: 100%;
-        justify-content: center;
-        margin-top: 8px;
-    }
+    .next-up-container { flex-direction: column; text-align: center; justify-content: center; }
+    .next-up-info { width: 100%; display: flex; flex-direction: column; align-items: center; }
+    .next-up-actions { width: 100%; justify-content: center; margin-top: 8px; }
 }
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
@@ -345,7 +329,22 @@ h1#main-title {
 .arc-episodes { font-size: 0.8em; color: #d0d7de; text-shadow: 0 1px 4px rgba(0,0,0,0.95); font-weight: 600; }
 .ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
 .ep-controls span { color: #fff !important; font-weight: 600; }
-.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; }
+
+/* INPUT DE EPISÓDIOS PROTEGIDO */
+.ep-input { 
+    width: 50px; 
+    background-color: rgba(0, 0, 0, 0.85); 
+    border: 1px solid var(--text-dim); 
+    color: var(--text-main); 
+    padding: 4px; 
+    border-radius: 4px; 
+    text-align: center; 
+    font-weight: bold; 
+    font-size: 0.85em; 
+    -moz-appearance: textfield; 
+}
+.ep-input::-webkit-outer-spin-button, .ep-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
 
 .btn-complete { background-color: var(--accent-gold); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; margin-left: auto; transition: filter 0.2s; }
@@ -401,6 +400,38 @@ h1#main-title {
 .btn-settings-action:hover {
     background: var(--accent-gold);
     color: #000;
+}
+
+/* NOVO SELETOR DE CORES PERSONALIZADAS */
+.custom-color-picker-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.color-input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(11, 19, 43, 0.9);
+    border: 1.5px solid var(--accent-gold);
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+.color-input-container input[type="color"] {
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    background: transparent;
+}
+
+.color-input-container span {
+    font-size: 0.85em;
+    font-weight: bold;
+    color: var(--text-main);
 }
 
 .fleet-timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; position: relative; padding-left: 18px; }
@@ -471,7 +502,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </svg>
 </div>
 
-<!-- ⚙️ MODAL DE DEFINIÇÕES -->
+<!-- ⚙️ MODAL DE DEFINIÇÕES COM SELETOR DE CORES PERSONALIZADAS -->
 <div class="settings-modal-overlay" id="settings-modal" style="display:none;" onclick="closeSettingsOnOverlay(event)">
     <div class="settings-modal-box">
         <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -482,8 +513,9 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             <button class="btn-settings-action" onclick="closeSettingsModal(); switchUserPrompt();" id="btn-switch-txt">👤 Trocar Perfil</button>
         </div>
 
+        <!-- TEMA POR PRESET DE PERSONAGEM -->
         <div class="settings-form-group">
-            <label id="label-set-crew">Membro para Recompensa</label>
+            <label id="label-set-crew">Preset de Personagem (Tema & Recompensa)</label>
             <select class="settings-select" id="crew-select" onchange="changeCrewMember(this.value)">
                 <option value="luffy">👒 Luffy</option>
                 <option value="zoro">⚔️ Zoro</option>
@@ -495,7 +527,23 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
                 <option value="franky">🤖 Franky</option>
                 <option value="brook">🎻 Brook</option>
                 <option value="jinbe">🥋 Jinbe</option>
+                <option value="custom">🎨 Personalizado (Custom Color)</option>
             </select>
+        </div>
+
+        <!-- CORES PERSONALIZADAS (EXIBIDO SE A OPÇÃO 'CUSTOM' FOR SELECIONADA) -->
+        <div class="settings-form-group" id="custom-color-group" style="display:none;">
+            <label>Cores Personalizadas</label>
+            <div class="custom-color-picker-grid">
+                <div class="color-input-container">
+                    <input type="color" id="primary-color-picker" value="#d90429" onchange="setCustomColors()">
+                    <span>Cor Primária</span>
+                </div>
+                <div class="color-input-container">
+                    <input type="color" id="secondary-color-picker" value="#ffb703" onchange="setCustomColors()">
+                    <span>Cor Destaque</span>
+                </div>
+            </div>
         </div>
 
         <div class="settings-form-group">
@@ -548,7 +596,6 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             </table>
         </div>
 
-        <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
         <h3 style="color:var(--accent-gold); font-size:0.95em; margin: 24px 0 6px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
         <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
         <div class="fleet-timeline" id="fleet-timeline-container">
@@ -587,12 +634,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
+    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS INTEGRADO) -->
+    <!-- VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -698,6 +745,9 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 let currentUser = localStorage.getItem('op_current_user') || '';
 let currentLang = localStorage.getItem('op_current_lang') || 'pt';
 let selectedCrewMember = localStorage.getItem('op_current_crew') || 'luffy';
+let customPrimaryColor = localStorage.getItem('op_custom_primary') || '#d90429';
+let customSecondaryColor = localStorage.getItem('op_custom_secondary') || '#ffb703';
+
 let userProgress = {};
 let dbRef = null;
 let currentFilter = 'all';
@@ -716,11 +766,29 @@ const crewThemes = {
 };
 
 function applyCrewTheme(member) {
-    const theme = crewThemes[member] || crewThemes.luffy;
     const root = document.documentElement;
-    root.style.setProperty('--accent-red', theme.primary);
-    root.style.setProperty('--accent-gold', theme.secondary);
-    root.style.setProperty('--accent-red-trans', theme.trans);
+    const customGroup = document.getElementById('custom-color-group');
+
+    if (member === 'custom') {
+        if (customGroup) customGroup.style.display = 'flex';
+        root.style.setProperty('--accent-red', customPrimaryColor);
+        root.style.setProperty('--accent-gold', customSecondaryColor);
+        root.style.setProperty('--accent-red-trans', 'rgba(217, 4, 41, 0.2)');
+    } else {
+        if (customGroup) customGroup.style.display = 'none';
+        const theme = crewThemes[member] || crewThemes.luffy;
+        root.style.setProperty('--accent-red', theme.primary);
+        root.style.setProperty('--accent-gold', theme.secondary);
+        root.style.setProperty('--accent-red-trans', theme.trans);
+    }
+}
+
+function setCustomColors() {
+    customPrimaryColor = document.getElementById('primary-color-picker').value;
+    customSecondaryColor = document.getElementById('secondary-color-picker').value;
+    localStorage.setItem('op_custom_primary', customPrimaryColor);
+    localStorage.setItem('op_custom_secondary', customSecondaryColor);
+    applyCrewTheme('custom');
 }
 
 const i18n = {
@@ -728,21 +796,21 @@ const i18n = {
         cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
-        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setLang: "Idioma da Interface",
+        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Preset de Personagem (Tema & Recompensa)", setLang: "Idioma da Interface",
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
         cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
-        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setLang: "Interface Language",
+        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Character Preset (Theme & Bounty)", setLang: "Interface Language",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
         cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
-        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setLang: "Idioma de la Interfaz",
+        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Preset de Personaje (Tema y Recompensa)", setLang: "Idioma de la Interfaz",
         loaderText: "Navegando por la Grand Line..."
     }
 };
@@ -911,7 +979,15 @@ const opData = [
 
 try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-dot').className = 'sync-dot'; document.getElementById('sync-text').textContent = 'Erro Firebase'; }
 
-function openSettingsModal() { document.getElementById('settings-modal').style.display = 'flex'; }
+function openSettingsModal() { 
+    document.getElementById('settings-modal').style.display = 'flex'; 
+    document.getElementById('crew-select').value = selectedCrewMember;
+    if (selectedCrewMember === 'custom') {
+        document.getElementById('custom-color-group').style.display = 'flex';
+        document.getElementById('primary-color-picker').value = customPrimaryColor;
+        document.getElementById('secondary-color-picker').value = customSecondaryColor;
+    }
+}
 function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
 function closeSettingsOnOverlay(e) { if (e.target.classList.contains('settings-modal-overlay')) closeSettingsModal(); }
 
@@ -1163,7 +1239,7 @@ function calculateBountyForProgress(progressObj, member = 'luffy') {
 function getSelectedCrewMemberName() {
     const names = {
         luffy: "LUFFY", zoro: "ZORO", nami: "NAMI", usopp: "USOPP", sanji: "SANJI",
-        chopper: "CHOPPER", robin: "ROBIN", franky: "FRANKY", brook: "BROOK", jinbe: "JINBE"
+        chopper: "CHOPPER", robin: "ROBIN", franky: "FRANKY", brook: "BROOK", jinbe: "JINBE", custom: "CUSTOM"
     };
     return names[selectedCrewMember] || "LUFFY";
 }
@@ -1440,8 +1516,8 @@ function renderApp() {
                         <div>
                             <div class="ep-controls">
                                 <span style="font-size:0.8em; color:var(--text-dim)">${t.watchedLabel}</span>
-                                <!-- PROTEÇÃO DO INPUT CONTRA VALORES INVÁLIDOS / MAIORES QUE O MÁXIMO -->
-                                <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" oninput="if(parseInt(this.value) > ${arc.totalEps}) this.value = ${arc.totalEps}; if(this.value < 0 || isNaN(this.value)) this.value = 0;" />
+                                <!-- PROTEÇÃO RIGOROSA DE TECLADO: BLOQUEIA 'e', '-', '+', E ENTRADAS MAIORES QUE O MÁXIMO DO ARCO -->
+                                <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" onkeydown="if(['e','E','+','-','.',','].includes(event.key)) event.preventDefault();" oninput="if(parseInt(this.value) > ${arc.totalEps}) this.value = ${arc.totalEps}; if(this.value < 0 || isNaN(this.value)) this.value = 0;" />
                                 <span style="font-size:0.8em; color:var(--text-dim)">/ ${arc.totalEps}</span>
                                 <button class="btn-ep" id="btn-add-${arc.id}">+5</button>
                                 <button class="btn-complete" id="btn-comp-${arc.id}">

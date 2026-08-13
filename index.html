@@ -287,12 +287,10 @@ h1#main-title {
 }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
 
-/* REGRAS RESPONSIVAS DE MOBILE */
 @media (max-width: 680px) {
     .vivre-card-stats-desktop { display: none; }
     .vivre-card-subbar { display: flex; }
 
-    /* Desativa Blurs pesados no mobile para máximo desempenho de FPS */
     .top-vivre-card, header.main-header-banner, .next-up-container, .arc-card {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
@@ -357,7 +355,6 @@ h1#main-title {
 .ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
 .ep-controls span { color: #fff !important; font-weight: 600; }
 
-/* INPUT DE EPISÓDIOS PROTEGIDO */
 .ep-input { 
     width: 50px; 
     background-color: rgba(0, 0, 0, 0.85); 
@@ -429,7 +426,6 @@ h1#main-title {
     color: #000;
 }
 
-/* SELETOR DE CORES PERSONALIZADAS */
 .custom-color-picker-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -529,7 +525,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </svg>
 </div>
 
-<!-- ⚙️ MODAL DE DEFINIÇÕES (COM MEMBRO E TEMA SEPARADOS) -->
+<!-- ⚙️ MODAL DE DEFINIÇÕES (COM TRADUÇÃO SUPORTADA) -->
 <div class="settings-modal-overlay" id="settings-modal" style="display:none;" onclick="closeSettingsOnOverlay(event)">
     <div class="settings-modal-box">
         <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -561,22 +557,22 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         <div class="settings-form-group">
             <label id="label-set-theme">Tema Visual da Aplicação</label>
             <select class="settings-select" id="theme-select" onchange="changeThemeMode(this.value)">
-                <option value="crew">🎨 Cor do Personagem Selecionado</option>
-                <option value="custom">🖌️ Cores Personalizadas (Custom)</option>
+                <option value="crew" id="opt-theme-crew">🎨 Cor do Personagem Selecionado</option>
+                <option value="custom" id="opt-theme-custom">🖌️ Cores Personalizadas (Custom)</option>
             </select>
         </div>
 
         <!-- PAINEL DE CORES CUSTOMIZADAS -->
         <div class="settings-form-group" id="custom-color-group" style="display:none;">
-            <label>Escolher Cores Personalizadas</label>
+            <label id="label-custom-picker">Escolher Cores Personalizadas</label>
             <div class="custom-color-picker-grid">
                 <div class="color-input-container">
                     <input type="color" id="primary-color-picker" value="#d90429" onchange="setCustomColors()">
-                    <span>Cor Primária</span>
+                    <span id="label-color-pri">Cor Primária</span>
                 </div>
                 <div class="color-input-container">
                     <input type="color" id="secondary-color-picker" value="#ffb703" onchange="setCustomColors()">
-                    <span>Cor Destaque</span>
+                    <span id="label-color-sec">Cor Destaque</span>
                 </div>
             </div>
         </div>
@@ -670,12 +666,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL -->
+    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS) -->
+    <!-- VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -849,6 +845,8 @@ const i18n = {
         statsTitle: "Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface",
+        optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
+        lblCustomPicker: "Escolher Cores Personalizadas", lblColorPri: "Cor Primária", lblColorSec: "Cor Destaque",
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
@@ -856,6 +854,8 @@ const i18n = {
         statsTitle: "Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language",
+        optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
+        lblCustomPicker: "Choose Custom Colors", lblColorPri: "Primary Color", lblColorSec: "Accent Color",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
@@ -863,6 +863,8 @@ const i18n = {
         statsTitle: "Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz",
+        optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
+        lblCustomPicker: "Elegir Colores Personalizados", lblColorPri: "Color Primario", lblColorSec: "Color Destacado",
         loaderText: "Navegando por la Grand Line..."
     }
 };
@@ -964,7 +966,7 @@ const arcDetailsI18n = {
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
-        "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: 'Raizo está a salvo!'"] },
+        "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
@@ -1099,6 +1101,13 @@ function applyTranslations() {
     document.getElementById('label-set-crew').textContent = t.setCrew;
     document.getElementById('label-set-theme').textContent = t.setTheme;
     document.getElementById('label-set-lang').textContent = t.setLang;
+
+    // TRADUÇÃO DOS CAMPOS DE TEMA E CUSTOM PICKER
+    document.getElementById('opt-theme-crew').textContent = t.optCrewTheme;
+    document.getElementById('opt-theme-custom').textContent = t.optCustomTheme;
+    document.getElementById('label-custom-picker').textContent = t.lblCustomPicker;
+    document.getElementById('label-color-pri').textContent = t.lblColorPri;
+    document.getElementById('label-color-sec').textContent = t.lblColorSec;
 
     const loaderTxt = document.getElementById('loader-status-txt');
     if (loaderTxt) loaderTxt.textContent = t.loaderText;

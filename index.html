@@ -32,7 +32,25 @@
 }
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
-.bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; }
+.bg-map-container { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    z-index: -1; 
+    opacity: var(--map-opacity); 
+    animation: mapFloat 25s ease-in-out infinite alternate;
+    will-change: transform; /* Avisa o browser para usar a GPU */
+    transform: translateZ(0); /* Força renderização por hardware */
+}
+        
+header.main-header-banner, .top-vivre-card, .arc-card, .next-up-container {
+    will-change: transform, border-color;
+    transform: translateZ(0);
+}
+        
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
 .compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
 @keyframes compassRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -1134,22 +1152,30 @@ function switchUserPrompt() {
     document.getElementById('login-msg-hint').style.color = 'var(--text-dim)';
 }
 
+let lastProgressJSON = "";
+
 function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
         const val = snapshot.val() || {};
         userProgress = val.progress || val || {};
-        const t = i18n[currentLang] || i18n.pt;
-        document.getElementById('sync-dot').className = 'sync-dot online';
-        document.getElementById('sync-text').style.color = '#52b788';
-        document.getElementById('sync-text').textContent = t.cloudState;
-        renderApp();
+        
+        const currentJSON = JSON.stringify(userProgress);
+        
+        // Só reconstrói o DOM do site se o progresso realmente mudou!
+        if (currentJSON !== lastProgressJSON) {
+            lastProgressJSON = currentJSON;
+            const t = i18n[currentLang] || i18n.pt;
+            document.getElementById('sync-dot').className = 'sync-dot online';
+            document.getElementById('sync-text').style.color = '#52b788';
+            document.getElementById('sync-text').textContent = t.cloudState;
+            renderApp();
+        }
     }, (error) => {
         console.error(error);
         document.getElementById('sync-dot').className = 'sync-dot';
         document.getElementById('sync-text').style.color = 'var(--accent-red)';
         document.getElementById('sync-text').textContent = 'Offline';
-        renderApp();
     });
 }
 

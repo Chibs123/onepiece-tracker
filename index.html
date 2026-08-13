@@ -32,22 +32,7 @@
 }
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
-
-/* 🚀 OTIMIZAÇÃO DE GPU PARA FLUIDEZ (60 FPS) 🚀 */
-.bg-map-container { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    pointer-events: none; 
-    z-index: -1; 
-    opacity: var(--map-opacity); 
-    animation: mapFloat 25s ease-in-out infinite alternate;
-    will-change: transform;
-    transform: translateZ(0);
-}
-
+.bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; }
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
 .compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
 @keyframes compassRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -121,8 +106,6 @@ header.main-header-banner {
     backdrop-filter: blur(8px); 
     box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
     transition: border-color 0.3s;
-    will-change: transform, border-color;
-    transform: translateZ(0);
 }
 
 h1#main-title { 
@@ -147,8 +130,6 @@ h1#main-title {
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
     overflow: hidden;
     transition: border-color 0.3s ease;
-    will-change: transform, border-color;
-    transform: translateZ(0);
 }
 
 .top-vivre-card:hover {
@@ -290,12 +271,6 @@ h1#main-title {
 @media (max-width: 680px) {
     .vivre-card-stats-desktop { display: none; }
     .vivre-card-subbar { display: flex; }
-
-    .top-vivre-card, header.main-header-banner, .next-up-container, .arc-card {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: rgba(28, 37, 65, 0.95) !important;
-    }
 }
 
 .next-up-container { background: linear-gradient(135deg, var(--accent-red-trans, rgba(217, 4, 41, 0.2)), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; transition: border-color 0.3s; }
@@ -744,12 +719,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
+    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS INTEGRADO) -->
+    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER COM BOTÃO DE ESTATÍSTICAS INTEGRADO) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -993,7 +968,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy l Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -1292,14 +1267,12 @@ function switchUserPrompt() {
     document.getElementById('login-msg-hint').style.color = 'var(--text-dim)';
 }
 
-/* 🔑 LEITURA E SINCRONIZAÇÃO COMPLETA DAS DEFINIÇÕES DA FIREBASE 🔑 */
 function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
         const val = snapshot.val() || {};
         userProgress = val.progress || val || {};
         
-        // LEITURA DAS DEFINIÇÕES DA NUVEM (TEMA, IDIOMA E CORES)
         if (val.settings) {
             const set = val.settings;
             if (set.lang && set.lang !== currentLang) {
@@ -1706,7 +1679,6 @@ function renderApp() {
                         <div>
                             <div class="ep-controls">
                                 <span style="font-size:0.8em; color:var(--text-dim)">${t.watchedLabel}</span>
-                                <!-- PROTEÇÃO DE TECLADO: BLOQUEIA 'e', '-', '+', E AJUSTA INSTANTANEAMENTE AO MÁXIMO -->
                                 <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" onkeydown="if(['e','E','+','-','.',','].includes(event.key)) event.preventDefault();" oninput="if(parseInt(this.value) > ${arc.totalEps}) this.value = ${arc.totalEps}; if(this.value < 0 || isNaN(this.value)) this.value = 0;" />
                                 <span style="font-size:0.8em; color:var(--text-dim)">/ ${arc.totalEps}</span>
                                 <button class="btn-ep" id="btn-add-${arc.id}">+5</button>
@@ -1755,10 +1727,8 @@ function renderApp() {
     document.getElementById('label-stat-bounty').textContent = `${t.statBountyPrefix}${crewName}`;
     document.getElementById('bounty-val').textContent = formatBounty(luffyBounty);
 
-    // ATUALIZAR O GEAR E AS INFOS RÁPIDAS
     updateProfileGear(watchedEpisodes, activeArc);
 
-    // ESCONDER O LOADER COM 500MS DE SEGURANÇA
     setTimeout(() => {
         const loader = document.getElementById('app-loader');
         if (loader) loader.classList.add('hidden');

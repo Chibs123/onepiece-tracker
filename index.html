@@ -608,7 +608,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         </div>
     </div>
 
-    <!-- 🌟 TOOLBAR ALINHADA NUMA LINHA HORIZONTAL IDÊNTICA À IMAGEM 🌟 -->
+    <!-- 🌟 TOOLBAR COM PESQUISA À ESQUERDA DOS BOTÕES 🌟 -->
     <div class="toolbar">
         <div class="filter-buttons">
             <button class="filter-btn active" id="filter-all-btn" onclick="setFilter('all', this)">Todos</button>
@@ -618,9 +618,10 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         </div>
 
         <div class="toolbar-right-group">
+            <!-- 🔍 BARRA DE PESQUISA À ESQUERDA DOS BOTÕES -->
+            <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar..." oninput="renderApp()">
             <button class="btn-toolbar-action green-btn" id="btn-user-stats-txt" onclick="openUserStatsModal()">👤 As Tuas Stats</button>
             <button class="btn-toolbar-action" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">🏴‍☠️ Stats da Crew</button>
-            <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar..." oninput="renderApp()">
         </div>
     </div>
 
@@ -828,8 +829,8 @@ const arcDetailsI18n = {
         "zou": { name: "Zou", summary: "A city built on the back of a giant elephant over 1,000 years old.", highlights: ["Secret of Road Poneglyphs leading to One Piece revealed", "Iconic Mink line: 'Raizo is safe!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Sanji rescue mission in Yonko Big Mom's territory.", highlights: ["Luffy vs Sanji painful duel", "Luffy vs Katakuri in Mirror World and Future Sight Haki upgrade", "Sanji reconciles with the crew", "Luffy declared 5th Emperor with ฿1.5B bounty"] },
         "reverie": { name: "Reverie", summary: "World summit of kings and leaders in Mary Geoise.", highlights: ["Empty Throne and mysterious leader Imu revealed", "Sabo and Revolutionary Army infiltrate Mary Geoise"] },
-        "wano": { name: "Wano Country", summary: "Epic war to liberate isolated Wano Country from Kaido and Orochi.", highlights: ["Zoro gets Enma sword", "Kozuki Oden and Gol D. Roger flashback", "Onigashima raid and battle against Kaido & Big Mom", "Luffy awakens GEAR 5TH (Sun God Nika)", "Defeat of Kaido and Luffy's bounty rises to ฿3.0B"] },
-        "egghead": { name: "Egghead", summary: "Arrival at Dr. Vegapunk's future island and clash with Gorosei.", highlights: ["Dr. Vegapunk reveals Devil Fruit mysteries", "Luffy Gear 5th vs Rob Lucci Awakened", "Arrival of Admirals and the Five Elders (Gorosei)"] }
+        "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
+        "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
     },
     es: {
         "romance-dawn": { name: "Romance Dawn", summary: "Luffy começa su viaje para ser el Rey de los Piratas, recluta a Zoro y enfrenta al Capitán Morgan.", highlights: ["Luffy recebe el Sombrero de Paja de Shanks", "Reclutamiento de Roronoa Zoro", "Derrota del Capitán Morgan"] },
@@ -854,7 +855,7 @@ const arcDetailsI18n = {
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
         "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
         "marineford": { name: "Marineford", summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
-        "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
+        "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace e Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
@@ -1392,7 +1393,7 @@ function fetchGlobalStatsAndFleet() {
         document.getElementById('global-top-bounty').textContent = formatBounty(maxBounty);
 
         if (leaderboard.length === 0) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">No data</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">${t.loadingData}</td></tr>`;
         } else {
             tbody.innerHTML = leaderboard.map((item, index) => {
                 let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
@@ -1481,11 +1482,11 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     if (mobileLocationEl) mobileLocationEl.textContent = locationText;
 }
 
-/* 🔍 FUNÇÃO DE NORMALIZAÇÃO DE TEXTO PARA PESQUISA AVANÇADA 🔍 */
+/* 🔍 NORMALIZAÇÃO DE TEXTO PARA PESQUISA 🔍 */
 function normalizeSearchText(str) {
     return (str || '')
         .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // Remove acentos (ex: ó -> o, é -> e)
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .trim();
 }
@@ -1495,7 +1496,6 @@ function renderApp() {
     const sagaListContainer = document.getElementById('saga-list');
     sagaListContainer.innerHTML = '';
     
-    // Processamento do termo de pesquisa
     const rawSearchQuery = document.getElementById('search-box')?.value || '';
     const searchQuery = normalizeSearchText(rawSearchQuery);
     const searchTerms = searchQuery.split(/\s+/).filter(Boolean);
@@ -1530,7 +1530,6 @@ function renderApp() {
 
             const arcNameTranslated = getArcTranslation(arc.id);
             
-            // 🧠 MOTOR DE PESQUISA INTELIGENTE (POR SUBSTRING, ACENTOS E NÚMEROS DE EPISÓDIO)
             let matchesSearch = true;
             if (searchTerms.length > 0) {
                 const normalizedArcName = normalizeSearchText(arcNameTranslated);
@@ -1538,7 +1537,6 @@ function renderApp() {
                 const normalizedArcId = normalizeSearchText(arc.id);
                 const arcEpsStr = normalizeSearchText(arc.eps);
 
-                // Verifica se todos os termos digitados existem em qualquer parte dos nomes
                 matchesSearch = searchTerms.every(term => 
                     normalizedArcName.includes(term) ||
                     normalizedSagaName.includes(term) ||

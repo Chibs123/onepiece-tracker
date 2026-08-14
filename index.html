@@ -251,9 +251,28 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 .modal-stats-crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-top: 12px; }
 
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 24px; font-size: 1.15em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-.arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 10px; }
+.arc-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 14px; 
+    margin-top: 12px; 
+}
 
-.arc-card { background-color: var(--card-bg); border-radius: 12px; padding: 12px; border: 2px solid rgba(255,255,255,0.2); display: flex; flex-direction: column; justify-content: space-between; position: relative; min-height: 125px; overflow: hidden; transition: transform 0.2s ease, border-color 0.2s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
+/* 2. Cartões com mais altura e preenchimento */
+.arc-card { 
+    background-color: var(--card-bg); 
+    border-radius: 12px; 
+    padding: 14px; 
+    border: 2px solid rgba(255,255,255,0.2); 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    position: relative; 
+    min-height: 130px; 
+    overflow: hidden; 
+    transition: transform 0.2s ease, border-color 0.2s ease; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4); 
+}
 .arc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: var(--card-gradient, linear-gradient(135deg, rgba(28,37,65,0.85), rgba(11,19,43,0.95))); z-index: 1; }
 .arc-card:hover { border-color: var(--accent-gold); }
 
@@ -267,12 +286,11 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 .arc-card-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
 .arc-card.status-in-progress { background-color: var(--in-progress-bg); border-color: var(--in-progress-border); }
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; padding-right: 22px; }
-.arc-info h3 { margin: 0 0 2px 0; font-size: 1em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
-.arc-episodes { font-size: 0.78em; color: #d0d7de; text-shadow: 0 1px 4px rgba(0,0,0,0.95); font-weight: 600; }
-.ep-controls { display: flex; align-items: center; gap: 4px; margin-top: 6px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
-.ep-controls span { color: #fff !important; font-weight: 600; font-size: 0.8em; }
-
-.ep-input { width: 44px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px 2px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.82em; -moz-appearance: textfield; }
+.arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
+.arc-episodes { font-size: 0.8em; color: #d0d7de; text-shadow: 0 1px 4px rgba(0,0,0,0.95); font-weight: 600; }
+.ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+.ep-controls span { color: #fff !important; font-weight: 600; font-size: 0.85em; }
+.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px 2px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; -moz-appearance: textfield; }
 .ep-input::-webkit-outer-spin-button, .ep-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 0.72em; font-weight: bold; }

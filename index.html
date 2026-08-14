@@ -33,19 +33,8 @@
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
 
-/* 🚀 OTIMIZAÇÃO DE GPU PARA FLUIDEZ (60 FPS) 🚀 */
 .bg-map-container { 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    pointer-events: none; 
-    z-index: -1; 
-    opacity: var(--map-opacity); 
-    animation: mapFloat 25s ease-in-out infinite alternate;
-    will-change: transform;
-    transform: translateZ(0);
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; will-change: transform; transform: translateZ(0);
 }
 
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
@@ -56,247 +45,45 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
 @keyframes dashMove { to { stroke-dashoffset: -200; } }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* 🧭 BÚSSOLA / LOG POSE LOADER 🧭 */
-.app-loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #0b132b;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-}
+/* 🧭 LOADER 🧭 */
+.app-loader-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0b132b; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.4s ease, visibility 0.4s ease; }
+.app-loader-overlay.hidden { opacity: 0; visibility: hidden; }
+.loader-content { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.loader-compass { font-size: 3.8em; animation: spinCompass 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55); filter: drop-shadow(0 0 12px var(--accent-gold)); }
+@keyframes spinCompass { 0% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(180deg) scale(1.15); } 100% { transform: rotate(360deg) scale(1); } }
+.loader-text { color: var(--accent-gold); font-weight: 800; font-size: 0.9em; letter-spacing: 1px; text-transform: uppercase; animation: pulseText 1.5s ease-in-out infinite alternate; }
+@keyframes pulseText { from { opacity: 0.4; } to { opacity: 1; } }
 
-.app-loader-overlay.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
+/* HEADER BANNER */
+header.main-header-banner { text-align: center; padding: 16px 20px; border: 1.5px solid var(--accent-gold); margin-bottom: 12px; background: var(--header-bg); border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1.5px; text-transform: uppercase; font-size: clamp(1.2em, 3vw, 1.6em); white-space: nowrap; }
 
-.loader-content {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-}
+/* 📜 VIVRE CARD 📜 */
+.top-vivre-card { display: flex; flex-direction: column; background: rgba(11, 19, 43, 0.88); border: 1.5px solid rgba(255, 255, 255, 0.2); border-radius: 12px; margin-bottom: 20px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: hidden; transition: border-color 0.3s ease; }
+.top-vivre-card:hover { border-color: var(--accent-gold); }
+.vivre-card-main { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; gap: 16px; }
+.vivre-user-info { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; }
+.user-name-tag { color: var(--accent-gold); font-weight: 800; font-size: 1.15em; letter-spacing: 0.5px; }
+.gear-text-clean { color: var(--accent-gold); font-weight: 800; font-size: 1.1em; display: inline-flex; align-items: center; position: relative; margin-left: 4px; cursor: pointer; transition: transform 0.2s ease, filter 0.2s ease; user-select: none; }
+.gear-text-clean:hover { transform: scale(1.15); filter: drop-shadow(0 0 6px var(--accent-gold)); }
+.gear-sup { font-size: 0.65em; font-weight: 900; vertical-align: super; line-height: 0; position: relative; top: -0.45em; left: 1px; }
+.vivre-card-stats-desktop { display: flex; align-items: center; justify-content: center; gap: 20px; font-size: 0.9em; flex-grow: 1; }
+.vivre-card-subbar { display: none; align-items: center; justify-content: space-between; background: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.06); padding: 6px 16px; font-size: 0.82em; }
+.vivre-stat-item { display: flex; align-items: center; gap: 6px; font-weight: 600; }
+.vivre-bounty-val { color: var(--accent-gold); font-family: 'Courier New', monospace; font-weight: bold; }
+.vivre-right-controls { display: flex; align-items: center; gap: 12px; }
 
-.loader-compass {
-    font-size: 3.8em;
-    animation: spinCompass 2.2s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    filter: drop-shadow(0 0 12px var(--accent-gold));
-}
+.btn-toolbar-stats { height: 34px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; padding: 0 14px; border-radius: 6px; font-size: 0.82em; font-weight: 700; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; outline: none; line-height: 1; background: rgba(255, 183, 3, 0.12); border: 1px solid var(--accent-gold); color: var(--accent-gold); backdrop-filter: blur(4px); }
+.btn-toolbar-stats:hover { background: var(--accent-gold); color: #000; box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3); }
 
-@keyframes spinCompass {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.15); }
-    100% { transform: rotate(360deg) scale(1); }
-}
-
-.loader-text {
-    color: var(--accent-gold);
-    font-weight: 800;
-    font-size: 0.9em;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    animation: pulseText 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes pulseText {
-    from { opacity: 0.4; }
-    to { opacity: 1; }
-}
-
-/* HEADER PRINCIPAL NO TOPO */
-header.main-header-banner { 
-    text-align: center;
-    padding: 16px 20px; 
-    border: 1.5px solid var(--accent-gold); 
-    margin-bottom: 12px; 
-    background: var(--header-bg); 
-    border-radius: 12px; 
-    backdrop-filter: blur(8px); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
-    transition: border-color 0.3s;
-    will-change: transform, border-color;
-    transform: translateZ(0);
-}
-
-h1#main-title { 
-    margin: 0; 
-    color: var(--accent-gold); 
-    letter-spacing: 1.5px; 
-    text-transform: uppercase; 
-    font-size: clamp(1.2em, 3vw, 1.6em); 
-    white-space: nowrap; 
-    transition: color 0.3s; 
-}
-
-/* 📜 VIVRE CARD / PASSAPORTE DE PIRATA 📜 */
-.top-vivre-card {
-    display: flex;
-    flex-direction: column;
-    background: rgba(11, 19, 43, 0.88);
-    border: 1.5px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    overflow: hidden;
-    transition: border-color 0.3s ease;
-    will-change: transform, border-color;
-    transform: translateZ(0);
-}
-
-.top-vivre-card:hover {
-    border-color: var(--accent-gold);
-}
-
-.vivre-card-main {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 18px;
-    gap: 16px;
-}
-
-.vivre-user-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: nowrap;
-}
-
-.user-name-tag {
-    color: var(--accent-gold);
-    font-weight: 800;
-    font-size: 1.15em;
-    letter-spacing: 0.5px;
-}
-
-.gear-text-clean {
-    color: var(--accent-gold);
-    font-weight: 800;
-    font-size: 1.1em;
-    display: inline-flex;
-    align-items: center;
-    position: relative;
-    margin-left: 4px;
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
-    user-select: none;
-}
-
-.gear-text-clean:hover {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 6px var(--accent-gold));
-}
-
-.gear-sup {
-    font-size: 0.65em;
-    font-weight: 900;
-    vertical-align: super;
-    line-height: 0;
-    position: relative;
-    top: -0.45em;
-    left: 1px;
-}
-
-.vivre-card-stats-desktop {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    font-size: 0.9em;
-    flex-grow: 1;
-}
-
-.vivre-card-subbar {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(0, 0, 0, 0.4);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 6px 16px;
-    font-size: 0.82em;
-}
-
-.vivre-stat-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-}
-
-.vivre-bounty-val {
-    color: var(--accent-gold);
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
-}
-
-.vivre-right-controls {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-/* BOTÃO DE ESTATÍSTICAS INTEGRADO NA TOOLBAR */
-.btn-toolbar-stats {
-    height: 34px;
-    box-sizing: border-box;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 14px;
-    border-radius: 6px;
-    font-size: 0.82em;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    outline: none;
-    line-height: 1;
-    background: rgba(255, 183, 3, 0.12); 
-    border: 1px solid var(--accent-gold); 
-    color: var(--accent-gold);
-    backdrop-filter: blur(4px);
-}
-
-.btn-toolbar-stats:hover { 
-    background: var(--accent-gold); 
-    color: #000; 
-    box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3);
-}
-
-.sync-status-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78em;
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-.sync-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--accent-red);
-}
+.sync-status-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.78em; font-weight: 600; white-space: nowrap; }
+.sync-dot { width: 8px; height: 8px; border-radius: 50%; background-color: var(--accent-red); }
 .sync-dot.online { background-color: #52b788; box-shadow: 0 0 8px #52b788; }
 
 @media (max-width: 680px) {
     .vivre-card-stats-desktop { display: none; }
     .vivre-card-subbar { display: flex; }
-
-    .top-vivre-card, header.main-header-banner, .next-up-container, .arc-card {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background: rgba(28, 37, 65, 0.95) !important;
-    }
+    .top-vivre-card, header.main-header-banner, .next-up-container, .arc-card { backdrop-filter: none !important; background: rgba(28, 37, 65, 0.95) !important; }
 }
 
 .next-up-container { background: linear-gradient(135deg, var(--accent-red-trans, rgba(217, 4, 41, 0.2)), rgba(28, 37, 65, 0.95)); border: 2px solid var(--accent-gold); border-radius: 12px; padding: 16px; margin-bottom: 20px; box-shadow: 0 6px 18px rgba(255, 183, 3, 0.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; transition: border-color 0.3s; }
@@ -314,24 +101,31 @@ h1#main-title {
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* GRELHA REAJUSTADA PARA ACOMODAR O NOVO CARTÃO DE ESTATÍSTICAS PESSOAIS */
-.modal-stats-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); 
-    gap: 10px; 
-    margin-top: 14px; 
+/* 🌟 NOVO LAYOUT DO MODAL DIVIDIDO EM 2 CARTÕES (ESQUERDA / DIREITA) 🌟 */
+.global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
+.global-stats-box-split { background: transparent; width: 100%; max-width: 980px; max-height: 90vh; overflow-y: auto; position: relative; box-sizing: border-box; }
+
+.modal-split-container { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
+
+@media (max-width: 820px) {
+    .modal-split-container { grid-template-columns: 1fr; }
 }
 
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.stats-card-block { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; padding: 20px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; flex-direction: column; }
+.stats-card-block.user-block { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.35), #1c2541); }
+
+.user-stats-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+.user-stat-row { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+.user-stat-label { font-size: 0.8em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; }
+.user-stat-val { font-weight: bold; color: var(--text-main); font-size: 0.95em; }
+.user-stat-val.gold { color: var(--accent-gold); font-family: 'Courier New', monospace; }
+.user-stat-val.green { color: #52b788; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .stat-card { background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; }
-.stat-card.user-highlight { border-color: #52b788; background: rgba(27, 67, 50, 0.3); }
 .stat-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); margin-bottom: 4px; }
 .stat-value { font-size: 0.95em; font-weight: bold; color: var(--text-main); }
-.stat-value.bounty-highlight { color: var(--accent-gold); font-family: 'Courier New', Courier, monospace; font-size: 1em; letter-spacing: -0.5px; }
-
-@media (max-width: 480px) {
-    .stats-grid .stat-card:last-child { grid-column: 1 / -1; text-align: center; }
-}
+.stat-value.bounty-highlight { color: var(--accent-gold); font-family: 'Courier New', Courier, monospace; font-size: 0.95em; letter-spacing: -0.5px; }
 
 .progress-bar-bg { background-color: rgba(0,0,0,0.5); height: 16px; border-radius: 8px; overflow: hidden; margin: 8px 0; border: 1px solid var(--text-dim); }
 .progress-bar-fill { background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), #52b788); height: 100%; width: 0%; transition: width 0.4s ease; }
@@ -343,12 +137,7 @@ h1#main-title {
 .filter-btn.active, .filter-btn:hover { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
 .search-input { background: rgba(0,0,0,0.4); border: 1px solid var(--text-dim); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 0.85em; outline: none; width: 100%; max-width: 200px; }
 
-.toolbar-right-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-}
+.toolbar-right-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: border-color 0.3s, color 0.3s; }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
@@ -372,18 +161,7 @@ h1#main-title {
 .ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
 .ep-controls span { color: #fff !important; font-weight: 600; }
 
-.ep-input { 
-    width: 50px; 
-    background-color: rgba(0, 0, 0, 0.85); 
-    border: 1px solid var(--text-dim); 
-    color: var(--text-main); 
-    padding: 4px; 
-    border-radius: 4px; 
-    text-align: center; 
-    font-weight: bold; 
-    font-size: 0.85em; 
-    -moz-appearance: textfield; 
-}
+.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; -moz-appearance: textfield; }
 .ep-input::-webkit-outer-spin-button, .ep-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
 .btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75em; font-weight: bold; }
@@ -395,165 +173,33 @@ h1#main-title {
 .arc-mini-fill { height: 100%; width: 0%; background-color: var(--accent-gold); transition: width 0.3s ease; }
 .arc-card.status-completed .arc-mini-fill { background-color: var(--accent-gold); }
 
-/* ESTILOS DOS MODAIS E DAS DEFINIÇÕES */
-.user-modal-overlay, .summary-modal-overlay, .global-stats-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
-.user-modal-box, .summary-modal-box, .global-stats-box, .settings-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; transition: border-color 0.3s; }
+.user-modal-overlay, .summary-modal-overlay, .settings-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; box-sizing: border-box; }
+.user-modal-box, .summary-modal-box, .settings-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 12px; width: 100%; max-width: 550px; padding: 20px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); position: relative; max-height: 88vh; overflow-y: auto; box-sizing: border-box; transition: border-color 0.3s; }
 
 .modal-close-btn { background: none; border: none; color: var(--text-dim); font-size: 1.4em; cursor: pointer; padding: 4px; line-height: 1; transition: color 0.2s; }
 .modal-close-btn:hover { color: var(--accent-gold); }
 
-.user-modal-box {
-    background: linear-gradient(135deg, #1c2541, #0b132b);
-    border: 2px solid var(--accent-gold);
-    border-radius: 16px;
-    width: 100%;
-    max-width: 420px;
-    padding: 26px 20px;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.9);
-    position: relative;
-    text-align: center;
-}
+.user-modal-box { background: linear-gradient(135deg, #1c2541, #0b132b); border: 2px solid var(--accent-gold); border-radius: 16px; width: 100%; max-width: 420px; padding: 26px 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; text-align: center; }
+.login-header-icon { font-size: 2.5em; margin-bottom: 8px; filter: drop-shadow(0 2px 8px rgba(255, 183, 3, 0.4)); }
+.login-input-group { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+.user-input, .pin-input { width: 100%; height: 44px; background: rgba(0, 0, 0, 0.6); border: 1.5px solid var(--accent-gold); color: var(--accent-gold); border-radius: 10px; padding: 0 12px; font-size: 1.05em; font-weight: bold; text-align: center; outline: none; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+.user-input:focus, .pin-input:focus { border-color: var(--accent-gold); box-shadow: 0 0 12px rgba(255, 183, 3, 0.4); }
+.user-input::placeholder, .pin-input::placeholder { color: var(--text-dim); font-weight: normal; }
+.pin-input { letter-spacing: 4px; font-size: 1.1em; }
+.btn-login { width: 100%; height: 44px; background: linear-gradient(135deg, var(--accent-gold), #e0a100); color: #000; border: none; border-radius: 10px; font-weight: 800; font-size: 0.95em; cursor: pointer; transition: transform 0.15s, box-shadow 0.2s; }
+.btn-login:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4); }
+.login-msg-hint { font-size: 0.82em; color: var(--text-dim); margin-top: 12px; min-height: 18px; }
 
-.login-header-icon {
-    font-size: 2.5em;
-    margin-bottom: 8px;
-    filter: drop-shadow(0 2px 8px rgba(255, 183, 3, 0.4));
-}
+.settings-form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; text-align: left; }
+.settings-form-group label { font-size: 0.85em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+.settings-select, .btn-settings-action { width: 100%; height: 42px; background: rgba(11, 19, 43, 0.9); border: 1.5px solid var(--accent-gold); color: var(--accent-gold); border-radius: 8px; padding: 0 12px; font-size: 0.95em; font-weight: bold; outline: none; box-sizing: border-box; }
+.btn-settings-action { background: rgba(255, 183, 3, 0.15); cursor: pointer; transition: all 0.2s; }
+.btn-settings-action:hover { background: var(--accent-gold); color: #000; }
 
-.login-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 20px 0;
-}
-
-.user-input, .pin-input {
-    width: 100%;
-    height: 44px;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1.5px solid var(--accent-gold);
-    color: var(--accent-gold);
-    border-radius: 10px;
-    padding: 0 12px;
-    font-size: 1.05em;
-    font-weight: bold;
-    text-align: center;
-    outline: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.user-input:focus, .pin-input:focus {
-    border-color: var(--accent-gold);
-    box-shadow: 0 0 12px rgba(255, 183, 3, 0.4);
-}
-
-.user-input::placeholder, .pin-input::placeholder {
-    color: var(--text-dim);
-    font-weight: normal;
-}
-
-.pin-input {
-    letter-spacing: 4px;
-    font-size: 1.1em;
-}
-
-.btn-login {
-    width: 100%;
-    height: 44px;
-    background: linear-gradient(135deg, var(--accent-gold), #e0a100);
-    color: #000;
-    border: none;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 0.95em;
-    cursor: pointer;
-    transition: transform 0.15s, box-shadow 0.2s;
-}
-
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
-}
-
-.login-msg-hint {
-    font-size: 0.82em;
-    color: var(--text-dim);
-    margin-top: 12px;
-    min-height: 18px;
-}
-
-.settings-form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 18px;
-    text-align: left;
-}
-
-.settings-form-group label {
-    font-size: 0.85em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-.settings-select, .btn-settings-action {
-    width: 100%;
-    height: 42px;
-    background: rgba(11, 19, 43, 0.9);
-    border: 1.5px solid var(--accent-gold);
-    color: var(--accent-gold);
-    border-radius: 8px;
-    padding: 0 12px;
-    font-size: 0.95em;
-    font-weight: bold;
-    outline: none;
-    box-sizing: border-box;
-}
-
-.btn-settings-action {
-    background: rgba(255, 183, 3, 0.15);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-settings-action:hover {
-    background: var(--accent-gold);
-    color: #000;
-}
-
-.custom-color-picker-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.color-input-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(11, 19, 43, 0.9);
-    border: 1.5px solid var(--accent-gold);
-    border-radius: 8px;
-    padding: 6px 12px;
-}
-
-.color-input-container input[type="color"] {
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    cursor: pointer;
-    background: transparent;
-}
-
-.color-input-container span {
-    font-size: 0.85em;
-    font-weight: bold;
-    color: var(--text-main);
-}
+.custom-color-picker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.color-input-container { display: flex; align-items: center; gap: 10px; background: rgba(11, 19, 43, 0.9); border: 1.5px solid var(--accent-gold); border-radius: 8px; padding: 6px 12px; }
+.color-input-container input[type="color"] { border: none; width: 32px; height: 32px; border-radius: 6px; cursor: pointer; background: transparent; }
+.color-input-container span { font-size: 0.85em; font-weight: bold; color: var(--text-main); }
 
 .fleet-timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 14px; position: relative; padding-left: 18px; }
 .fleet-timeline::before { content: ''; position: absolute; top: 10px; bottom: 10px; left: 34px; width: 4px; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-red), #52b788); border-radius: 2px; }
@@ -683,56 +329,85 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </div>
 </div>
 
-<!-- 📊 MODAL DE ESTATÍSTICAS GERAIS E FROTA UNIFICADAS (COM ESTATÍSTICAS PESSOAIS ADICIONADAS NO LADO ESQUERDO) -->
+<!-- 📊 MODAL DE ESTATÍSTICAS DIVIDIDO EM 2 CARTÕES (ESQUERDA: USER | DIREITA: CREW & FROTA) 📊 -->
 <div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
-    <div class="global-stats-box">
-        <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
-        <h2 style="margin: 0 0 4px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-stats-title">Estatísticas da Tripulação</h2>
-        <span style="font-size:0.8em; color:var(--text-dim);" id="modal-stats-sub">Resumo geral de todos os navegadores registados</span>
+    <div class="global-stats-box-split">
+        <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:-12px; right:-12px; background:#1c2541; border:1.5px solid var(--accent-gold); border-radius:50%; width:32px; height:32px; z-index:10;">&times;</button>
+        
+        <div class="modal-split-container">
+            <!-- 🟢 CARTÃO DO LADO ESQUERDO: DADOS PESSOAIS DO UTILIZADOR 🟢 -->
+            <div class="stats-card-block user-block">
+                <h2 style="margin: 0 0 2px 0; color: #52b788; font-size: 1.25em;" id="label-stat-user-title">👤 As Tuas Estatísticas</h2>
+                <span style="font-size:0.78em; color:var(--text-dim);" id="label-stat-user-sub">O teu desempenho pessoal na travessia</span>
 
-        <div class="modal-stats-grid">
-            <!-- 🟢 NOVO CARTÃO DE ESTATÍSTICAS DO PRÓPRIO UTILIZADOR NO LADO ESQUERDO 🟢 -->
-            <div class="stat-card user-highlight">
-                <span class="stat-label" id="label-stat-user">AS TUAS STATS</span>
-                <span class="stat-value" id="user-modal-eps">0 / 0</span>
-                <span style="font-size:0.75em; color:#52b788; font-weight:bold; margin-top:2px;" id="user-modal-pct">0%</span>
+                <div class="user-stats-list">
+                    <div class="user-stat-row">
+                        <span class="user-stat-label" id="lbl-user-name">Navegador</span>
+                        <span class="user-stat-val green" id="user-card-name">---</span>
+                    </div>
+                    <div class="user-stat-row">
+                        <span class="user-stat-label" id="lbl-user-eps">Episódios Vistos</span>
+                        <span class="user-stat-val" id="user-card-eps">0 / 0</span>
+                    </div>
+                    <div class="user-stat-row">
+                        <span class="user-stat-label" id="lbl-user-pct">Progresso Geral</span>
+                        <span class="user-stat-val green" id="user-card-pct">0%</span>
+                    </div>
+                    <div class="user-stat-row">
+                        <span class="user-stat-label" id="lbl-user-loc">Localização Atual</span>
+                        <span class="user-stat-val" id="user-card-loc">📍 Grand Line</span>
+                    </div>
+                    <div class="user-stat-row">
+                        <span class="user-stat-label" id="lbl-user-bounty">Recompensa Atual</span>
+                        <span class="user-stat-val gold" id="user-card-bounty">฿ 0</span>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <span class="stat-label" id="label-stat-crew">TRIPULAÇÃO</span>
-                <span class="stat-value" id="global-users-count">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label" id="label-stat-toteps">TOTAL EPS VISTOS</span>
-                <span class="stat-value" id="global-eps-count">0</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-label" id="label-stat-maxbounty">RECOMPENSA MÁXIMA</span>
-                <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
-            </div>
-        </div>
 
-        <h3 style="color:#52b788; font-size:0.95em; margin: 18px 0 6px 0; text-transform:uppercase;" id="label-leaderboard-heading">🏆 Tabela de Liderança</h3>
-        <div style="overflow-x:auto;">
-            <table class="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th id="th-rank">#</th>
-                        <th id="th-user">Navegador</th>
-                        <th id="th-progress">Progresso</th>
-                        <th id="th-episodes">Episódios</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboard-body">
-                    <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
-                </tbody>
-            </table>
-        </div>
+            <!-- 🏴‍☠️ CARTÃO DO LADO DIREITO: DADOS GERAIS DA TRIPULAÇÃO & FROTA 🏴‍☠️ -->
+            <div class="stats-card-block">
+                <h2 style="margin: 0 0 2px 0; color: var(--accent-gold); font-size: 1.25em;" id="modal-stats-title">🏴‍☠️ Estatísticas da Tripulação</h2>
+                <span style="font-size:0.78em; color:var(--text-dim);" id="modal-stats-sub">Resumo geral e localização de todos os navegadores</span>
 
-        <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
-        <h3 style="color:var(--accent-gold); font-size:0.95em; margin: 24px 0 6px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
-        <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
-        <div class="fleet-timeline" id="fleet-timeline-container">
-            <div style="text-align:center; color:var(--text-dim); padding:15px;" id="loading-fleet">A carregar rota dos navios...</div>
+                <div class="stats-grid" style="margin-top: 12px;">
+                    <div class="stat-card">
+                        <span class="stat-label" id="label-stat-crew">TRIPULAÇÃO</span>
+                        <span class="stat-value" id="global-users-count">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label" id="label-stat-toteps">TOTAL EPS VISTOS</span>
+                        <span class="stat-value" id="global-eps-count">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label" id="label-stat-maxbounty">RECOMPENSA MÁX.</span>
+                        <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
+                    </div>
+                </div>
+
+                <h3 style="color:#52b788; font-size:0.9em; margin: 14px 0 6px 0; text-transform:uppercase;" id="label-leaderboard-heading">🏆 Tabela de Liderança</h3>
+                <div style="overflow-x:auto; max-height:180px; overflow-y:auto;">
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th id="th-rank">#</th>
+                                <th id="th-user">Navegador</th>
+                                <th id="th-progress">Progresso</th>
+                                <th id="th-episodes">Episódios</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
+                <h3 style="color:var(--accent-gold); font-size:0.9em; margin: 18px 0 4px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
+                <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
+                <div class="fleet-timeline" id="fleet-timeline-container">
+                    <div style="text-align:center; color:var(--text-dim); padding:10px;" id="loading-fleet">A carregar rota dos navios...</div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -767,12 +442,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- BANNER DO TÍTULO PRINCIPAL -->
+    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- VIVRE CARD (PERFIL DO UTILIZADOR - LIMPO E ELEGANTE) -->
+    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER LIMPO E ORGANIZADO) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -788,9 +463,11 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
                 <span class="vivre-stat-item" id="top-quick-location">📍 Grand Line</span>
             </div>
 
-            <div class="sync-status-indicator">
-                <span class="sync-dot" id="sync-dot"></span>
-                <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+            <div class="vivre-right-controls">
+                <div class="sync-status-indicator">
+                    <span class="sync-dot" id="sync-dot"></span>
+                    <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+                </div>
             </div>
         </div>
 
@@ -834,7 +511,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         </div>
     </div>
 
-    <!-- TOOLBAR COM FILTROS E O BOTÃO DE ESTATÍSTICAS & FROTA INTEGRADO À DIREITA -->
+    <!-- TOOLBAR COM FILTROS E O BOTÃO DE ESTATÍSTICAS INTEGRADO À DIREITA -->
     <div class="toolbar">
         <div class="filter-buttons">
             <button class="filter-btn active" id="filter-all-btn" onclick="setFilter('all', this)">Todos</button>
@@ -960,8 +637,8 @@ function changeCrewMember(member) {
 
 const i18n = {
     pt: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUser: "AS TUAS STATS", statUserEps: "Eps Vistos", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
-        statsTitle: "Estatísticas & Frota da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
+        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUserTitle: "👤 As Tuas Stats", statUserSub: "O teu desempenho pessoal na travessia", lblUserName: "Navegador", lblUserEps: "Episódios Vistos", lblUserPct: "Progresso Geral", lblUserLoc: "Localização Atual", lblUserBounty: "Recompensa Atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        statsTitle: "🏴‍☠️ Estatísticas da Tripulação", statsSub: "Resumo geral e localização de todos os navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface",
         optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
@@ -969,8 +646,8 @@ const i18n = {
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
-        cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUser: "YOUR STATS", statUserEps: "Watched Eps", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
-        statsTitle: "Crew Stats & Fleet", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
+        cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUserTitle: "👤 Your Stats", statUserSub: "Your personal progress across the seas", lblUserName: "Navigator", lblUserEps: "Episodes Watched", lblUserPct: "Overall Progress", lblUserLoc: "Current Location", lblUserBounty: "Current Bounty", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        statsTitle: "🏴‍☠️ Crew Stats", statsSub: "General overview and locations of all navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language",
         optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
@@ -978,8 +655,8 @@ const i18n = {
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUser: "TUS STATS", statUserEps: "Eps Vistos", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "Estadísticas y Flota de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Stats", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserLoc: "Ubicación Actual", lblUserBounty: "Recompensa Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        statsTitle: "🏴‍☠️ Estadísticas de la Tripulación", statsSub: "Resumen general y ubicación de todos los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz",
         optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
@@ -1018,7 +695,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy l Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -1086,7 +763,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "Sanji rescue mission en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Arrival of Admirals and the Five Elders (Gorosei)"] }
@@ -1207,9 +884,16 @@ function applyTranslations() {
     document.getElementById('summary-heading-desc').textContent = t.summaryDescHeading;
     document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
 
+    document.getElementById('label-stat-user-title').textContent = t.statUserTitle;
+    document.getElementById('label-stat-user-sub').textContent = t.statUserSub;
+    document.getElementById('lbl-user-name').textContent = t.lblUserName;
+    document.getElementById('lbl-user-eps').textContent = t.lblUserEps;
+    document.getElementById('lbl-user-pct').textContent = t.lblUserPct;
+    document.getElementById('lbl-user-loc').textContent = t.lblUserLoc;
+    document.getElementById('lbl-user-bounty').textContent = t.lblUserBounty;
+
     document.getElementById('modal-stats-title').textContent = t.statsTitle;
     document.getElementById('modal-stats-sub').textContent = t.statsSub;
-    document.getElementById('label-stat-user').textContent = t.statUser;
     document.getElementById('label-stat-crew').textContent = t.statCrew;
     document.getElementById('label-stat-toteps').textContent = t.statTotEps;
     document.getElementById('label-stat-maxbounty').textContent = t.statMaxBounty;
@@ -1519,6 +1203,7 @@ function fetchGlobalStatsAndFleet() {
         let leaderboard = [];
         let sagaMap = {};
         let currentUserWatched = 0;
+        let currentActiveArcName = "";
 
         opData.forEach(s => { sagaMap[s.sagaKey] = { icon: s.icon, sagaObj: s, users: [] }; });
 
@@ -1566,6 +1251,8 @@ function fetchGlobalStatsAndFleet() {
                 currentArcId = saga.arcs[saga.arcs.length - 1].id;
             }
 
+            if (username === currentUser) currentActiveArcName = getArcTranslation(currentArcId);
+
             sagaMap[currentSagaKey].users.push({
                 username: username,
                 arcId: currentArcId,
@@ -1573,10 +1260,13 @@ function fetchGlobalStatsAndFleet() {
             });
         });
 
-        // ATUALIZA O CARTÃO DE ESTATÍSTICAS DO UTILIZADOR
+        // ATUALIZA O CARTÃO DO LADO ESQUERDO (STATS PESSOAIS DO NAVEGADOR)
         const userPercent = Math.round((currentUserWatched / totalSeriesEpisodes) * 100) || 0;
-        document.getElementById('user-modal-eps').textContent = `${currentUserWatched} / ${totalSeriesEpisodes}`;
-        document.getElementById('user-modal-pct').textContent = `${userPercent}%`;
+        document.getElementById('user-card-name').textContent = currentUser;
+        document.getElementById('user-card-eps').textContent = `${currentUserWatched} / ${totalSeriesEpisodes}`;
+        document.getElementById('user-card-pct').textContent = `${userPercent}%`;
+        document.getElementById('user-card-loc').textContent = currentActiveArcName ? `📍 ${currentActiveArcName}` : '📍 Grand Line';
+        document.getElementById('user-card-bounty').textContent = formatBounty(getLuffyBounty());
 
         // 1. Renderizar Leaderboard
         leaderboard.sort((a, b) => b.watched - a.watched);

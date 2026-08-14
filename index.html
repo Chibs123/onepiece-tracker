@@ -97,7 +97,7 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 
 .progress-container { background-color: var(--card-bg); padding: 14px; border-radius: 12px; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* 🌟 GRELHA DE STATS: 3 LADO A LADO NO PC E 2+1 NO MOBILE 🌟 */
+/* GRELHA DE STATS PRINCIPAL */
 .stats-grid { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -119,26 +119,17 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 .stat-value { font-size: 0.95em; font-weight: bold; color: var(--text-main); }
 .stat-value.bounty-highlight { color: var(--accent-gold); font-family: 'Courier New', Courier, monospace; font-size: 1em; letter-spacing: -0.5px; }
 
-/* COMPORTAMENTO NO MOBILE (2 CARTÕES EM CIMA + 1 EM BAIXO A ESTICAR) */
 @media (max-width: 680px) {
-    .stats-grid { 
-        grid-template-columns: 1fr 1fr; 
-    }
-    .stat-card.stat-card-full { 
-        grid-column: 1 / -1; 
-        text-align: center;
-        align-items: center;
-    }
-    .stat-value.bounty-highlight { 
-        font-size: 1.05em; 
-    }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-card.stat-card-full { grid-column: 1 / -1; text-align: center; align-items: center; }
+    .stat-value.bounty-highlight { font-size: 1.05em; }
 }
 
 .progress-bar-bg { background-color: rgba(0,0,0,0.5); height: 16px; border-radius: 8px; overflow: hidden; margin: 8px 0; border: 1px solid var(--text-dim); }
 .progress-bar-fill { background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), #52b788); height: 100%; width: 0%; transition: width 0.4s ease; }
 .progress-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.78em; color: var(--text-dim); font-weight: bold; }
 
-/* 🌟 TOOLBAR RESPONSIVA 🌟 */
+/* 🌟 TOOLBAR COM BOTÕES PADRONIZADOS 🌟 */
 .toolbar { 
     display: flex; 
     justify-content: space-between; 
@@ -211,18 +202,6 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3); 
 }
 
-.btn-toolbar-action.green-btn { 
-    background: rgba(82, 183, 136, 0.15); 
-    border-color: #52b788; 
-    color: #52b788; 
-}
-
-.btn-toolbar-action.green-btn:hover { 
-    background: #52b788; 
-    color: #000; 
-    box-shadow: 0 2px 10px rgba(82, 183, 136, 0.3); 
-}
-
 .search-input { 
     height: 34px;
     background: rgba(0,0,0,0.4); 
@@ -252,7 +231,7 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     .filter-btn, .btn-toolbar-action { flex: 1 1 auto; text-align: center; font-size: 0.76em; padding: 0 8px; }
 }
 
-/* 🌟 MODAIS RESPONSIVOS 🌟 */
+/* 🌟 MODAIS COM OS MESMOS ESTILOS E TEMAS 🌟 */
 .global-stats-overlay, .user-stats-overlay, .user-modal-overlay, .summary-modal-overlay, .settings-modal-overlay { 
     position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 12px; 
 }
@@ -260,14 +239,19 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 .stats-modal-box, .user-modal-box, .summary-modal-box, .settings-modal-box { 
     background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 20px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; 
 }
-.stats-modal-box.user-theme { border-color: #52b788; max-width: 500px; }
 
-.user-stats-list-modal { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
-.user-stat-row { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9em; }
-.user-stat-label { font-size: 0.8em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; }
-.user-stat-val { font-weight: bold; color: var(--text-main); }
-.user-stat-val.gold { color: var(--accent-gold); font-family: 'Courier New', monospace; }
-.user-stat-val.green { color: #52b788; }
+/* GRELHA DO MODAL DE STATS PESSOAIS DO USER */
+.modal-stats-user-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+    margin-top: 14px; 
+}
+.modal-stats-user-grid .stat-card.stat-full { 
+    grid-column: 1 / -1; 
+    text-align: center; 
+    align-items: center; 
+}
 
 .modal-stats-crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-top: 12px; }
 
@@ -441,42 +425,42 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
     </div>
 </div>
 
-<!-- 👤 MODAL 1: AS TUAS ESTATÍSTICAS 👤 -->
+<!-- 👤 MODAL 1: AS TUAS ESTATÍSTICAS (COM O MESMO ESTILO DO RESTO DA APP) 👤 -->
 <div class="user-stats-overlay" id="user-stats-modal" style="display:none;" onclick="closeUserStatsOnOverlay(event)">
-    <div class="stats-modal-box user-theme">
+    <div class="stats-modal-box">
         <button class="modal-close-btn" onclick="closeUserStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
         
-        <h2 style="margin: 0 0 2px 0; color: #52b788; font-size: 1.25em;" id="label-stat-user-title">👤 As Tuas Estatísticas</h2>
+        <h2 style="margin: 0 0 2px 0; color: var(--accent-gold); font-size: 1.25em;" id="label-stat-user-title">👤 As Tuas Estatísticas</h2>
         <span style="font-size:0.78em; color:var(--text-dim);" id="label-stat-user-sub">O teu desempenho pessoal e progresso na travessia</span>
 
-        <div class="user-stats-list-modal">
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-name">Navegador</span>
-                <span class="user-stat-val green" id="user-card-name">---</span>
+        <div class="modal-stats-user-grid">
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-name">NAVEGADOR</span>
+                <span class="stat-value bounty-highlight" id="user-card-name">---</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-eps">Episódios Vistos</span>
-                <span class="user-stat-val" id="user-card-eps">0 / 0</span>
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-pct">PROGRESSO GERAL</span>
+                <span class="stat-value" id="user-card-pct" style="color:#52b788;">0%</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-pct">Progresso Geral</span>
-                <span class="user-stat-val green" id="user-card-pct">0%</span>
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-eps">EPISÓDIOS VISTOS</span>
+                <span class="stat-value" id="user-card-eps">0 / 0</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-arcs">Arcos Concluídos</span>
-                <span class="user-stat-val" id="user-card-arcs">0 / 0</span>
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-arcs">ARCOS CONCLUÍDOS</span>
+                <span class="stat-value" id="user-card-arcs">0 / 0</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-loc">Localização Atual</span>
-                <span class="user-stat-val" id="user-card-loc">📍 Grand Line</span>
+            <div class="stat-card stat-full">
+                <span class="stat-label" id="lbl-user-loc">LOCALIZAÇÃO ATUAL</span>
+                <span class="stat-value" id="user-card-loc">📍 Grand Line</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-bounty">Recompensa Atual</span>
-                <span class="user-stat-val gold" id="user-card-bounty">฿ 0</span>
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-bounty">RECOMPENSA ATUAL</span>
+                <span class="stat-value bounty-highlight" id="user-card-bounty">฿ 0</span>
             </div>
-            <div class="user-stat-row">
-                <span class="user-stat-label" id="lbl-user-hours">Tempo Assistido</span>
-                <span class="user-stat-val" id="user-card-hours">~0h (0 dias)</span>
+            <div class="stat-card">
+                <span class="stat-label" id="lbl-user-hours">TEMPO ASSISTIDO</span>
+                <span class="stat-value" id="user-card-hours">~0h (0 d)</span>
             </div>
         </div>
     </div>
@@ -641,7 +625,7 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
 
         <div class="toolbar-right-group">
             <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar..." oninput="renderApp()">
-            <button class="btn-toolbar-action green-btn" id="btn-user-stats-txt" onclick="openUserStatsModal()">👤 As Tuas Stats</button>
+            <button class="btn-toolbar-action" id="btn-user-stats-txt" onclick="openUserStatsModal()">👤 As Tuas Stats</button>
             <button class="btn-toolbar-action" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">🏴‍☠️ Stats da Crew</button>
         </div>
     </div>
@@ -876,7 +860,7 @@ const arcDetailsI18n = {
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
         "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
         "marineford": { name: "Marineford", summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
-        "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia com Ace e Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
+        "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia com Ace e Sabo, e inicio de los 2 anos de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe e Luffy"] },
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
@@ -884,7 +868,7 @@ const arcDetailsI18n = {
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
-        "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden e viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko e recompensa de Luffy sube a ฿3.0B"] },
+        "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden e viaje con Gol D. Roger", "Invasión de Onigashima e batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko e recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Arrival of Admirals and the Five Elders (Gorosei)"] }
     }
 };
@@ -1466,7 +1450,7 @@ function fetchGlobalStatsAndFleet() {
     }).catch((err) => {
         console.error("Erro ao carregar estatísticas gerais:", err);
         tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro Firebase (.read Rules)</td></tr>`;
-        fleetContainer.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:10px;">Erro ao carregar frota</div>`;
+        fleetContainer.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:15px;">Erro ao carregar frota</div>`;
     });
 }
 

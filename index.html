@@ -441,6 +441,37 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
+    <!-- VIVRE CARD (PERFIL DO UTILIZADOR) -->
+    <div class="top-vivre-card">
+        <div class="vivre-card-main">
+            <div class="vivre-user-info">
+                <span class="user-name-tag" id="current-user-display">---</span>
+                <!-- O GEAR ABRE AS DEFINIÇÕES -->
+                <span id="user-gears-display" onclick="openSettingsModal()"></span>
+            </div>
+
+            <!-- INFORMAÇÕES RÁPIDAS NO PC -->
+            <div class="vivre-card-stats-desktop">
+                <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-quick-bounty">฿ 0</span></span>
+                <span style="color:rgba(255,255,255,0.2)">•</span>
+                <span class="vivre-stat-item" id="top-quick-location">📍 Grand Line</span>
+            </div>
+
+            <div class="vivre-right-controls">
+                <div class="sync-status-indicator">
+                    <span class="sync-dot" id="sync-dot"></span>
+                    <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUB-BARRA REVELADA APENAS NO TELEMÓVEL -->
+        <div class="vivre-card-subbar">
+            <span class="vivre-stat-item" id="top-mobile-location">📍 Grand Line</span>
+            <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
+        </div>
+    </div>
+    
     <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
@@ -476,37 +507,6 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         <div class="progress-footer">
             <span id="label-journey-progress">Progresso da Jornada</span>
             <span id="percentage-text">0% Concluído</span>
-        </div>
-    </div>
-
-    <!-- VIVRE CARD (PERFIL DO UTILIZADOR) -->
-    <div class="top-vivre-card">
-        <div class="vivre-card-main">
-            <div class="vivre-user-info">
-                <span class="user-name-tag" id="current-user-display">---</span>
-                <!-- O GEAR ABRE AS DEFINIÇÕES -->
-                <span id="user-gears-display" onclick="openSettingsModal()"></span>
-            </div>
-
-            <!-- INFORMAÇÕES RÁPIDAS NO PC -->
-            <div class="vivre-card-stats-desktop">
-                <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-quick-bounty">฿ 0</span></span>
-                <span style="color:rgba(255,255,255,0.2)">•</span>
-                <span class="vivre-stat-item" id="top-quick-location">📍 Grand Line</span>
-            </div>
-
-            <div class="vivre-right-controls">
-                <div class="sync-status-indicator">
-                    <span class="sync-dot" id="sync-dot"></span>
-                    <span id="sync-text" style="color:var(--text-dim);">A ligar...</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- SUB-BARRA REVELADA APENAS NO TELEMÓVEL -->
-        <div class="vivre-card-subbar">
-            <span class="vivre-stat-item" id="top-mobile-location">📍 Grand Line</span>
-            <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
         </div>
     </div>
     

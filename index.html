@@ -33,10 +33,7 @@
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
 
-.bg-map-container { 
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; will-change: transform; transform: translateZ(0);
-}
-
+.bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; will-change: transform; transform: translateZ(0); }
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
 .compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
 @keyframes compassRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -101,27 +98,31 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1.5px; tex
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* 🌟 NOVO LAYOUT DO MODAL DIVIDIDO EM 2 CARTÕES (ESQUERDA / DIREITA) 🌟 */
+/* 🌟 MODAL DE ESTATÍSTICAS UNIFICADO E HARMONIOSO 🌟 */
 .global-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
-.global-stats-box-split { background: transparent; width: 100%; max-width: 980px; max-height: 90vh; overflow-y: auto; position: relative; box-sizing: border-box; }
+.global-stats-box-unified { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; width: 100%; max-width: 680px; max-height: 88vh; overflow-y: auto; padding: 22px 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; box-sizing: border-box; }
 
-.modal-split-container { display: grid; grid-template-columns: 1fr 1.6fr; gap: 16px; }
-
-@media (max-width: 820px) {
-    .modal-split-container { grid-template-columns: 1fr; }
+/* CARTÃO PESSOAL (ESTILO VIVRE PASSPORT INTEGRADO) */
+.user-stats-highlight-card { 
+    background: linear-gradient(135deg, rgba(27,67,50,0.6), rgba(11,19,43,0.9)); 
+    border: 1.5px solid #52b788; 
+    border-radius: 10px; 
+    padding: 14px 16px; 
+    margin-top: 14px; 
+    margin-bottom: 18px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); 
 }
+.user-highlight-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
+.user-highlight-title { font-weight: 800; color: #52b788; font-size: 0.95em; letter-spacing: 0.5px; }
 
-.stats-card-block { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; padding: 20px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); display: flex; flex-direction: column; }
-.stats-card-block.user-block { border-color: #52b788; background: linear-gradient(135deg, rgba(27,67,50,0.35), #1c2541); }
+.user-quick-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.user-metric-item { display: flex; flex-direction: column; }
+.user-metric-label { font-size: 0.72em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; }
+.user-metric-val { font-size: 1em; font-weight: bold; color: var(--text-main); margin-top: 2px; }
+.user-metric-val.green { color: #52b788; }
+.user-metric-val.gold { color: var(--accent-gold); font-family: 'Courier New', monospace; }
 
-.user-stats-list { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
-.user-stat-row { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
-.user-stat-label { font-size: 0.8em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; }
-.user-stat-val { font-weight: bold; color: var(--text-main); font-size: 0.95em; }
-.user-stat-val.gold { color: var(--accent-gold); font-family: 'Courier New', monospace; }
-.user-stat-val.green { color: #52b788; }
-
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 14px; }
 .stat-card { background: rgba(11, 19, 43, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 10px; display: flex; flex-direction: column; justify-content: center; }
 .stat-label { font-size: 0.7em; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-dim); margin-bottom: 4px; }
 .stat-value { font-size: 0.95em; font-weight: bold; color: var(--text-main); }
@@ -329,85 +330,78 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
     </div>
 </div>
 
-<!-- 📊 MODAL DE ESTATÍSTICAS DIVIDIDO EM 2 CARTÕES (ESQUERDA: USER | DIREITA: CREW & FROTA) 📊 -->
+<!-- 📊 MODAL DE ESTATÍSTICAS UNIFICADO (COM CARTÃO DO USER EM DESTAQUE NO TOPO) 📊 -->
 <div class="global-stats-overlay" id="global-stats-modal" style="display:none;" onclick="closeGlobalStatsOnOverlay(event)">
-    <div class="global-stats-box-split">
-        <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:-12px; right:-12px; background:#1c2541; border:1.5px solid var(--accent-gold); border-radius:50%; width:32px; height:32px; z-index:10;">&times;</button>
+    <div class="global-stats-box-unified">
+        <button class="modal-close-btn" onclick="closeGlobalStatsModal()" style="position:absolute; top:12px; right:14px;">&times;</button>
         
-        <div class="modal-split-container">
-            <!-- 🟢 CARTÃO DO LADO ESQUERDO: DADOS PESSOAIS DO UTILIZADOR 🟢 -->
-            <div class="stats-card-block user-block">
-                <h2 style="margin: 0 0 2px 0; color: #52b788; font-size: 1.25em;" id="label-stat-user-title">👤 As Tuas Estatísticas</h2>
-                <span style="font-size:0.78em; color:var(--text-dim);" id="label-stat-user-sub">O teu desempenho pessoal na travessia</span>
+        <h2 style="margin: 0 0 2px 0; color: var(--accent-gold); font-size: 1.3em;" id="modal-stats-title">📊 Estatísticas da Tripulação</h2>
+        <span style="font-size:0.8em; color:var(--text-dim);" id="modal-stats-sub">Resumo geral, ranking e localização dos navegadores</span>
 
-                <div class="user-stats-list">
-                    <div class="user-stat-row">
-                        <span class="user-stat-label" id="lbl-user-name">Navegador</span>
-                        <span class="user-stat-val green" id="user-card-name">---</span>
-                    </div>
-                    <div class="user-stat-row">
-                        <span class="user-stat-label" id="lbl-user-eps">Episódios Vistos</span>
-                        <span class="user-stat-val" id="user-card-eps">0 / 0</span>
-                    </div>
-                    <div class="user-stat-row">
-                        <span class="user-stat-label" id="lbl-user-pct">Progresso Geral</span>
-                        <span class="user-stat-val green" id="user-card-pct">0%</span>
-                    </div>
-                    <div class="user-stat-row">
-                        <span class="user-stat-label" id="lbl-user-loc">Localização Atual</span>
-                        <span class="user-stat-val" id="user-card-loc">📍 Grand Line</span>
-                    </div>
-                    <div class="user-stat-row">
-                        <span class="user-stat-label" id="lbl-user-bounty">Recompensa Atual</span>
-                        <span class="user-stat-val gold" id="user-card-bounty">฿ 0</span>
-                    </div>
+        <!-- 🟢 CARTÃO PESSOAL DO NAVEGADOR EM DESTAQUE 🟢 -->
+        <div class="user-stats-highlight-card">
+            <div class="user-highlight-header">
+                <span class="user-highlight-title" id="label-stat-user-title">👤 As Tuas Estatísticas</span>
+                <span style="font-weight:800; font-size:0.95em; color:#fff;" id="user-card-name">---</span>
+            </div>
+            <div class="user-quick-metrics">
+                <div class="user-metric-item">
+                    <span class="user-metric-label" id="lbl-user-eps">Episódios Vistos</span>
+                    <span class="user-metric-val" id="user-card-eps">0 / 0</span>
+                </div>
+                <div class="user-metric-item">
+                    <span class="user-metric-label" id="lbl-user-pct">Progresso Geral</span>
+                    <span class="user-metric-val green" id="user-card-pct">0%</span>
+                </div>
+                <div class="user-metric-item">
+                    <span class="user-metric-label" id="lbl-user-loc">Localização Atual</span>
+                    <span class="user-metric-val" id="user-card-loc">📍 Grand Line</span>
+                </div>
+                <div class="user-metric-item">
+                    <span class="user-metric-label" id="lbl-user-bounty">Recompensa</span>
+                    <span class="user-metric-val gold" id="user-card-bounty">฿ 0</span>
                 </div>
             </div>
+        </div>
 
-            <!-- 🏴‍☠️ CARTÃO DO LADO DIREITO: DADOS GERAIS DA TRIPULAÇÃO & FROTA 🏴‍☠️ -->
-            <div class="stats-card-block">
-                <h2 style="margin: 0 0 2px 0; color: var(--accent-gold); font-size: 1.25em;" id="modal-stats-title">🏴‍☠️ Estatísticas da Tripulação</h2>
-                <span style="font-size:0.78em; color:var(--text-dim);" id="modal-stats-sub">Resumo geral e localização de todos os navegadores</span>
-
-                <div class="stats-grid" style="margin-top: 12px;">
-                    <div class="stat-card">
-                        <span class="stat-label" id="label-stat-crew">TRIPULAÇÃO</span>
-                        <span class="stat-value" id="global-users-count">0</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label" id="label-stat-toteps">TOTAL EPS VISTOS</span>
-                        <span class="stat-value" id="global-eps-count">0</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-label" id="label-stat-maxbounty">RECOMPENSA MÁX.</span>
-                        <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
-                    </div>
-                </div>
-
-                <h3 style="color:#52b788; font-size:0.9em; margin: 14px 0 6px 0; text-transform:uppercase;" id="label-leaderboard-heading">🏆 Tabela de Liderança</h3>
-                <div style="overflow-x:auto; max-height:180px; overflow-y:auto;">
-                    <table class="leaderboard-table">
-                        <thead>
-                            <tr>
-                                <th id="th-rank">#</th>
-                                <th id="th-user">Navegador</th>
-                                <th id="th-progress">Progresso</th>
-                                <th id="th-episodes">Episódios</th>
-                            </tr>
-                        </thead>
-                        <tbody id="leaderboard-body">
-                            <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
-                <h3 style="color:var(--accent-gold); font-size:0.9em; margin: 18px 0 4px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
-                <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
-                <div class="fleet-timeline" id="fleet-timeline-container">
-                    <div style="text-align:center; color:var(--text-dim); padding:10px;" id="loading-fleet">A carregar rota dos navios...</div>
-                </div>
+        <!-- 🏴‍☠️ DADOS GERAIS DA TRIPULAÇÃO 🏴‍☠️ -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-crew">TRIPULAÇÃO</span>
+                <span class="stat-value" id="global-users-count">0</span>
             </div>
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-toteps">TOTAL EPS VISTOS</span>
+                <span class="stat-value" id="global-eps-count">0</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label" id="label-stat-maxbounty">RECOMPENSA MÁXIMA</span>
+                <span class="stat-value bounty-highlight" id="global-top-bounty">฿ 0</span>
+            </div>
+        </div>
+
+        <h3 style="color:#52b788; font-size:0.95em; margin: 18px 0 6px 0; text-transform:uppercase;" id="label-leaderboard-heading">🏆 Tabela de Liderança</h3>
+        <div style="overflow-x:auto;">
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th id="th-rank">#</th>
+                        <th id="th-user">Navegador</th>
+                        <th id="th-progress">Progresso</th>
+                        <th id="th-episodes">Episódios</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    <tr><td colspan="4" style="text-align:center; color:var(--text-dim);" id="loading-leaderboard">A carregar dados...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ⛵ SECÇÃO DA FROTA INTEGRADA -->
+        <h3 style="color:var(--accent-gold); font-size:0.95em; margin: 24px 0 4px 0; text-transform:uppercase;" id="modal-fleet-title">⛵ Rota da Frota dos Chapéus de Palha</h3>
+        <span style="font-size:0.75em; color:var(--text-dim);" id="modal-fleet-sub">Localização atual de cada navegador nos mares da Grand Line</span>
+        <div class="fleet-timeline" id="fleet-timeline-container">
+            <div style="text-align:center; color:var(--text-dim); padding:12px;" id="loading-fleet">A carregar rota dos navios...</div>
         </div>
     </div>
 </div>
@@ -442,12 +436,12 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
-    <!-- 1º LUGAR: BANNER DO TÍTULO PRINCIPAL NO TOPO ABSOLUTO -->
+    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
         <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
     </header>
 
-    <!-- 2º LUGAR: VIVRE CARD (PERFIL DO USER LIMPO E ORGANIZADO) -->
+    <!-- VIVRE CARD (PERFIL DO UTILIZADOR) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
             <div class="vivre-user-info">
@@ -579,7 +573,6 @@ const crewThemes = {
     jinbe: { primary: "#1d3557", secondary: "#457b9d", trans: "rgba(29, 53, 87, 0.2)" }
 };
 
-/* GUARDA AS DEFINIÇÕES NA FIREBASE E LOCALSTORAGE */
 function saveSettingsToFirebase() {
     if (dbRef) {
         dbRef.child('settings').set({
@@ -637,8 +630,8 @@ function changeCrewMember(member) {
 
 const i18n = {
     pt: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUserTitle: "👤 As Tuas Stats", statUserSub: "O teu desempenho pessoal na travessia", lblUserName: "Navegador", lblUserEps: "Episódios Vistos", lblUserPct: "Progresso Geral", lblUserLoc: "Localização Atual", lblUserBounty: "Recompensa Atual", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
-        statsTitle: "🏴‍☠️ Estatísticas da Tripulação", statsSub: "Resumo geral e localização de todos os navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
+        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", globalStatsBtn: "📊 Estatísticas & Frota", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUserTitle: "👤 As Tuas Estatísticas", statUserSub: "O teu desempenho pessoal na travessia", lblUserName: "Navegador", lblUserEps: "Episódios Vistos", lblUserPct: "Progresso Geral", lblUserLoc: "Localização Atual", lblUserBounty: "Recompensa", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar arco...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        statsTitle: "📊 Estatísticas da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface",
         optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
@@ -646,8 +639,8 @@ const i18n = {
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
-        cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUserTitle: "👤 Your Stats", statUserSub: "Your personal progress across the seas", lblUserName: "Navigator", lblUserEps: "Episodes Watched", lblUserPct: "Overall Progress", lblUserLoc: "Current Location", lblUserBounty: "Current Bounty", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
-        statsTitle: "🏴‍☠️ Crew Stats", statsSub: "General overview and locations of all navigators", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
+        cloudState: "Synced", switchProfile: "👤 Switch Profile", globalStatsBtn: "📊 Stats & Fleet", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUserTitle: "👤 Your Stats", statUserSub: "Your personal progress across the seas", lblUserName: "Navigator", lblUserEps: "Episodes Watched", lblUserPct: "Overall Progress", lblUserLoc: "Current Location", lblUserBounty: "Bounty", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search arc...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        statsTitle: "📊 Crew Stats", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language",
         optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
@@ -655,8 +648,8 @@ const i18n = {
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Stats", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserLoc: "Ubicación Actual", lblUserBounty: "Recompensa Actual", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "🏴‍☠️ Estadísticas de la Tripulación", statsSub: "Resumen general y ubicación de todos los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", globalStatsBtn: "📊 Estadísticas y Flota", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Estadísticas", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserLoc: "Ubicación Actual", lblUserBounty: "Recompensa", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar arco...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        statsTitle: "📊 Estadísticas de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁXIMA", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz",
         optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
@@ -695,7 +688,7 @@ const arcDetailsI18n = {
         "punk-hazard": { name: "Punk Hazard", summary: "Numa ilha dividida entre fogo e gelo, o bando forma uma aliança com Trafalgar Law.", highlights: ["Aliança Pirata entre Luffy l Law", "Derrota de Caesar Clown e destruição da fábrica de SAD", "Zoro corta Monet ao meio sem usar Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "A operação para derrubar o tirano Doflamingo e libertar a ilha dos brinquedos.", highlights: ["Sabo regressa vivo e ganha o fruto Mera Mera no Mi", "Luffy revela a transformação Gear 4th (Boundman)", "Derrota monumental de Doflamingo com o King Kong Gun", "Formação da Grande Frota do Chapéu de Palha (5.600 membros)"] },
         "zou": { name: "Zou", summary: "Uma cidade construída nas costas de um elefante gigante há mais de 1000 anos.", highlights: ["Revelação do segredo dos Road Poneglyphs rumo ao One Piece", "A frase icónica dos Minks: 'Raizo está seguro!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declared 5º Imperador com Recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "A missão de resgate de Sanji no território da Yonko Big Mom.", highlights: ["Luffy vs Sanji (O duelo doloroso)", "Luffy vs Katakuri no Mundo dos Espelhos e o aperfeiçoamento do Haki da Visão", "Sanji faz as pazes com a tripulação", "Luffy declarado o 5º Imperador com Recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "A reunião mundial dos reis e líderes políticos em Mary Geoise.", highlights: ["Revelação do Trono Vazio e do misterioso líder Imu-sama", "Sabo e o Exército Revolucionário infiltram-se em Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "A chegada à ilha do futuro do cientista Dr. Vegapunk e o choque contra os Gorosei.", highlights: ["Revelação dos mistérios dos Frutos do Diabo por Dr. Vegapunk", "Luffy Gear 5th vs Rob Lucci Awakened", "Chegada dos Almirantes e dos Cinco Anciões (Gorosei)"] }
@@ -741,7 +734,7 @@ const arcDetailsI18n = {
         "baratie": { name: "Baratie", summary: "Visita al restaurante flotante Baratie para reclutar a un cocinero y combate con Don Krieg.", highlights: ["Sanji recruitment", "Duelo Legendario: Zoro vs Mihawk", "Aparición del Shichibukai Dracule Mihawk"] },
         "arlong-park": { name: "Arlong Park", summary: "Luffy descubre el pasado trágico de Nami y combate a Arlong para liberar su aldea.", highlights: ["Cena Icónica: '¡Luffy, ayúdame!'", "Luffy coloca el Sombrero de Paja a Nami", "Destrucción de Arlong Park y primera recompensa de Luffy (฿30M)"] },
         "loguetown": { name: "Loguetown", summary: "La última parada antes del Grand Line, donde nació y fue ejecutado Gol D. Roger.", highlights: ["Luffy sonríe en la plataforma de ejecución", "Zoro obtiene Sandai Kitetsu y Yubashiri", "Intervención misteriosa de Monkey D. Dragon", "Promesa del Barril antes de Reverse Mountain"] },
-        "reverse-mountain": { name: "Reverse Mountain", summary: "Entrada al Grand Line subiendo una montaña de agua y encuentro con la ballena Laboon.", highlights: ["Entrada espectacular al Grand Line", "Encuentro con Crocus y la historia emotiva de Laboon"] },
+        "reverse-mountain": { name: "Reverse Mountain", summary: "Entrada al Grand Line subiendo una montaña de agua y encuentro con la ballena Laboon.", highlights: ["Entrada espectacular al Grand Line", "Encuentro con Crocus e la historia emotiva de Laboon"] },
         "whiskey-peak": { name: "Whiskey Peak", summary: "La isla de cazadores de recompensas de Baroque Works y alianza con la Princesa Vivi.", highlights: ["Zoro vs 100 Cazadores de Recompensas", "Luffy vs Zoro (Malentendido)", "Revelación de la identidad de la Princesa Vivi"] },
         "little-garden": { name: "Little Garden", summary: "Isla prehistórica donde dos gigantes llevan duelando más de 100 años.", highlights: ["Duelo de Gigantes Dorry y Brogy", "Zoro a punto de cortarse los pies", "Usopp admira el orgullo guerrero de Elbaf"] },
         "drum-island": { name: "Drum Island", summary: "Búsqueda de un médico para Nami en una isla helada dominada por Wapol.", highlights: ["Historia de Tony Tony Chopper y el Dr. Hiriluk", "Luffy escalando la montaña cargando a Nami y Sanji", "Florecimiento de cerezos en la nieve y reclutamiento de Chopper"] },
@@ -760,10 +753,10 @@ const arcDetailsI18n = {
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace y Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
-        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
+        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
-        "whole-cake": { name: "Whole Cake Island", summary: "Sanji rescue mission en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
+        "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden y viaje con Gol D. Roger", "Invasión de Onigashima y batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko y recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Arrival of Admirals and the Five Elders (Gorosei)"] }
@@ -885,8 +878,6 @@ function applyTranslations() {
     document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
 
     document.getElementById('label-stat-user-title').textContent = t.statUserTitle;
-    document.getElementById('label-stat-user-sub').textContent = t.statUserSub;
-    document.getElementById('lbl-user-name').textContent = t.lblUserName;
     document.getElementById('lbl-user-eps').textContent = t.lblUserEps;
     document.getElementById('lbl-user-pct').textContent = t.lblUserPct;
     document.getElementById('lbl-user-loc').textContent = t.lblUserLoc;
@@ -1191,7 +1182,7 @@ function fetchGlobalStatsAndFleet() {
     const fleetContainer = document.getElementById('fleet-timeline-container');
     
     tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">${t.loadingData}</td></tr>`;
-    fleetContainer.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:15px;" id="loading-fleet">${t.loadingData}</div>`;
+    fleetContainer.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:12px;" id="loading-fleet">${t.loadingData}</div>`;
     
     firebase.database().ref('users').once('value').then((snapshot) => {
         const usersData = snapshot.val() || {};
@@ -1260,7 +1251,7 @@ function fetchGlobalStatsAndFleet() {
             });
         });
 
-        // ATUALIZA O CARTÃO DO LADO ESQUERDO (STATS PESSOAIS DO NAVEGADOR)
+        // ATUALIZA O CARTÃO DO UTILIZADOR
         const userPercent = Math.round((currentUserWatched / totalSeriesEpisodes) * 100) || 0;
         document.getElementById('user-card-name').textContent = currentUser;
         document.getElementById('user-card-eps').textContent = `${currentUserWatched} / ${totalSeriesEpisodes}`;
@@ -1268,7 +1259,7 @@ function fetchGlobalStatsAndFleet() {
         document.getElementById('user-card-loc').textContent = currentActiveArcName ? `📍 ${currentActiveArcName}` : '📍 Grand Line';
         document.getElementById('user-card-bounty').textContent = formatBounty(getLuffyBounty());
 
-        // 1. Renderizar Leaderboard
+        // 1. Leaderboard
         leaderboard.sort((a, b) => b.watched - a.watched);
 
         document.getElementById('global-users-count').textContent = totalUsers;
@@ -1292,7 +1283,7 @@ function fetchGlobalStatsAndFleet() {
             }).join('');
         }
 
-        // 2. Renderizar Frota
+        // 2. Frota
         fleetContainer.innerHTML = opData.map(saga => {
             const sagaData = sagaMap[saga.sagaKey];
             const hasUsers = sagaData.users.length > 0;
@@ -1336,15 +1327,11 @@ function fetchGlobalStatsAndFleet() {
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
-    // Elementos Desktop
     const bountyEl = document.getElementById('top-quick-bounty');
     const locationEl = document.getElementById('top-quick-location');
-
-    // Elementos Mobile
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
-    // Gear ⚙️ com o número elevado perfeito (<sup class="gear-sup">)
     let gearTag = '';
     if (totalWatchedEps >= 1071) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
     else if (totalWatchedEps >= 726) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
@@ -1365,7 +1352,6 @@ function updateProfileGear(totalWatchedEps, activeArc) {
 
     if (bountyEl) bountyEl.textContent = formattedBounty;
     if (locationEl) locationEl.textContent = locationText;
-
     if (mobileBountyEl) mobileBountyEl.textContent = formattedBounty;
     if (mobileLocationEl) mobileLocationEl.textContent = locationText;
 }

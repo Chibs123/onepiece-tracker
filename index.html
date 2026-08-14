@@ -95,12 +95,129 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1.5px; tex
 
 .progress-container { background-color: var(--card-bg); padding: 16px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* 🌟 MODAIS DE ESTATÍSTICAS SEPARADOS 🌟 */
+/* 🌟 TOOLBAR ALINHADA PERFEITA COMO NA IMAGEM 🌟 */
+.toolbar { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    gap: 12px; 
+    margin-bottom: 20px; 
+    flex-wrap: wrap; 
+}
+
+.filter-buttons { 
+    display: flex; 
+    gap: 6px; 
+    flex-wrap: wrap; 
+    align-items: center; 
+}
+
+.filter-btn { 
+    height: 36px;
+    box-sizing: border-box;
+    background: rgba(255,255,255,0.08); 
+    border: 1px solid rgba(255,255,255,0.2); 
+    color: var(--text-main); 
+    padding: 0 12px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 0.85em; 
+    font-weight: bold; 
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s; 
+    white-space: nowrap;
+}
+
+.filter-btn.active, .filter-btn:hover { 
+    background: var(--accent-gold); 
+    color: #000; 
+    border-color: var(--accent-gold); 
+}
+
+.toolbar-right-group { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    flex-wrap: wrap; 
+}
+
+.btn-toolbar-action { 
+    height: 36px; 
+    box-sizing: border-box; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 0 14px; 
+    border-radius: 6px; 
+    font-size: 0.85em; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.2s ease; 
+    white-space: nowrap; 
+    outline: none; 
+    line-height: 1; 
+    background: rgba(255, 183, 3, 0.12); 
+    border: 1px solid var(--accent-gold); 
+    color: var(--accent-gold); 
+    backdrop-filter: blur(4px); 
+}
+
+.btn-toolbar-action:hover { 
+    background: var(--accent-gold); 
+    color: #000; 
+    box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3); 
+}
+
+.btn-toolbar-action.green-btn { 
+    background: rgba(82, 183, 136, 0.15); 
+    border-color: #52b788; 
+    color: #52b788; 
+}
+
+.btn-toolbar-action.green-btn:hover { 
+    background: #52b788; 
+    color: #000; 
+    box-shadow: 0 2px 10px rgba(82, 183, 136, 0.3); 
+}
+
+.search-input { 
+    height: 36px;
+    box-sizing: border-box;
+    background: rgba(0,0,0,0.4); 
+    border: 1px solid var(--text-dim); 
+    color: var(--text-main); 
+    padding: 0 12px; 
+    border-radius: 6px; 
+    font-size: 0.85em; 
+    outline: none; 
+    width: 140px; 
+}
+
+.search-input:focus {
+    border-color: var(--accent-gold);
+}
+
+@media (max-width: 760px) {
+    .toolbar {
+        justify-content: center;
+    }
+    .filter-buttons, .toolbar-right-group {
+        justify-content: center;
+        width: 100%;
+    }
+    .search-input {
+        width: 100%;
+        max-width: 260px;
+    }
+}
+
+/* 🌟 MODAIS DE ESTATÍSTICAS 🌟 */
 .global-stats-overlay, .user-stats-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 19, 43, 0.92); backdrop-filter: blur(8px); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; }
 .stats-modal-box { background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; width: 100%; max-width: 620px; max-height: 88vh; overflow-y: auto; padding: 22px 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; box-sizing: border-box; }
 .stats-modal-box.user-theme { border-color: #52b788; max-width: 520px; }
 
-/* LISTA DE STATS DO USER */
 .user-stats-list-modal { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; }
 .user-stat-row { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; }
 .user-stat-label { font-size: 0.82em; color: var(--text-dim); text-transform: uppercase; font-weight: bold; }
@@ -117,19 +234,6 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1.5px; tex
 .progress-bar-bg { background-color: rgba(0,0,0,0.5); height: 16px; border-radius: 8px; overflow: hidden; margin: 8px 0; border: 1px solid var(--text-dim); }
 .progress-bar-fill { background: linear-gradient(90deg, var(--accent-red), var(--accent-gold), #52b788); height: 100%; width: 0%; transition: width 0.4s ease; }
 .progress-footer { display: flex; justify-content: space-between; align-items: center; font-size: 0.8em; color: var(--text-dim); font-weight: bold; }
-
-.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.filter-buttons { display: flex; gap: 6px; flex-wrap: wrap; }
-.filter-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8em; font-weight: bold; transition: all 0.2s; }
-.filter-btn.active, .filter-btn:hover { background: var(--accent-gold); color: #000; border-color: var(--accent-gold); }
-.search-input { background: rgba(0,0,0,0.4); border: 1px solid var(--text-dim); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 0.85em; outline: none; width: 100%; max-width: 170px; }
-
-.toolbar-right-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-
-.btn-toolbar-action { height: 34px; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; padding: 0 12px; border-radius: 6px; font-size: 0.8em; font-weight: 700; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; outline: none; line-height: 1; background: rgba(255, 183, 3, 0.12); border: 1px solid var(--accent-gold); color: var(--accent-gold); backdrop-filter: blur(4px); }
-.btn-toolbar-action:hover { background: var(--accent-gold); color: #000; box-shadow: 0 2px 10px rgba(255, 183, 3, 0.3); }
-.btn-toolbar-action.green-btn { background: rgba(82, 183, 136, 0.12); border-color: #52b788; color: #52b788; }
-.btn-toolbar-action.green-btn:hover { background: #52b788; color: #000; box-shadow: 0 2px 10px rgba(82, 183, 136, 0.3); }
 
 .saga-title { color: var(--accent-gold); border-left: 4px solid var(--accent-red); padding-left: 10px; margin-top: 28px; font-size: 1.2em; text-shadow: 0 2px 4px rgba(0,0,0,0.8); transition: border-color 0.3s, color 0.3s; }
 .arc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
@@ -441,6 +545,11 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
 </div>
 
 <div class="container">
+    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
+    <header id="main-header" class="main-header-banner">
+        <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
+    </header>
+
     <!-- VIVRE CARD (PERFIL DO UTILIZADOR) -->
     <div class="top-vivre-card">
         <div class="vivre-card-main">
@@ -471,11 +580,6 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             <span class="vivre-stat-item"><span class="vivre-bounty-val" id="top-mobile-bounty">฿ 0</span></span>
         </div>
     </div>
-    
-    <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
-    <header id="main-header" class="main-header-banner">
-        <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
-    </header>
 
     <div class="next-up-container" id="next-up-card">
         <div class="next-up-info">
@@ -509,8 +613,8 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
             <span id="percentage-text">0% Concluído</span>
         </div>
     </div>
-    
-    <!-- TOOLBAR COM OS DOIS BOTÕES DE STATS E PESQUISA -->
+
+    <!-- 🌟 TOOLBAR ALINHADA NUMA LINHA HORIZONTAL IGUAL À IMAGEM 🌟 -->
     <div class="toolbar">
         <div class="filter-buttons">
             <button class="filter-btn active" id="filter-all-btn" onclick="setFilter('all', this)">Todos</button>
@@ -522,7 +626,7 @@ footer { margin-top: 45px; padding: 16px 0; text-align: center; font-size: 0.85e
         <div class="toolbar-right-group">
             <button class="btn-toolbar-action green-btn" id="btn-user-stats-txt" onclick="openUserStatsModal()">👤 As Tuas Stats</button>
             <button class="btn-toolbar-action" id="btn-global-stats-txt" onclick="openGlobalStatsModal()">🏴‍☠️ Stats da Crew</button>
-            <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar arco..." oninput="renderApp()">
+            <input type="text" class="search-input" id="search-box" placeholder="🔍 Pesquisar..." oninput="renderApp()">
         </div>
     </div>
 
@@ -750,7 +854,7 @@ const arcDetailsI18n = {
         "long-ring": { name: "Long Ring Long Land", summary: "Competencia en los juegos Davy Back Fight contra los Piratas de Foxy.", highlights: ["Afro Luffy en combates de boxeo", "Aparición del Almirante Aokiji (Kuzan)"] },
         "water-7": { name: "Water 7", summary: "Crisis interna: retiro del Going Merry, duelo Luffy vs Usopp y desaparición de Robin.", highlights: ["Confrontación dramática: Luffy vs Usopp por el Going Merry", "Traición del CP9 en los astilleros Galley-La", "Nico Robin se entrega al Gobierno Mundial para proteger a la tripulación"] },
         "enies-lobby": { name: "Enies Lobby", summary: "Invasión a la isla judicial del Gobierno Mundial para rescatar a Nico Robin.", highlights: ["Luffy revela el Gear 2nd contra Blueno", "Sogeking quema la bandera del Gobierno Mundial", "Robin grita: '¡QUIERO VIVIR!'", "Luffy vs Rob Lucci y golpe final Jet Gatling", "Funeral y despedida emotiva del Going Merry"] },
-        "post-enies": { name: "Post-Enies Lobby", summary: "Consecuencias de Enies Lobby: nuevo barco Thousand Sunny, nuevas recompensas y revelación familiar.", highlights: ["Garp revela que Dragon es el padre de Luffy y Shanks es un Yonko", "Franky se une oficialmente como carpintero", "Usopp pide perdón entre lágrimas para regresar", "Ace vs Barbanegra en la Isla Banaro"] },
+        "post-enies": { name: "Post-Enies Lobby", summary: "Consecuencias de Enies Lobby: nuevo barco Thousand Sunny, nuevas recompensas y revelación familiar.", highlights: ["Garp revela que Dragon es el padre de Luffy e Shanks es un Yonko", "Franky se une oficialmente como carpintero", "Usopp pide perdón entre lágrimas para regresar", "Ace vs Barbanegra en la Isla Banaro"] },
         "thriller-bark": { name: "Thriller Bark", summary: "Barco fantasma gigante dominado por Gecko Moria que roba sombras humanas.", highlights: ["Reclutamiento del esqueleto músico Brook", "Luffy se transforma en Nightmare Luffy", "Zoro absorbe todo el dolor de Luffy ante Kuma: '¡AQUÍ NO HA PASADO NADA!'"] },
         "sabaody": { name: "Archipiélago Sabaody", summary: "Llegada a la antesala del Nuevo Mundo y encuentro con la Peor Generación.", highlights: ["Luffy golpea a un Tenryuubito", "Aparición de Silvers Rayleigh", "Separación trágica de la tripulación causada por Kuma"] },
         "amazon-lily": { name: "Amazon Lily", summary: "Luffy es enviado a la isla de las mujeres dominada por Boa Hancock.", highlights: ["Boa Hancock se enamora de Luffy", "Luffy descubre que Ace será ejecutado en Marineford"] },
@@ -759,7 +863,7 @@ const arcDetailsI18n = {
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia con Ace y Sabo, e inicio de los 2 años de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
         "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe y Luffy"] },
-        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego y hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
+        "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },

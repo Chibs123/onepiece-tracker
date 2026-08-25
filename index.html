@@ -240,54 +240,11 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 20px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; 
 }
 
-/* GRELHA DO MODAL DE STATS PESSOAIS */
 .modal-stats-user-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
     gap: 10px; 
     margin-top: 14px; 
-}
-
-/* CARTAZ / PASSPORT CONTAINER */
-.poster-preview-container {
-    margin-top: 18px;
-    background: rgba(11, 19, 43, 0.9);
-    border: 1.5px solid var(--accent-gold);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-#passport-canvas {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
-}
-
-.btn-download-poster {
-    width: 100%;
-    height: 40px;
-    background: linear-gradient(135deg, var(--accent-gold), #e0a100);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    font-weight: 800;
-    font-size: 0.9em;
-    cursor: pointer;
-    transition: transform 0.15s, filter 0.2s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-.btn-download-poster:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.1);
 }
 
 .modal-stats-crew-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-top: 12px; }
@@ -300,7 +257,6 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     margin-top: 12px; 
 }
 
-/* Cartões de Arcos */
 .arc-card { 
     background-color: var(--card-bg); 
     border-radius: 12px; 
@@ -488,7 +444,7 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
     </div>
 </div>
 
-<!-- 👤 MODAL 1: AS TUAS ESTATÍSTICAS COM CARTAZ GERADOR 👤 -->
+<!-- 👤 MODAL 1: AS TUAS ESTATÍSTICAS (8 CARTÕES PERFEITOS) 👤 -->
 <div class="user-stats-overlay" id="user-stats-modal" style="display:none;" onclick="closeUserStatsOnOverlay(event)">
     <div class="stats-modal-box">
         <button class="modal-close-btn" onclick="closeUserStatsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
@@ -529,15 +485,6 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
                 <span class="stat-label" id="lbl-user-hours">TEMPO ASSISTIDO</span>
                 <span class="stat-value" id="user-card-hours">~0h (0 d)</span>
             </div>
-        </div>
-
-        <!-- 🏴‍☠️ CARTAZ DE PROCURADO / VIVRE POSTER 🏴‍☠️ -->
-        <div class="poster-preview-container">
-            <span style="font-size: 0.85em; font-weight: 800; color: var(--accent-gold); text-transform: uppercase;" id="lbl-poster-title">📜 Cartaz de Procurado / Passaporte</span>
-            <canvas id="passport-canvas" width="600" height="780"></canvas>
-            <button class="btn-download-poster" onclick="downloadPassportPoster()">
-                <span>📥</span> <span id="lbl-btn-download-poster">Descarregar Cartaz de Procurado</span>
-            </button>
         </div>
     </div>
 </div>
@@ -738,7 +685,7 @@ let currentUser = localStorage.getItem('op_current_user') || '';
 let currentLang = localStorage.getItem('op_current_lang') || 'pt';
 let selectedCrewMember = localStorage.getItem('op_current_crew') || 'luffy';
 let selectedThemeMode = localStorage.getItem('op_theme_mode') || 'crew';
-let currentTrackMode = localStorage.getItem('op_track_mode') || 'original';
+let currentTrackMode = localStorage.getItem('op_track_mode') || 'original'; // 'original' ou 'onepace'
 let customPrimaryColor = localStorage.getItem('op_custom_primary') || '#d90429';
 let customSecondaryColor = localStorage.getItem('op_custom_secondary') || '#ffb703';
 
@@ -846,7 +793,6 @@ const i18n = {
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface", setMode: "Modo de Visualização",
         optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
         lblCustomPicker: "Escolher Cores Personalizadas", lblColorPri: "Cor Primária", lblColorSec: "Cor Destaque",
-        lblPosterTitle: "📜 Cartaz de Procurado / Passaporte", lblBtnDownloadPoster: "Descarregar Cartaz de Procurado",
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
@@ -856,7 +802,6 @@ const i18n = {
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language", setMode: "Watch Mode",
         optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
         lblCustomPicker: "Choose Custom Colors", lblColorPri: "Primary Color", lblColorSec: "Accent Color",
-        lblPosterTitle: "📜 Wanted Poster / Pirate Passport", lblBtnDownloadPoster: "Download Wanted Poster",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
@@ -866,7 +811,6 @@ const i18n = {
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz", setMode: "Modo de Visualización",
         optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
         lblCustomPicker: "Elegir Colores Personalizados", lblColorPri: "Color Primario", lblColorSec: "Color Destacado",
-        lblPosterTitle: "📜 Cartel de Se Busca / Pasaporte", lblBtnDownloadPoster: "Descargar Cartel de Se Busca",
         loaderText: "Navegando por la Grand Line..."
     }
 };
@@ -1101,103 +1045,567 @@ function getCurrentOpData() {
     return currentTrackMode === 'onepace' ? opDataOnePace : opDataOriginal;
 }
 
-/* 🎨 GERAÇÃO DO CARTAZ / VIVRE CARD POSTER NO CANVAS 🎨 */
-function drawPassportPoster(watchedEps, totalEps, pct, activeLocation) {
-    const canvas = document.getElementById('passport-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    
-    // Background do Cartaz (Estilo Wanted Pergaminho Náutico Escuro)
-    ctx.fillStyle = "#121a30";
-    ctx.fillRect(0, 0, 600, 780);
+try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-dot').className = 'sync-dot'; document.getElementById('sync-text').textContent = 'Erro Firebase'; }
 
-    // Borda Dourada Estilizada
-    ctx.strokeStyle = "#ffb703";
-    ctx.lineWidth = 6;
-    ctx.strokeRect(16, 16, 568, 748);
-    ctx.strokeStyle = "rgba(255, 183, 3, 0.4)";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(24, 24, 552, 732);
+function openSettingsModal() { 
+    document.getElementById('settings-modal').style.display = 'flex'; 
+    document.getElementById('mode-select').value = currentTrackMode;
+    document.getElementById('crew-select').value = selectedCrewMember;
+    document.getElementById('theme-select').value = selectedThemeMode;
+    if (selectedThemeMode === 'custom') {
+        document.getElementById('custom-color-group').style.display = 'flex';
+        document.getElementById('primary-color-picker').value = customPrimaryColor;
+        document.getElementById('secondary-color-picker').value = customSecondaryColor;
+    } else {
+        document.getElementById('custom-color-group').style.display = 'none';
+    }
+}
+function closeSettingsModal() { document.getElementById('settings-modal').style.display = 'none'; }
+function closeSettingsOnOverlay(e) { if (e.target.classList.contains('settings-modal-overlay')) closeSettingsModal(); }
 
-    // Título Principal do Cartaz
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#ffb703";
-    ctx.font = "bold 34px 'Segoe UI', sans-serif";
-    ctx.fillText("ONE PIECE VOYAGE LOG", 300, 75);
+/* 👤 CONTROLOS DO MODAL DE STATS DO USER */
+function openUserStatsModal() {
+    document.getElementById('user-stats-modal').style.display = 'flex';
+    fetchGlobalStatsAndFleet();
+}
+function closeUserStatsModal() { document.getElementById('user-stats-modal').style.display = 'none'; }
+function closeUserStatsOnOverlay(e) { if (e.target.classList.contains('user-stats-overlay')) closeUserStatsModal(); }
 
-    ctx.font = "bold 16px 'Segoe UI', sans-serif";
-    ctx.fillStyle = "#a0aec0";
-    ctx.fillText("GRAND LINE PIRATE PASSPORT", 300, 105);
+/* 🏴‍☠️ CONTROLOS DO MODAL DE STATS DA CREW */
+function openGlobalStatsModal() {
+    document.getElementById('global-stats-modal').style.display = 'flex';
+    fetchGlobalStatsAndFleet();
+}
+function closeGlobalStatsModal() { document.getElementById('global-stats-modal').style.display = 'none'; }
+function closeGlobalStatsOnOverlay(e) { if (e.target.classList.contains('global-stats-overlay')) closeGlobalStatsModal(); }
 
-    // Moldura do Avatar / Jolly Roger
-    ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-    ctx.fillRect(175, 130, 250, 250);
-    ctx.strokeStyle = "#ffb703";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(175, 130, 250, 250);
-
-    // Imagem do Ícone da App dentro do Cartaz
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = "./img/icon-192.png";
-    img.onload = () => {
-        ctx.drawImage(img, 185, 140, 230, 230);
-    };
-
-    // Nome do Pirata
-    ctx.fillStyle = "#edf2f4";
-    ctx.font = "bold 32px 'Segoe UI', sans-serif";
-    ctx.fillText(currentUser.toUpperCase() || "PIRATE", 300, 425);
-
-    // Recompensa
-    ctx.fillStyle = "#ffb703";
-    ctx.font = "bold 26px 'Courier New', monospace";
-    ctx.fillText(formatBounty(getLuffyBounty()), 300, 465);
-
-    // Linha Divisória
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(60, 495);
-    ctx.lineTo(540, 495);
-    ctx.stroke();
-
-    // Detalhes do Progresso
-    ctx.textAlign = "left";
-    ctx.font = "bold 17px 'Segoe UI', sans-serif";
-    ctx.fillStyle = "#a0aec0";
-    ctx.fillText("EPISÓDIOS:", 70, 540);
-    ctx.fillText("PROGRESSO:", 70, 580);
-    ctx.fillText("LOCALIZAÇÃO:", 70, 620);
-    ctx.fillText("MODO TRACKER:", 70, 660);
-
-    ctx.textAlign = "right";
-    ctx.fillStyle = "#edf2f4";
-    ctx.fillText(`${watchedEps} / ${totalEps}`, 530, 540);
-    
-    ctx.fillStyle = "#52b788";
-    ctx.fillText(`${pct}%`, 530, 580);
-
-    ctx.fillStyle = "#edf2f4";
-    ctx.fillText(activeLocation.replace('📍 ', ''), 530, 620);
-
-    ctx.fillStyle = "#ffb703";
-    ctx.fillText(currentTrackMode === 'onepace' ? "One Pace (Fan Edit)" : "Anime Original", 530, 660);
-
-    // Rodapé
-    ctx.textAlign = "center";
-    ctx.font = "italic 13px 'Segoe UI', sans-serif";
-    ctx.fillStyle = "#718096";
-    ctx.fillText("Issued by Straw Hat Fleet • Made by Chibs", 300, 725);
+function changeLanguage(lang) { 
+    currentLang = lang; 
+    localStorage.setItem('op_current_lang', lang); 
+    saveSettingsToFirebase();
+    applyTranslations(); 
+    renderApp(); 
 }
 
-function downloadPassportPoster() {
-    const canvas = document.getElementById('passport-canvas');
-    if (!canvas) return;
-    const link = document.createElement('a');
-    link.download = `pirate-passport-${currentUser || 'voyager'}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
+function getArcTranslation(arcId) {
+    const langData = arcDetailsI18n[currentLang] || arcDetailsI18n.pt;
+    return langData[arcId]?.name || arcId;
+}
+
+function getSagaTranslation(sagaObj) {
+    return sagaObj.sagaI18n[currentLang] || sagaObj.sagaI18n.pt;
+}
+
+function applyTranslations() {
+    const t = i18n[currentLang] || i18n.pt;
+    document.getElementById('lang-select').value = currentLang;
+    document.getElementById('mode-select').value = currentTrackMode;
+    document.getElementById('crew-select').value = selectedCrewMember;
+    document.getElementById('theme-select').value = selectedThemeMode;
+    document.getElementById('btn-switch-txt').textContent = t.switchProfile;
+    document.getElementById('btn-user-stats-txt').textContent = t.userStatsBtn;
+    document.getElementById('btn-global-stats-txt').textContent = t.globalStatsBtn;
+    document.getElementById('label-current-adventure').textContent = t.currentAdventure;
+    document.getElementById('label-stat-arcs').textContent = t.statArcs;
+    document.getElementById('label-stat-eps').textContent = t.statEps;
+    document.getElementById('label-journey-progress').textContent = t.journeyProgress;
+    document.getElementById('filter-all-btn').textContent = t.filterAll;
+    document.getElementById('filter-progress-btn').textContent = t.filterInProgress;
+    document.getElementById('filter-completed-btn').textContent = t.filterCompleted;
+    document.getElementById('filter-unwatched-btn').textContent = t.filterPending;
+    document.getElementById('search-box').placeholder = t.searchPlaceholder;
+    document.getElementById('modal-welcome-title').textContent = t.welcomeTitle;
+    document.getElementById('modal-welcome-desc').textContent = t.welcomeDesc;
+    document.getElementById('username-input').placeholder = t.yourName;
+    document.getElementById('modal-login-btn').textContent = t.enterBtn;
+    document.getElementById('summary-heading-desc').textContent = t.summaryDescHeading;
+    document.getElementById('summary-heading-scenes').textContent = t.summaryScenesHeading;
+
+    document.getElementById('label-stat-user-title').textContent = t.statUserTitle;
+    document.getElementById('label-stat-user-sub').textContent = t.statUserSub;
+    document.getElementById('lbl-user-name').textContent = t.lblUserName;
+    document.getElementById('lbl-user-eps').textContent = t.lblUserEps;
+    document.getElementById('lbl-user-pct').textContent = t.lblUserPct;
+    document.getElementById('lbl-user-arcs').textContent = t.lblUserArcs;
+    document.getElementById('lbl-user-loc').textContent = t.lblUserLoc;
+    document.getElementById('lbl-user-eta').textContent = t.lblUserEta;
+    document.getElementById('lbl-user-bounty').textContent = t.lblUserBounty;
+    document.getElementById('lbl-user-hours').textContent = t.lblUserHours;
+
+    document.getElementById('modal-stats-title').textContent = t.statsTitle;
+    document.getElementById('modal-stats-sub').textContent = t.statsSub;
+    document.getElementById('label-stat-crew').textContent = t.statCrew;
+    document.getElementById('label-stat-toteps').textContent = t.statTotEps;
+    document.getElementById('label-stat-maxbounty').textContent = t.statMaxBounty;
+    document.getElementById('label-leaderboard-heading').textContent = t.leaderboardHeading;
+    document.getElementById('th-rank').textContent = t.thRank;
+    document.getElementById('th-user').textContent = t.thUser;
+    document.getElementById('th-progress').textContent = t.thProgress;
+    document.getElementById('th-episodes').textContent = t.thEpisodes;
+
+    document.getElementById('modal-fleet-title').textContent = t.fleetTitle;
+    document.getElementById('modal-fleet-sub').textContent = t.fleetSub;
+
+    document.getElementById('modal-settings-title').textContent = t.settingsTitle;
+    document.getElementById('label-set-mode').textContent = t.setMode;
+    document.getElementById('label-set-profile').textContent = t.setProfile;
+    document.getElementById('label-set-crew').textContent = t.setCrew;
+    document.getElementById('label-set-theme').textContent = t.setTheme;
+    document.getElementById('label-set-lang').textContent = t.setLang;
+
+    document.getElementById('opt-theme-crew').textContent = t.optCrewTheme;
+    document.getElementById('opt-theme-custom').textContent = t.optCustomTheme;
+    document.getElementById('label-custom-picker').textContent = t.lblCustomPicker;
+    document.getElementById('label-color-pri').textContent = t.lblColorPri;
+    document.getElementById('label-color-sec').textContent = t.lblColorSec;
+
+    const loaderTxt = document.getElementById('loader-status-txt');
+    if (loaderTxt) loaderTxt.textContent = t.loaderText;
+}
+
+function checkUserSession() {
+    applyTranslations();
+    applyCrewTheme();
+    updateTitleBanner();
+    if (!currentUser) { document.getElementById('user-modal').style.display = 'flex'; } 
+    else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
+}
+
+async function hashPIN(pinText) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(pinText);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function processUserLogin() {
+    const inputUser = document.getElementById('username-input').value.trim();
+    const inputPin = document.getElementById('pin-input').value.trim();
+    const hintEl = document.getElementById('login-msg-hint');
+
+    if (!inputUser) {
+        hintEl.textContent = '❌ Introduz o teu nome de pirata!';
+        hintEl.style.color = 'var(--accent-red)';
+        return;
+    }
+
+    if (!inputPin || inputPin.length < 4) {
+        hintEl.textContent = '❌ O PIN precisa ter exatamente 4 dígitos!';
+        hintEl.style.color = 'var(--accent-red)';
+        return;
+    }
+
+    const cleanUsername = inputUser.replace(/[.#$\[\]]/g, "_");
+    const pinHash = await hashPIN(inputPin);
+
+    firebase.database().ref('users/' + cleanUsername).once('value').then((snapshot) => {
+        const val = snapshot.val();
+        
+        if (val) {
+            if (val.pin) {
+                if (val.pin === pinHash || val.pin === inputPin) {
+                    if (val.pin === inputPin) {
+                        firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash);
+                    }
+                    currentUser = cleanUsername;
+                    localStorage.setItem('op_current_user', currentUser);
+                    checkUserSession();
+                } else {
+                    hintEl.textContent = '❌ PIN Incorreto para este utilizador!';
+                    hintEl.style.color = 'var(--accent-red)';
+                }
+            } else {
+                firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash).then(() => {
+                    currentUser = cleanUsername;
+                    localStorage.setItem('op_current_user', currentUser);
+                    checkUserSession();
+                });
+            }
+        } else {
+            currentUser = cleanUsername;
+            localStorage.setItem('op_current_user', currentUser);
+            firebase.database().ref('users/' + cleanUsername + '/pin').set(pinHash);
+            checkUserSession();
+        }
+    }).catch(err => {
+        console.error(err);
+        currentUser = cleanUsername;
+        localStorage.setItem('op_current_user', currentUser);
+        checkUserSession();
+    });
+}
+
+function switchUserPrompt() { 
+    document.getElementById('user-modal').style.display = 'flex'; 
+    document.getElementById('username-input').value = currentUser; 
+    document.getElementById('pin-input').value = '';
+    document.getElementById('login-msg-hint').textContent = 'Pede PIN ao entrar ou cria um PIN novo se fores novo!';
+    document.getElementById('login-msg-hint').style.color = 'var(--text-dim)';
+}
+
+function bindFirebaseUser(username) {
+    dbRef = firebase.database().ref('users/' + username);
+    dbRef.on('value', (snapshot) => {
+        const val = snapshot.val() || {};
+        
+        if (currentTrackMode === 'onepace') {
+            userProgress = val.progress_onepace || {};
+        } else {
+            userProgress = val.progress || val || {};
+        }
+        
+        if (val.settings) {
+            const set = val.settings;
+            if (set.lang && set.lang !== currentLang) {
+                currentLang = set.lang;
+                localStorage.setItem('op_current_lang', currentLang);
+                applyTranslations();
+            }
+            if (set.trackMode && set.trackMode !== currentTrackMode) {
+                currentTrackMode = set.trackMode;
+                localStorage.setItem('op_track_mode', currentTrackMode);
+                updateTitleBanner();
+            }
+            if (set.crewMember && set.crewMember !== selectedCrewMember) {
+                selectedCrewMember = set.crewMember;
+                localStorage.setItem('op_current_crew', selectedCrewMember);
+            }
+            if (set.themeMode && set.themeMode !== selectedThemeMode) {
+                selectedThemeMode = set.themeMode;
+                localStorage.setItem('op_theme_mode', selectedThemeMode);
+            }
+            if (set.customPrimary) {
+                customPrimaryColor = set.customPrimary;
+                localStorage.setItem('op_custom_primary', customPrimaryColor);
+            }
+            if (set.customSecondary) {
+                customSecondaryColor = set.customSecondary;
+                localStorage.setItem('op_custom_secondary', customSecondaryColor);
+            }
+            applyCrewTheme();
+        }
+        
+        const currentJSON = JSON.stringify(userProgress);
+        if (currentJSON !== lastProgressJSON) {
+            lastProgressJSON = currentJSON;
+            const t = i18n[currentLang] || i18n.pt;
+            document.getElementById('sync-dot').className = 'sync-dot online';
+            document.getElementById('sync-text').style.color = '#52b788';
+            document.getElementById('sync-text').textContent = t.cloudState;
+            renderApp();
+        }
+    }, (error) => {
+        console.error(error);
+        document.getElementById('sync-dot').className = 'sync-dot';
+        document.getElementById('sync-text').style.color = 'var(--accent-red)';
+        document.getElementById('sync-text').textContent = 'Offline';
+    });
+}
+
+function setFilter(filterType, btnEl) { currentFilter = filterType; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnEl.classList.add('active'); renderApp(); }
+
+function saveData() { 
+    if (dbRef) { 
+        if (currentTrackMode === 'onepace') {
+            dbRef.child('progress_onepace').set(userProgress); 
+        } else {
+            dbRef.child('progress').set(userProgress); 
+        }
+    } 
+}
+
+function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
+
+/* CÁLCULO DE RECOMPENSA MULTI-PERSONAGEM */
+function calculateBountyForProgress(progressObj, member = 'luffy') {
+    let allArcs = getCurrentOpData().flatMap(s => s.arcs);
+    let isDone = (arcId) => {
+        let arc = allArcs.find(a => a.id === arcId);
+        return arc && (progressObj[arcId] || 0) >= arc.totalEps;
+    };
+
+    switch (member) {
+        case 'zoro':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 1111000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 320000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 120000000;
+            if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 60000000;
+            return 0;
+
+        case 'nami':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 366000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 66000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 16000000;
+            return 0;
+
+        case 'usopp':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 500000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 200000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 30000000;
+            return 0;
+
+        case 'sanji':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 1032000000;
+            if (isDone('whole-cake') || isDone('reverie')) return 330000000;
+            if (isDone('dressrosa') || isDone('zou')) return 177000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 77000000;
+            return 0;
+
+        case 'chopper':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 1000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 100;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 50;
+            return 0;
+
+        case 'robin':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 930000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 130000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 80000000;
+            if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 79000000;
+            return 79000000;
+
+        case 'franky':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 394000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 94000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 44000000;
+            return 0;
+
+        case 'brook':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 383000000;
+            if (isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie')) return 83000000;
+            if (isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 33000000;
+            return 0;
+
+        case 'jinbe':
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 1100000000;
+            if (isDone('whole-cake') || isDone('reverie')) return 438000000;
+            if (isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard') || isDone('dressrosa') || isDone('zou')) return 250000000;
+            return 76000000;
+
+        case 'luffy':
+        default:
+            if (isDone('wano') || isDone('egghead') || isDone('elbaf')) return 3000000000;
+            if (isDone('whole-cake') || isDone('reverie')) return 1500000000;
+            if (isDone('dressrosa') || isDone('zou')) return 500000000;
+            if (isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard')) return 400000000;
+            if (isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford')) return 300000000;
+            if (isDone('alabasta') || isDone('jaya') || isDone('skypiea') || isDone('long-ring') || isDone('water-7')) return 100000000;
+            if (isDone('arlong-park') || isDone('loguetown') || isDone('reverse-mountain') || isDone('whiskey-peak') || isDone('little-garden') || isDone('drum-island')) return 30000000;
+            return 0;
+    }
+}
+
+function getSelectedCrewMemberName() {
+    const names = {
+        luffy: "LUFFY", zoro: "ZORO", nami: "NAMI", usopp: "USOPP", sanji: "SANJI",
+        chopper: "CHOPPER", robin: "ROBIN", franky: "FRANKY", brook: "BROOK", jinbe: "JINBE"
+    };
+    return names[selectedCrewMember] || "LUFFY";
+}
+
+function getLuffyBounty() { return calculateBountyForProgress(userProgress, selectedCrewMember); }
+
+function openSummaryModal(arcId, isCompleted) {
+    const arc = getCurrentOpData().flatMap(s => s.arcs).find(a => a.id === arcId);
+    if (!arc) return;
+    const t = i18n[currentLang] || i18n.pt;
+    const langData = arcDetailsI18n[currentLang] || arcDetailsI18n.pt;
+    const details = langData[arcId] || arcDetailsI18n.pt[arcId] || { summary: "", highlights: [] };
+
+    document.getElementById('summary-title').textContent = details.name || arc.id;
+    document.getElementById('summary-eps').textContent = `${t.epsSeries} ${arc.eps}`;
+
+    const textEl = document.getElementById('summary-text');
+    const listEl = document.getElementById('summary-list');
+
+    if (isCompleted) {
+        textEl.textContent = details.summary;
+        listEl.innerHTML = (details.highlights || []).map(h => `<li>🔥 ${h}</li>`).join('');
+    } else {
+        textEl.textContent = t.spoilerLock;
+        listEl.innerHTML = `<li style='color:var(--accent-gold)'>${t.spoilerList}</li>`;
+    }
+    document.getElementById('summary-modal').style.display = 'flex';
+}
+
+function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
+function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
+
+/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS, USER E FROTA 📊 */
+function fetchGlobalStatsAndFleet() {
+    const currentOpData = getCurrentOpData();
+    const t = i18n[currentLang] || i18n.pt;
+    const totalSeriesEpisodes = currentOpData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
+    const totalSeriesArcs = currentOpData.flatMap(s => s.arcs).length;
+    const tbody = document.getElementById('leaderboard-body');
+    const fleetContainer = document.getElementById('fleet-timeline-container');
+    
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">${t.loadingData}</td></tr>`;
+    fleetContainer.innerHTML = `<div style="text-align:center; color:var(--text-dim); padding:10px;" id="loading-fleet">${t.loadingData}</div>`;
+    
+    firebase.database().ref('users').once('value').then((snapshot) => {
+        const usersData = snapshot.val() || {};
+        const userKeys = Object.keys(usersData);
+
+        let totalUsers = userKeys.length;
+        let grandTotalEps = 0;
+        let maxBounty = 0;
+        let leaderboard = [];
+        let sagaMap = {};
+        let currentUserWatched = 0;
+        let currentUserCompletedArcs = 0;
+        let currentActiveArcName = "";
+
+        currentOpData.forEach(s => { sagaMap[s.sagaKey] = { icon: s.icon, sagaObj: s, users: [] }; });
+
+        userKeys.forEach(username => {
+            const rawVal = usersData[username] || {};
+            const prog = currentTrackMode === 'onepace' ? (rawVal.progress_onepace || {}) : (rawVal.progress || rawVal || {});
+            let watched = 0;
+            let completedArcsCount = 0;
+
+            currentOpData.flatMap(s => s.arcs).forEach(arc => {
+                const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
+                watched += currentEps;
+                if (currentEps >= arc.totalEps) completedArcsCount++;
+            });
+
+            if (username === currentUser) {
+                currentUserWatched = watched;
+                currentUserCompletedArcs = completedArcsCount;
+            }
+
+            grandTotalEps += watched;
+            const bounty = calculateBountyForProgress(prog, selectedCrewMember);
+            if (bounty > maxBounty) maxBounty = bounty;
+
+            const percent = Math.round((watched / totalSeriesEpisodes) * 100) || 0;
+
+            leaderboard.push({
+                username: username,
+                watched: watched,
+                percent: percent,
+                bounty: bounty
+            });
+
+            let currentSagaKey = currentOpData[0].sagaKey;
+            let currentArcId = "";
+
+            for (let saga of currentOpData) {
+                let sagaCompleted = true;
+                for (let arc of saga.arcs) {
+                    const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
+                    if (currentEps < arc.totalEps) {
+                        currentSagaKey = saga.sagaKey;
+                        currentArcId = arc.id;
+                        sagaCompleted = false;
+                        break;
+                    }
+                }
+                if (!sagaCompleted) break;
+                currentSagaKey = saga.sagaKey;
+                currentArcId = saga.arcs[saga.arcs.length - 1].id;
+            }
+
+            if (username === currentUser) currentActiveArcName = getArcTranslation(currentArcId);
+
+            sagaMap[currentSagaKey].users.push({
+                username: username,
+                arcId: currentArcId,
+                bounty: bounty
+            });
+        });
+
+        // ATUALIZA OS DADOS NO MODAL PESSOAL DO USER
+        const userPercent = Math.round((currentUserWatched / totalSeriesEpisodes) * 100) || 0;
+        const totalMinutes = currentUserWatched * (currentTrackMode === 'onepace' ? 35 : 23.5);
+        const totalHours = Math.round(totalMinutes / 60);
+        const totalDays = (totalHours / 24).toFixed(1);
+
+        const remainingEps = Math.max(0, totalSeriesEpisodes - currentUserWatched);
+        let etaText = t.allCaughtUp;
+        if (remainingEps > 0) {
+            const daysLeft = Math.ceil(remainingEps / (currentTrackMode === 'onepace' ? 2 : 3));
+            if (daysLeft >= 60) {
+                const months = Math.round(daysLeft / 30);
+                etaText = `~${months} ${t.etaMonths}`;
+            } else {
+                etaText = `~${daysLeft} ${t.etaDays}`;
+            }
+        }
+
+        document.getElementById('user-card-name').textContent = currentUser;
+        document.getElementById('user-card-eps').textContent = `${currentUserWatched} / ${totalSeriesEpisodes}`;
+        document.getElementById('user-card-pct').textContent = `${userPercent}%`;
+        document.getElementById('user-card-arcs').textContent = `${currentUserCompletedArcs} / ${totalSeriesArcs}`;
+        document.getElementById('user-card-loc').textContent = currentActiveArcName ? `📍 ${currentActiveArcName}` : '📍 Grand Line';
+        document.getElementById('user-card-eta').textContent = etaText;
+        document.getElementById('user-card-bounty').textContent = formatBounty(getLuffyBounty());
+        document.getElementById('user-card-hours').textContent = `~${totalHours}h (${totalDays} d)`;
+
+        // 1. Leaderboard
+        leaderboard.sort((a, b) => b.watched - a.watched);
+
+        document.getElementById('global-users-count').textContent = totalUsers;
+        document.getElementById('global-eps-count').textContent = grandTotalEps;
+        document.getElementById('global-top-bounty').textContent = formatBounty(maxBounty);
+
+        if (leaderboard.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-dim);">No data</td></tr>`;
+        } else {
+            tbody.innerHTML = leaderboard.map((item, index) => {
+                let rankClass = index === 0 ? 'rank-1' : (index === 1 ? 'rank-2' : (index === 2 ? 'rank-3' : ''));
+                let medal = index === 0 ? '🥇 ' : (index === 1 ? '🥈 ' : (index === 2 ? '🥉 ' : ''));
+                return `
+                    <tr>
+                        <td><span class="rank-badge ${rankClass}">${index + 1}</span></td>
+                        <td style="font-weight:bold;">${medal}${item.username} ${item.username === currentUser ? `<span style="color:var(--accent-gold); font-size:0.8em;">${t.youTag}</span>` : ''}</td>
+                        <td><span style="color:#52b788; font-weight:bold;">${item.percent}%</span></td>
+                        <td>${item.watched} eps</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // 2. Frota
+        fleetContainer.innerHTML = currentOpData.map(saga => {
+            const sagaData = sagaMap[saga.sagaKey];
+            const hasUsers = sagaData.users.length > 0;
+            if (!hasUsers) return '';
+
+            const sagaTitleTranslated = getSagaTranslation(saga);
+
+            return `
+                <div class="fleet-saga-node">
+                    <div class="saga-badge">
+                        <div class="saga-icon-circle">${saga.icon}</div>
+                        <div class="saga-name-title">${sagaTitleTranslated}</div>
+                    </div>
+                    <div class="ships-container">
+                        ${sagaData.users.map(u => {
+                            const arcTranslated = getArcTranslation(u.arcId);
+                            return `
+                                <div class="user-ship-tag ${u.username === currentUser ? 'is-me' : ''}">
+                                    <span class="ship-anim-icon">⛵</span>
+                                    <div class="ship-info-box">
+                                        <span class="ship-captain-name">${u.username} ${u.username === currentUser ? '🏴‍☠️' : ''}</span>
+                                        <span class="ship-bounty-tag">${formatBounty(u.bounty)}</span>
+                                        ${arcTranslated ? `<span class="ship-arc-location">📍 ${arcTranslated}</span>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+    }).catch((err) => {
+        console.error("Erro ao carregar estatísticas gerais:", err);
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--accent-red);">Erro Firebase (.read Rules)</td></tr>`;
+        fleetContainer.innerHTML = `<div style="text-align:center; color:var(--accent-red); padding:10px;">Erro ao carregar frota</div>`;
+    });
 }
 
 /* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (BASEADO EM ARCOS CANÓNICOS) ⚡ */
@@ -1212,6 +1620,7 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const currentOpData = getCurrentOpData();
     const allArcs = currentOpData.flatMap(s => s.arcs);
     
+    // Função auxiliar para verificar progresso num arco
     const getProgress = (arcId) => Math.min(
         (allArcs.find(a => a.id === arcId)?.totalEps || 0), 
         Math.max(0, userProgress[arcId] || 0)
@@ -1221,13 +1630,16 @@ function updateProfileGear(totalWatchedEps, activeArc) {
         return arc && (userProgress[arcId] || 0) >= arc.totalEps;
     };
 
+    // 1. GEAR 5 (Wano em diante)
     const wanoEps = getProgress('wano');
     const hasGear5 = isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoEps >= 140);
 
+    // 2. GEAR 4 (Dressrosa em diante)
     const dressrosaEps = getProgress('dressrosa');
     const dressrosaTotal = allArcs.find(a => a.id === 'dressrosa')?.totalEps || 1;
     const hasGear4 = hasGear5 || isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie') || (dressrosaEps >= Math.floor(dressrosaTotal * 0.7));
 
+    // 3. GEAR 3 e GEAR 2 (Enies Lobby em diante)
     const eniesEps = getProgress('enies-lobby');
     const eniesTotal = allArcs.find(a => a.id === 'enies-lobby')?.totalEps || 1;
     const hasPassedEnies = isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard') || hasGear4;
@@ -1235,6 +1647,7 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const hasGear3 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.6));
     const hasGear2 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.3));
 
+    // Determina o ícone final
     let gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️</span>';
 
     if (hasGear5) {
@@ -1400,9 +1813,6 @@ function renderApp() {
 
     updateProfileGear(watchedEpisodes, activeArc);
 
-    const activeLocStr = activeArc ? `📍 ${getArcTranslation(activeArc.id)}` : "📍 Raftel / Em dia!";
-    drawPassportPoster(watchedEpisodes, totalEpisodes, percent, activeLocStr);
-
     setTimeout(() => {
         const loader = document.getElementById('app-loader');
         if (loader) loader.classList.add('hidden');
@@ -1425,7 +1835,7 @@ function renderNextUpCard(arc) {
     detailEl.textContent = `${arc.currentEps} / ${arc.totalEps} (${t.epsSeries} ${arc.eps})`;
     actionsEl.innerHTML = `
         <button class="btn-quick-add" onclick="addEps('${arc.id}', 1, ${arc.totalEps})">${t.addOneEp}</button>
-        <button class="btn-ep" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${arc.currentEps})">✓ ${t.completeBtn}</button>
+        <button class="btn-complete" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${arc.currentEps})">✓ ${t.completeBtn}</button>
     `;
 }
 

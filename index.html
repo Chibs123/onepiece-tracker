@@ -10,7 +10,6 @@
     <link rel="apple-touch-icon" sizes="192x192" href="./img/icon-192.png">
     <link rel="manifest" href="./manifest.json">
     
-    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#0b132b">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -59,7 +58,7 @@ header.main-header-banner { text-align: center; padding: 14px 16px; border: 2.5p
 h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-transform: uppercase; font-size: clamp(1.1em, 3.5vw, 1.6em); white-space: nowrap; }
 
 /* 📜 VIVRE CARD 📜 */
-.top-vivre-card { display: flex; flex-direction: column; background: rgba(11, 19, 43, 0.88);border: 1px solid var(--accent-gold); border-radius: 12px; margin-bottom: 16px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: hidden; transition: border-color 0.3s ease; }
+.top-vivre-card { display: flex; flex-direction: column; background: rgba(11, 19, 43, 0.88); border: 1px solid var(--accent-gold); border-radius: 12px; margin-bottom: 16px; backdrop-filter: blur(8px); box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: hidden; transition: border-color 0.3s ease; }
 .top-vivre-card:hover { border-color: var(--accent-gold); }
 .vivre-card-main { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; gap: 10px; }
 .vivre-user-info { display: flex; align-items: center; gap: 8px; flex-wrap: nowrap; }
@@ -259,7 +258,7 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     margin-top: 12px; 
 }
 
-/* 2. Cartões com mais altura e preenchimento */
+/* Cartões com mais altura e preenchimento */
 .arc-card { 
     background-color: var(--card-bg); 
     border-radius: 12px; 
@@ -289,13 +288,13 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 .arc-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; padding-right: 22px; }
 .arc-info h3 { margin: 0 0 2px 0; font-size: 1.05em; text-shadow: 0 2px 6px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,1); }
 .arc-episodes { font-size: 0.8em; color: #d0d7de; text-shadow: 0 1px 4px rgba(0,0,0,0.95); font-weight: 600; }
-.ep-controls { display: flex; align-items: center; gap: 5px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
+.ep-controls { display: flex; align-items: center; gap: 6px; margin-top: 8px; flex-wrap: wrap; text-shadow: 0 1px 4px rgba(0,0,0,0.9); }
 .ep-controls span { color: #fff !important; font-weight: 600; font-size: 0.85em; }
-.ep-input { width: 50px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px 2px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; -moz-appearance: textfield; }
+
+.ep-input { width: 52px; background-color: rgba(0, 0, 0, 0.85); border: 1px solid var(--text-dim); color: var(--text-main); padding: 4px; border-radius: 4px; text-align: center; font-weight: bold; font-size: 0.85em; -moz-appearance: textfield; }
 .ep-input::-webkit-outer-spin-button, .ep-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
-.btn-ep { background-color: rgba(28, 37, 65, 0.95); color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 4px 6px; border-radius: 4px; cursor: pointer; font-size: 0.72em; font-weight: bold; }
-.btn-complete { background-color: var(--accent-gold); color: #000; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.72em; font-weight: bold; margin-left: auto; transition: filter 0.2s; }
+.btn-complete { background-color: var(--accent-gold); color: #000; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.76em; font-weight: bold; margin-left: auto; transition: filter 0.2s; }
 .btn-complete:hover { filter: brightness(1.15); }
 
 .arc-mini-progress { background-color: rgba(0, 0, 0, 0.7); height: 4px; border-radius: 2px; margin-top: 6px; overflow: hidden; }
@@ -881,13 +880,13 @@ const arcDetailsI18n = {
         "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
         "marineford": { name: "Marineford", summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia com Ace e Sabo, e inicio de los 2 anos de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
-        "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fuertes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
+        "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fortes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe e Luffy"] },
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
         "zou": { name: "Zou", summary: "Ciudad construida en el lomo de un elefante gigante de más de 1.000 años.", highlights: ["Se revela el secreto de los Road Poneglyphs hacia el One Piece", "Frase icónica Mink: '¡Raizo está a salvo!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Misión de rescate de Sanji en el territorio de la Yonko Big Mom.", highlights: ["Duelo doloroso: Luffy vs Sanji", "Luffy vs Katakuri en el Mundo Espejo y mejora del Haki de Visión", "Sanji se reconciles con la tripulación", "Luffy declarado 5º Emperador con recompensa de ฿1.5B"] },
-        "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo y el Ejército Revolucionario se infiltran en Mary Geoise"] },
+        "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo e el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden e viaje con Gol D. Roger", "Invasión de Onigashima e batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko e recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Arrival of Admirals and the Five Elders (Gorosei)"] },
         "elbaf": { name: "Elbaf", summary: "Los Sombrero de Paja llegan a la legendaria tierra de los gigantes guerreros, Elbaf, desvelando antiguos misterios del Siglo Vacío y del Dios del Sol.", highlights: ["Llegada a la legendaria tierra de gigantes guerreros, Elbaf", "Reencuentro con Dorry y Brogy", "Revelaciones sobre el Siglo Vacío y la historia antigua"] }
@@ -1612,7 +1611,6 @@ function renderApp() {
                                 <span style="font-size:0.8em; color:var(--text-dim)">${t.watchedLabel}</span>
                                 <input type="number" class="ep-input" id="input-${arc.id}" value="${currentEps}" min="0" max="${arc.totalEps}" onkeydown="if(['e','E','+','-','.',','].includes(event.key)) event.preventDefault();" oninput="if(parseInt(this.value) > ${arc.totalEps}) this.value = ${arc.totalEps}; if(this.value < 0 || isNaN(this.value)) this.value = 0;" />
                                 <span style="font-size:0.8em; color:var(--text-dim)">/ ${arc.totalEps}</span>
-                                <button class="btn-ep" id="btn-add-${arc.id}">+5</button>
                                 <button class="btn-complete" id="btn-comp-${arc.id}">
                                     ${currentEps >= arc.totalEps ? '✓' : t.completeBtn}
                                 </button>
@@ -1638,10 +1636,8 @@ function renderApp() {
     opData.forEach(saga => {
         saga.arcs.forEach(arc => {
             const input = document.getElementById(`input-${arc.id}`);
-            const btnAdd = document.getElementById(`btn-add-${arc.id}`);
             const btnComp = document.getElementById(`btn-comp-${arc.id}`);
             if (input) input.onchange = (e) => updateEpisodicProgress(arc.id, e.target.value, arc.totalEps);
-            if (btnAdd) btnAdd.onclick = () => addEps(arc.id, 5, arc.totalEps);
             if (btnComp) btnComp.onclick = () => toggleComplete(arc.id, arc.totalEps, userProgress[arc.id] || 0);
         });
     });

@@ -1608,7 +1608,7 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD ⚡ */
+/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (BASEADO EM ARCOS CANÓNICOS) ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
@@ -1617,23 +1617,46 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
-    const isPace = currentTrackMode === 'onepace';
+    const currentOpData = getCurrentOpData();
+    const allArcs = currentOpData.flatMap(s => s.arcs);
     
-    // Limiares exatos para cada modo
-    const g5Threshold = isPace ? 290 : 980; // Wano (Nika)
-    const g4Threshold = isPace ? 200 : 670; // Dressrosa (Boundman)
-    const g3Threshold = isPace ? 85 : 304;  // Enies Lobby
-    const g2Threshold = isPace ? 66 : 272;  // Enies Lobby
+    // Função auxiliar para verificar progresso num arco
+    const getProgress = (arcId) => Math.min(
+        (allArcs.find(a => a.id === arcId)?.totalEps || 0), 
+        Math.max(0, userProgress[arcId] || 0)
+    );
+    const isDone = (arcId) => {
+        const arc = allArcs.find(a => a.id === arcId);
+        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
+    };
 
+    // 1. GEAR 5 (Wano em diante)
+    const wanoEps = getProgress('wano');
+    const hasGear5 = isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoEps >= 140);
+
+    // 2. GEAR 4 (Dressrosa em diante)
+    const dressrosaEps = getProgress('dressrosa');
+    const dressrosaTotal = allArcs.find(a => a.id === 'dressrosa')?.totalEps || 1;
+    const hasGear4 = hasGear5 || isDone('dressrosa') || isDone('zou') || isDone('whole-cake') || isDone('reverie') || (dressrosaEps >= Math.floor(dressrosaTotal * 0.7));
+
+    // 3. GEAR 3 e GEAR 2 (Enies Lobby em diante)
+    const eniesEps = getProgress('enies-lobby');
+    const eniesTotal = allArcs.find(a => a.id === 'enies-lobby')?.totalEps || 1;
+    const hasPassedEnies = isDone('enies-lobby') || isDone('post-enies') || isDone('thriller-bark') || isDone('sabaody') || isDone('amazon-lily') || isDone('impel-down') || isDone('marineford') || isDone('post-war') || isDone('return-sabaody') || isDone('fishman-island') || isDone('punk-hazard') || hasGear4;
+
+    const hasGear3 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.6));
+    const hasGear2 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.3));
+
+    // Determina o ícone final
     let gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️</span>';
 
-    if (totalWatchedEps >= g5Threshold) {
+    if (hasGear5) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
-    } else if (totalWatchedEps >= g4Threshold) {
+    } else if (hasGear4) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
-    } else if (totalWatchedEps >= g3Threshold) {
+    } else if (hasGear3) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">3</sup></span>';
-    } else if (totalWatchedEps >= g2Threshold) {
+    } else if (hasGear2) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">2</sup></span>';
     }
 

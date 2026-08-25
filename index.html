@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>One Piece Progress Tracker</title>
 
-    <!-- 🏴‍☠️ FAVICON & APPLE TOUCH ICON COM A JOLLY ROGER 🏴‍☠️ -->
+    <!-- 🏴‍☠️ FAVICON & APPLE TOUCH ICON 🏴‍☠️ -->
     <link rel="icon" type="image/png" sizes="192x192" href="./img/icon-192.png">
     <link rel="apple-touch-icon" sizes="192x192" href="./img/icon-192.png">
     <link rel="manifest" href="./manifest.json">
@@ -97,7 +97,7 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
 
 .progress-container { background-color: var(--card-bg); padding: 14px; border-radius: 12px; border: 1px solid var(--accent-gold); margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.4); backdrop-filter: blur(8px); }
 
-/* GRELHA DE STATS PRINCIPAL */
+/* GRELHA DE STATS */
 .stats-grid { 
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
@@ -240,7 +240,6 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     background: #1c2541; border: 2px solid var(--accent-gold); border-radius: 14px; width: 100%; max-width: 620px; max-height: 90vh; overflow-y: auto; padding: 20px 16px; box-shadow: 0 12px 40px rgba(0,0,0,0.9); position: relative; 
 }
 
-/* GRELHA DO MODAL DE STATS PESSOAIS: 8 CARTÕES PERFEITOS (4X2) */
 .modal-stats-user-grid { 
     display: grid; 
     grid-template-columns: 1fr 1fr; 
@@ -258,7 +257,6 @@ h1#main-title { margin: 0; color: var(--accent-gold); letter-spacing: 1px; text-
     margin-top: 12px; 
 }
 
-/* Cartões com mais altura e preenchimento */
 .arc-card { 
     background-color: var(--card-bg); 
     border-radius: 12px; 
@@ -383,6 +381,14 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
     <div class="settings-modal-box">
         <button class="modal-close-btn" onclick="closeSettingsModal()" style="position:absolute; top:10px; right:12px;">&times;</button>
         <h2 style="margin: 0 0 14px 0; color: var(--accent-gold); font-size: 1.25em;" id="modal-settings-title">⚙️ Definições do Tracker</h2>
+
+        <div class="settings-form-group">
+            <label id="label-set-mode">Modo de Visualização</label>
+            <select class="settings-select" id="mode-select" onchange="changeTrackMode(this.value)">
+                <option value="original">📺 Anime Original (Toei)</option>
+                <option value="onepace">✂️ One Pace (Fan Edit)</option>
+            </select>
+        </div>
 
         <div class="settings-form-group">
             <label id="label-set-profile">Perfil de Navegador</label>
@@ -564,7 +570,7 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
 <div class="container">
     <!-- BANNER DO TÍTULO PRINCIPAL NO TOPO -->
     <header id="main-header" class="main-header-banner">
-        <h1 id="main-title">☠️ One Piece Voyage Log ☠️</h1>
+        <h1 id="main-title">☠️ ONE PIECE VOYAGE LOG ☠️</h1>
     </header>
 
     <!-- VIVRE CARD (PERFIL DO UTILIZADOR) -->
@@ -679,6 +685,7 @@ let currentUser = localStorage.getItem('op_current_user') || '';
 let currentLang = localStorage.getItem('op_current_lang') || 'pt';
 let selectedCrewMember = localStorage.getItem('op_current_crew') || 'luffy';
 let selectedThemeMode = localStorage.getItem('op_theme_mode') || 'crew';
+let currentTrackMode = localStorage.getItem('op_track_mode') || 'original'; // 'original' ou 'onepace'
 let customPrimaryColor = localStorage.getItem('op_custom_primary') || '#d90429';
 let customSecondaryColor = localStorage.getItem('op_custom_secondary') || '#ffb703';
 
@@ -686,6 +693,7 @@ let userProgress = {};
 let dbRef = null;
 let currentFilter = 'all';
 let lastProgressJSON = "";
+let previousProgressCache = JSON.parse(localStorage.getItem('op_prev_progress') || '{}');
 
 const crewThemes = {
     luffy: { primary: "#d90429", secondary: "#ffb703", trans: "rgba(217, 4, 41, 0.2)" },
@@ -706,9 +714,31 @@ function saveSettingsToFirebase() {
             lang: currentLang,
             crewMember: selectedCrewMember,
             themeMode: selectedThemeMode,
+            trackMode: currentTrackMode,
             customPrimary: customPrimaryColor,
             customSecondary: customSecondaryColor
         });
+    }
+}
+
+function updateTitleBanner() {
+    const titleEl = document.getElementById('main-title');
+    if (currentTrackMode === 'onepace') {
+        titleEl.innerHTML = `☠️ ONE P<span style="color:#d90429;">A</span>CE VOYAGE LOG ☠️`;
+    } else {
+        titleEl.innerHTML = `☠️ ONE PIECE VOYAGE LOG ☠️`;
+    }
+}
+
+function changeTrackMode(mode) {
+    currentTrackMode = mode;
+    localStorage.setItem('op_track_mode', mode);
+    updateTitleBanner();
+    saveSettingsToFirebase();
+    if (currentUser) {
+        bindFirebaseUser(currentUser);
+    } else {
+        renderApp();
     }
 }
 
@@ -757,28 +787,28 @@ function changeCrewMember(member) {
 
 const i18n = {
     pt: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", userStatsBtn: "👤 As Tuas Stats", globalStatsBtn: "🏴‍☠️ Stats da Crew", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUserTitle: "👤 As Tuas Estatísticas", statUserSub: "O teu desempenho pessoal e progresso na travessia", lblUserName: "Navegador", lblUserEps: "Episódios Vistos", lblUserPct: "Progresso Geral", lblUserArcs: "Arcos Concluídos", lblUserLoc: "Localização Atual", lblUserEta: "Estimativa até Raftel", lblUserBounty: "Recompensa", lblUserHours: "Tempo Assistido", etaDays: "dias", etaMonths: "meses", allCaughtUp: "🎉 Em dia!", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps da série:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
+        cloudState: "Sincronizado", switchProfile: "👤 Trocar Perfil", userStatsBtn: "👤 As Tuas Stats", globalStatsBtn: "🏴‍☠️ Stats da Crew", settingsBtn: "⚙️ Definições", currentAdventure: "📍 A tua aventura atual", statUserTitle: "👤 As Tuas Estatísticas", statUserSub: "O teu desempenho pessoal e progresso na travessia", lblUserName: "Navegador", lblUserEps: "Episódios Vistos", lblUserPct: "Progresso Geral", lblUserArcs: "Arcos Concluídos", lblUserLoc: "Localização Atual", lblUserEta: "Estimativa até Raftel", lblUserBounty: "Recompensa", lblUserHours: "Tempo Assistido", etaDays: "dias", etaMonths: "meses", allCaughtUp: "🎉 Em dia!", statArcs: "MAPA DE ARCOS", statEps: "EPISÓDIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progresso da Jornada", filterAll: "Todos", filterInProgress: "🟡 Em Progresso", filterCompleted: "🟢 Concluídos", filterPending: "⚪ Pendentes", searchPlaceholder: "🔍 Pesquisar...", watchedLabel: "Vistos:", completeBtn: "Concluir", addOneEp: "▶ +1 Episódio", completedText: "Concluído", epsSeries: "Eps:", welcomeTitle: "☠️ BEM-VINDO Á TRIPULAÇÃO ☠️", welcomeDesc: "Escolhe o teu nome e PIN secreto para protegeres o teu progresso:", yourName: "O teu nome...", enterBtn: "Entrar na Aventura ▶", summaryDescHeading: "📖 Resumo da Aventura", summaryScenesHeading: "🔥 Momentos & Cenas Marcantes", allDoneTitle: "🎉 Parabéns! Estás em dia com o Anime!", allDoneDesc: "Completaste todos os arcos disponíveis.", spoilerLock: "🔒 Conteúdo Bloqueado por Aviso de Spoiler! Conclui este arco marcando todos os seus episódios como vistos para desbloqueares o resumo e as cenas marcantes.", spoilerList: "🔒 Marca o arco como concluído para revelar as melhores cenas!",
         statsTitle: "🏴‍☠️ Estatísticas da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
-        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface",
+        settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface", setMode: "Modo de Visualização",
         optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
         lblCustomPicker: "Escolher Cores Personalizadas", lblColorPri: "Cor Primária", lblColorSec: "Cor Destaque",
         loaderText: "A traçar rota na Grand Line..."
     },
     en: { 
-        cloudState: "Synced", switchProfile: "👤 Switch Profile", userStatsBtn: "👤 Your Stats", globalStatsBtn: "🏴‍☠️ Crew Stats", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUserTitle: "👤 Your Stats", statUserSub: "Your personal progress across the seas", lblUserName: "Navigator", lblUserEps: "Episodes Watched", lblUserPct: "Overall Progress", lblUserArcs: "Completed Arcs", lblUserLoc: "Current Location", lblUserEta: "Catch-up ETA", lblUserBounty: "Current Bounty", lblUserHours: "Time Watched", etaDays: "days", etaMonths: "months", allCaughtUp: "🎉 Caught Up!", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Anime eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
+        cloudState: "Synced", switchProfile: "👤 Switch Profile", userStatsBtn: "👤 Your Stats", globalStatsBtn: "🏴‍☠️ Crew Stats", settingsBtn: "⚙️ Settings", currentAdventure: "📍 Your Current Adventure", statUserTitle: "👤 Your Stats", statUserSub: "Your personal progress across the seas", lblUserName: "Navigator", lblUserEps: "Episodes Watched", lblUserPct: "Overall Progress", lblUserArcs: "Completed Arcs", lblUserLoc: "Current Location", lblUserEta: "Catch-up ETA", lblUserBounty: "Current Bounty", lblUserHours: "Time Watched", etaDays: "days", etaMonths: "months", allCaughtUp: "🎉 Caught Up!", statArcs: "ARCS MAP", statEps: "EPISODES WATCHED", statBountyPrefix: "BOUNTY OF ", journeyProgress: "Journey Progress", filterAll: "All", filterInProgress: "🟡 In Progress", filterCompleted: "🟢 Completed", filterPending: "⚪ Pending", searchPlaceholder: "🔍 Search...", watchedLabel: "Watched:", completeBtn: "Complete", addOneEp: "▶ +1 Episode", completedText: "Completed", epsSeries: "Eps:", welcomeTitle: "☠️ WELCOME TO THE CREW ☠️", welcomeDesc: "Enter your name and secret PIN to protect your progress:", yourName: "Your name...", enterBtn: "Join Adventure ▶", summaryDescHeading: "📖 Adventure Summary", summaryScenesHeading: "🔥 Iconic Moments & Scenes", allDoneTitle: "🎉 Congrats! You are caught up with the Anime!", allDoneDesc: "You completed all available arcs.", spoilerLock: "🔒 Content Locked for Spoiler Warning! Complete this arc by marking all episodes as watched to unlock the summary and iconic scenes.", spoilerList: "🔒 Mark the arc as complete to reveal iconic scenes!",
         statsTitle: "🏴‍☠️ Crew Stats", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
-        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language",
+        settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language", setMode: "Watch Mode",
         optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
         lblCustomPicker: "Choose Custom Colors", lblColorPri: "Primary Color", lblColorSec: "Accent Color",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
-        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", userStatsBtn: "👤 Tus Stats", globalStatsBtn: "🏴‍☠️ Stats de la Crew", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Estadísticas", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserArcs: "Arcos Completados", lblUserLoc: "Ubicación Actual", lblUserEta: "Estimación hasta Raftel", lblUserBounty: "Recompensa Actual", lblUserHours: "Tiempo Visto", etaDays: "días", etaMonths: "meses", allCaughtUp: "🎉 ¡Al día!", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps de la serie:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
+        cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", userStatsBtn: "👤 Tus Stats", globalStatsBtn: "🏴‍☠️ Stats de la Crew", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Estadísticas", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserArcs: "Arcos Completados", lblUserLoc: "Ubicación Actual", lblUserEta: "Estimación hasta Raftel", lblUserBounty: "Recompensa Actual", lblUserHours: "Tiempo Visto", etaDays: "días", etaMonths: "meses", allCaughtUp: "🎉 ¡Al día!", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
         statsTitle: "🏴‍☠️ Estadísticas de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
-        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz",
+        settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz", setMode: "Modo de Visualización",
         optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
         lblCustomPicker: "Elegir Colores Personalizados", lblColorPri: "Color Primario", lblColorSec: "Color Destacado",
         loaderText: "Navegando por la Grand Line..."
@@ -889,11 +919,12 @@ const arcDetailsI18n = {
         "reverie": { name: "Reverie", summary: "Cumbre mundial de reyes y líderes políticos en Mary Geoise.", highlights: ["Trono Vacío e Imu-sama revelados", "Sabo e el Ejército Revolucionario se infiltran en Mary Geoise"] },
         "wano": { name: "País de Wano", summary: "Guerra épica para liberar al aislado País de Wano de Kaido y Orochi.", highlights: ["Zoro obtiene la espada legendaria Enma", "Pasado de Kozuki Oden e viaje con Gol D. Roger", "Invasión de Onigashima e batallas Yonko", "Luffy despierta el GEAR 5TH (Dios del Sol Nika)", "Derrota de los Yonko e recompensa de Luffy sube a ฿3.0B"] },
         "egghead": { name: "Egghead", summary: "Llegada a la isla del futuro del Dr. Vegapunk y choque con el Gorosei.", highlights: ["Dr. Vegapunk revela los misterios de las Frutas del Diablo", "Luffy Gear 5th vs Rob Lucci Despertado", "Arrival of Admirals and the Five Elders (Gorosei)"] },
-        "elbaf": { name: "Elbaf", summary: "Los Sombrero de Paja llegan a la legendaria tierra de los gigantes guerreros, Elbaf, desvelando antiguos misterios del Siglo Vacío y del Dios del Sol.", highlights: ["Llegada a la legendaria tierra de gigantes guerreros, Elbaf", "Reencuentro con Dorry y Brogy", "Revelaciones sobre el Siglo Vacío y la historia antigua"] }
+        "elbaf": { name: "Elbaf", summary: "Los Sombrero de Paja llegan a la legendaria tierra de los gigantes guerreros, Elbaf, desvelando antiguos misterios del Siglo Vacío y del Dios del Sol.", highlights: ["Llegada a la legendaria tierra de gigantes guerreros, Elbaf", "Reencuentro con Dorry e Brogy", "Revelaciones sobre el Siglo Vacío e la historia antigua"] }
     }
 };
 
-const opData = [
+/* 📺 BASE DE DADOS DO ANIME ORIGINAL 📺 */
+const opDataOriginal = [
     { sagaKey: "east-blue", icon: "🌊", sagaI18n: { pt: "Saga East Blue", en: "East Blue Saga", es: "Saga East Blue" }, arcs: [
         { id: "romance-dawn", eps: "1-3", totalEps: 3, icon: `<img src="./img/village-cows.webp" class="arc-img-icon" alt="Romance Dawn">`, grad: "linear-gradient(135deg, rgba(14, 43, 92, 0.8), rgba(11, 19, 43, 0.95))" },
         { id: "orange-town", eps: "4-8", totalEps: 5, icon: `<img src="./img/Orange_Town.webp" class="arc-img-icon" alt="Orange Town">`, grad: "linear-gradient(135deg, rgba(92, 43, 14, 0.8), rgba(11, 19, 43, 0.95))" },
@@ -951,10 +982,74 @@ const opData = [
     ]}
 ];
 
+/* ✂️ BASE DE DADOS DO ONE PACE (FAN EDIT) ✂️ */
+const opDataOnePace = [
+    { sagaKey: "east-blue", icon: "🌊", sagaI18n: { pt: "Saga East Blue (One Pace)", en: "East Blue Saga (One Pace)", es: "Saga East Blue (One Pace)" }, arcs: [
+        { id: "romance-dawn", eps: "1-4", totalEps: 4, icon: `<img src="./img/village-cows.webp" class="arc-img-icon" alt="Romance Dawn">`, grad: "linear-gradient(135deg, rgba(14, 43, 92, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "orange-town", eps: "1-3", totalEps: 3, icon: `<img src="./img/Orange_Town.webp" class="arc-img-icon" alt="Orange Town">`, grad: "linear-gradient(135deg, rgba(92, 43, 14, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "syrup-village", eps: "1-5", totalEps: 5, icon: `<img src="./img/Syrup.webp" class="arc-img-icon" alt="Syrup Village">`, grad: "linear-gradient(135deg, rgba(14, 92, 43, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "baratie", eps: "1-8", totalEps: 8, icon: `<img src="./img/Baratie.webp" class="arc-img-icon" alt="Baratie">`, grad: "linear-gradient(135deg, rgba(92, 14, 43, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "arlong-park", eps: "1-9", totalEps: 9, icon: `<img src="./img/Arlong_Park.webp" class="arc-img-icon" alt="Arlong Park">`, grad: "linear-gradient(135deg, rgba(14, 75, 92, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "loguetown", eps: "1-4", totalEps: 4, icon: `<img src="./img/The_Town_of_the_Beginning_and_the_End_Landfall_at_Logue_Town.webp" class="arc-img-icon" alt="Loguetown">`, grad: "linear-gradient(135deg, rgba(45, 45, 75, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "alabasta", icon: "🏜️", sagaI18n: { pt: "Saga Alabasta (One Pace)", en: "Alabasta Saga (One Pace)", es: "Saga Alabasta (One Pace)" }, arcs: [
+        { id: "reverse-mountain", eps: "1-2", totalEps: 2, icon: `<img src="./img/Reverse_Mountain.webp" class="arc-img-icon" alt="Reverse Mountain">`, grad: "linear-gradient(135deg, rgba(120, 40, 40, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "whiskey-peak", eps: "1-2", totalEps: 2, icon: `<img src="./img/Whisky_Peak.webp" class="arc-img-icon" alt="Whiskey Peak">`, grad: "linear-gradient(135deg, rgba(80, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "little-garden", eps: "1-5", totalEps: 5, icon: `<img src="./img/Little_Garden.webp" class="arc-img-icon" alt="Little Garden">`, grad: "linear-gradient(135deg, rgba(30, 90, 40, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "drum-island", eps: "1-7", totalEps: 7, icon: `<img src="./img/Drum_Island.webp" class="arc-img-icon" alt="Drum Island">`, grad: "linear-gradient(135deg, rgba(60, 90, 110, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "alabasta", eps: "1-15", totalEps: 15, icon: `<img src="./img/Arabasta.webp" class="arc-img-icon" alt="Alabasta">`, grad: "linear-gradient(135deg, rgba(140, 90, 20, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "sky-island", icon: "☁️", sagaI18n: { pt: "Saga Sky Island (One Pace)", en: "Sky Island Saga (One Pace)", es: "Saga Isla del Cielo (One Pace)" }, arcs: [
+        { id: "jaya", eps: "1-5", totalEps: 5, icon: `<img src="./img/Jaya.webp" class="arc-img-icon" alt="Jaya">`, grad: "linear-gradient(135deg, rgba(100, 70, 30, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "skypiea", eps: "1-24", totalEps: 24, icon: `<img src="./img/Skypiea.webp" class="arc-img-icon" alt="Skypiea">`, grad: "linear-gradient(135deg, rgba(40, 100, 120, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "water-7", icon: "🚂", sagaI18n: { pt: "Saga Water 7 (One Pace)", en: "Water 7 Saga (One Pace)", es: "Saga Water 7 (One Pace)" }, arcs: [
+        { id: "long-ring", eps: "1-5", totalEps: 5, icon: `<img src="./img/Long_Ring_Long_Land.webp" class="arc-img-icon" alt="Long Ring Long Land">`, grad: "linear-gradient(135deg, rgba(50, 80, 120, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "water-7", eps: "1-20", totalEps: 20, icon: `<img src="./img/Water_Seven.webp" class="arc-img-icon" alt="Water 7">`, grad: "linear-gradient(135deg, rgba(20, 90, 140, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "enies-lobby", eps: "1-29", totalEps: 29, icon: `<img src="./img/enieslobby.webp" class="arc-img-icon" alt="Enies Lobby">`, grad: "linear-gradient(135deg, rgba(120, 30, 30, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "post-enies", eps: "1-5", totalEps: 5, icon: `<img src="./img/Post-Enies_Lobby.webp" class="arc-img-icon" alt="Post-Enies Lobby">`, grad: "linear-gradient(135deg, rgba(60, 60, 90, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "thriller-bark", icon: "👻", sagaI18n: { pt: "Saga Thriller Bark (One Pace)", en: "Thriller Bark Saga (One Pace)", es: "Saga Thriller Bark (One Pace)" }, arcs: [
+        { id: "thriller-bark", eps: "1-22", totalEps: 22, icon: `<img src="./img/Thriller_Bark.webp" class="arc-img-icon" alt="Thriller Bark">`, grad: "linear-gradient(135deg, rgba(60, 20, 80, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "summit-war", icon: "⚓", sagaI18n: { pt: "Saga Summit War (One Pace)", en: "Summit War Saga (One Pace)", es: "Saga Guerra de la Cumbre (One Pace)" }, arcs: [
+        { id: "sabaody", eps: "1-11", totalEps: 11, icon: `<img src="./img/Sabaody_Archipelago.webp" class="arc-img-icon" alt="Arquipélago Sabaody">`, grad: "linear-gradient(135deg, rgba(30, 100, 80, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "amazon-lily", eps: "1-6", totalEps: 6, icon: `<img src="./img/Amazon_Lily.webp" class="arc-img-icon" alt="Amazon Lily">`, grad: "linear-gradient(135deg, rgba(110, 30, 70, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "impel-down", eps: "1-16", totalEps: 16, icon: `<img src="./img/Impel_Down.webp" class="arc-img-icon" alt="Impel Down">`, grad: "linear-gradient(135deg, rgba(90, 30, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "marineford", eps: "1-18", totalEps: 18, icon: `<img src="./img/Marineford.webp" class="arc-img-icon" alt="Marineford">`, grad: "linear-gradient(135deg, rgba(130, 20, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "post-war", eps: "1-8", totalEps: 8, icon: `<img src="./img/Post-War.webp" class="arc-img-icon" alt="Pós-Guerra">`, grad: "linear-gradient(135deg, rgba(70, 70, 70, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "fishman-island", icon: "🧜‍♂️", sagaI18n: { pt: "Saga Ilha dos Homens-Peixe (One Pace)", en: "Fishman Island Saga (One Pace)", es: "Saga Isla de los Hombres-Pez (One Pace)" }, arcs: [
+        { id: "return-sabaody", eps: "1-3", totalEps: 3, icon: `<img src="./img/Return_to_Sabaody.webp" class="arc-img-icon" alt="Regresso a Sabaody">`, grad: "linear-gradient(135deg, rgba(20, 80, 100, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "fishman-island", eps: "1-24", totalEps: 24, icon: `<img src="./img/Fishman_Island.webp" class="arc-img-icon" alt="Ilha dos Homens-Peixe">`, grad: "linear-gradient(135deg, rgba(10, 110, 130, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "dressrosa", icon: "🧸", sagaI18n: { pt: "Saga Dressrosa (One Pace)", en: "Dressrosa Saga (One Pace)", es: "Saga Dressrosa (One Pace)" }, arcs: [
+        { id: "punk-hazard", eps: "1-22", totalEps: 22, icon: `<img src="./img/Punk_Hazard.webp" class="arc-img-icon" alt="Punk Hazard">`, grad: "linear-gradient(135deg, rgba(120, 60, 20, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "dressrosa", eps: "1-48", totalEps: 48, icon: `<img src="./img/Dressrosa.webp" class="arc-img-icon" alt="Dressrosa">`, grad: "linear-gradient(135deg, rgba(130, 30, 60, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "whole-cake", icon: "🍰", sagaI18n: { pt: "Saga Whole Cake Island (One Pace)", en: "Whole Cake Island Saga (One Pace)", es: "Saga Whole Cake Island (One Pace)" }, arcs: [
+        { id: "zou", eps: "1-10", totalEps: 10, icon: `<img src="./img/zou.webp" class="arc-img-icon" alt="Zou">`, grad: "linear-gradient(135deg, rgba(30, 90, 50, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "whole-cake", eps: "1-39", totalEps: 39, icon: `<img src="./img/Whole_Cake_Island.webp" class="arc-img-icon" alt="Whole Cake Island">`, grad: "linear-gradient(135deg, rgba(140, 40, 90, 0.8), rgba(11, 19, 43, 0.95))" },
+        { id: "reverie", eps: "1-2", totalEps: 2, icon: `<img src="./img/Reverie.webp" class="arc-img-icon" alt="Reverie">`, grad: "linear-gradient(135deg, rgba(100, 80, 20, 0.8), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "wano", icon: "⚔️", sagaI18n: { pt: "Saga País de Wano (One Pace)", en: "Wano Country Saga (One Pace)", es: "Saga País de Wano (One Pace)" }, arcs: [
+        { id: "wano", eps: "1-49", totalEps: 49, icon: `<img src="./img/Wano.webp" class="arc-img-icon" alt="País de Wano">`, grad: "linear-gradient(135deg, rgba(150, 20, 30, 0.85), rgba(11, 19, 43, 0.95))" }
+    ]},
+    { sagaKey: "final", icon: "🤖", sagaI18n: { pt: "Saga Final (One Pace)", en: "Final Saga (One Pace)", es: "Saga Final (One Pace)" }, arcs: [
+        { id: "egghead", eps: "1-18", totalEps: 18, icon: `<img src="./img/Egghead.webp" class="arc-img-icon" alt="Egghead">`, grad: "linear-gradient(135deg, rgba(160, 110, 10, 0.85), rgba(11, 19, 43, 0.95))" },
+        { id: "elbaf", eps: "1+", totalEps: 10, icon: `<img src="./img/Elbaf.webp" class="arc-img-icon" alt="Elbaf">`, grad: "linear-gradient(135deg, rgba(180, 80, 20, 0.85), rgba(11, 19, 43, 0.95))" }
+    ]}
+];
+
+function getCurrentOpData() {
+    return currentTrackMode === 'onepace' ? opDataOnePace : opDataOriginal;
+}
+
 try { firebase.initializeApp(firebaseConfig); checkUserSession(); } catch (e) { console.error("Firebase falhou: ", e); document.getElementById('sync-dot').className = 'sync-dot'; document.getElementById('sync-text').textContent = 'Erro Firebase'; }
 
 function openSettingsModal() { 
     document.getElementById('settings-modal').style.display = 'flex'; 
+    document.getElementById('mode-select').value = currentTrackMode;
     document.getElementById('crew-select').value = selectedCrewMember;
     document.getElementById('theme-select').value = selectedThemeMode;
     if (selectedThemeMode === 'custom') {
@@ -1004,6 +1099,7 @@ function getSagaTranslation(sagaObj) {
 function applyTranslations() {
     const t = i18n[currentLang] || i18n.pt;
     document.getElementById('lang-select').value = currentLang;
+    document.getElementById('mode-select').value = currentTrackMode;
     document.getElementById('crew-select').value = selectedCrewMember;
     document.getElementById('theme-select').value = selectedThemeMode;
     document.getElementById('btn-switch-txt').textContent = t.switchProfile;
@@ -1051,6 +1147,7 @@ function applyTranslations() {
     document.getElementById('modal-fleet-sub').textContent = t.fleetSub;
 
     document.getElementById('modal-settings-title').textContent = t.settingsTitle;
+    document.getElementById('label-set-mode').textContent = t.setMode;
     document.getElementById('label-set-profile').textContent = t.setProfile;
     document.getElementById('label-set-crew').textContent = t.setCrew;
     document.getElementById('label-set-theme').textContent = t.setTheme;
@@ -1069,6 +1166,7 @@ function applyTranslations() {
 function checkUserSession() {
     applyTranslations();
     applyCrewTheme();
+    updateTitleBanner();
     if (!currentUser) { document.getElementById('user-modal').style.display = 'flex'; } 
     else { document.getElementById('user-modal').style.display = 'none'; document.getElementById('current-user-display').textContent = currentUser; bindFirebaseUser(currentUser); }
 }
@@ -1150,7 +1248,12 @@ function bindFirebaseUser(username) {
     dbRef = firebase.database().ref('users/' + username);
     dbRef.on('value', (snapshot) => {
         const val = snapshot.val() || {};
-        userProgress = val.progress || val || {};
+        
+        if (currentTrackMode === 'onepace') {
+            userProgress = val.progress_onepace || {};
+        } else {
+            userProgress = val.progress || val || {};
+        }
         
         if (val.settings) {
             const set = val.settings;
@@ -1158,6 +1261,11 @@ function bindFirebaseUser(username) {
                 currentLang = set.lang;
                 localStorage.setItem('op_current_lang', currentLang);
                 applyTranslations();
+            }
+            if (set.trackMode && set.trackMode !== currentTrackMode) {
+                currentTrackMode = set.trackMode;
+                localStorage.setItem('op_track_mode', currentTrackMode);
+                updateTitleBanner();
             }
             if (set.crewMember && set.crewMember !== selectedCrewMember) {
                 selectedCrewMember = set.crewMember;
@@ -1196,12 +1304,22 @@ function bindFirebaseUser(username) {
 }
 
 function setFilter(filterType, btnEl) { currentFilter = filterType; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active')); btnEl.classList.add('active'); renderApp(); }
-function saveData() { if (dbRef) { dbRef.child('progress').set(userProgress); } }
+
+function saveData() { 
+    if (dbRef) { 
+        if (currentTrackMode === 'onepace') {
+            dbRef.child('progress_onepace').set(userProgress); 
+        } else {
+            dbRef.child('progress').set(userProgress); 
+        }
+    } 
+}
+
 function formatBounty(num) { return "฿ " + num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
 /* CÁLCULO DE RECOMPENSA MULTI-PERSONAGEM */
 function calculateBountyForProgress(progressObj, member = 'luffy') {
-    let allArcs = opData.flatMap(s => s.arcs);
+    let allArcs = getCurrentOpData().flatMap(s => s.arcs);
     let isDone = (arcId) => {
         let arc = allArcs.find(a => a.id === arcId);
         return arc && (progressObj[arcId] || 0) >= arc.totalEps;
@@ -1289,7 +1407,7 @@ function getSelectedCrewMemberName() {
 function getLuffyBounty() { return calculateBountyForProgress(userProgress, selectedCrewMember); }
 
 function openSummaryModal(arcId, isCompleted) {
-    const arc = opData.flatMap(s => s.arcs).find(a => a.id === arcId);
+    const arc = getCurrentOpData().flatMap(s => s.arcs).find(a => a.id === arcId);
     if (!arc) return;
     const t = i18n[currentLang] || i18n.pt;
     const langData = arcDetailsI18n[currentLang] || arcDetailsI18n.pt;
@@ -1314,11 +1432,12 @@ function openSummaryModal(arcId, isCompleted) {
 function closeSummaryModal() { document.getElementById('summary-modal').style.display = 'none'; }
 function closeSummaryOnOverlay(e) { if (e.target.classList.contains('summary-modal-overlay')) { closeSummaryModal(); } }
 
-/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS, USER E FROTA UNIFICADAS 📊 */
+/* 📊 LÓGICA DAS ESTATÍSTICAS GERAIS, USER E FROTA 📊 */
 function fetchGlobalStatsAndFleet() {
+    const currentOpData = getCurrentOpData();
     const t = i18n[currentLang] || i18n.pt;
-    const totalSeriesEpisodes = opData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
-    const totalSeriesArcs = opData.flatMap(s => s.arcs).length;
+    const totalSeriesEpisodes = currentOpData.flatMap(s => s.arcs).reduce((acc, a) => acc + a.totalEps, 0);
+    const totalSeriesArcs = currentOpData.flatMap(s => s.arcs).length;
     const tbody = document.getElementById('leaderboard-body');
     const fleetContainer = document.getElementById('fleet-timeline-container');
     
@@ -1338,15 +1457,15 @@ function fetchGlobalStatsAndFleet() {
         let currentUserCompletedArcs = 0;
         let currentActiveArcName = "";
 
-        opData.forEach(s => { sagaMap[s.sagaKey] = { icon: s.icon, sagaObj: s, users: [] }; });
+        currentOpData.forEach(s => { sagaMap[s.sagaKey] = { icon: s.icon, sagaObj: s, users: [] }; });
 
         userKeys.forEach(username => {
             const rawVal = usersData[username] || {};
-            const prog = rawVal.progress || rawVal || {};
+            const prog = currentTrackMode === 'onepace' ? (rawVal.progress_onepace || {}) : (rawVal.progress || rawVal || {});
             let watched = 0;
             let completedArcsCount = 0;
 
-            opData.flatMap(s => s.arcs).forEach(arc => {
+            currentOpData.flatMap(s => s.arcs).forEach(arc => {
                 const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
                 watched += currentEps;
                 if (currentEps >= arc.totalEps) completedArcsCount++;
@@ -1370,10 +1489,10 @@ function fetchGlobalStatsAndFleet() {
                 bounty: bounty
             });
 
-            let currentSagaKey = opData[0].sagaKey;
+            let currentSagaKey = currentOpData[0].sagaKey;
             let currentArcId = "";
 
-            for (let saga of opData) {
+            for (let saga of currentOpData) {
                 let sagaCompleted = true;
                 for (let arc of saga.arcs) {
                     const currentEps = Math.min(arc.totalEps, Math.max(0, prog[arc.id] || 0));
@@ -1400,20 +1519,19 @@ function fetchGlobalStatsAndFleet() {
 
         // ATUALIZA OS DADOS NO MODAL PESSOAL DO USER
         const userPercent = Math.round((currentUserWatched / totalSeriesEpisodes) * 100) || 0;
-        const totalMinutes = currentUserWatched * 23.5;
+        const totalMinutes = currentUserWatched * (currentTrackMode === 'onepace' ? 35 : 23.5);
         const totalHours = Math.round(totalMinutes / 60);
         const totalDays = (totalHours / 24).toFixed(1);
 
-        // CÁLCULO DA ESTIMATIVA ATÉ RAFTEL (MÉDIA DE 3 EPS/DIA)
         const remainingEps = Math.max(0, totalSeriesEpisodes - currentUserWatched);
         let etaText = t.allCaughtUp;
         if (remainingEps > 0) {
-            const daysLeft = Math.ceil(remainingEps / 3);
+            const daysLeft = Math.ceil(remainingEps / (currentTrackMode === 'onepace' ? 2 : 3));
             if (daysLeft >= 60) {
                 const months = Math.round(daysLeft / 30);
-                etaText = `~${months} ${t.etaMonths} (3 eps/d)`;
+                etaText = `~${months} ${t.etaMonths}`;
             } else {
-                etaText = `~${daysLeft} ${t.etaDays} (3 eps/d)`;
+                etaText = `~${daysLeft} ${t.etaDays}`;
             }
         }
 
@@ -1451,7 +1569,7 @@ function fetchGlobalStatsAndFleet() {
         }
 
         // 2. Frota
-        fleetContainer.innerHTML = opData.map(saga => {
+        fleetContainer.innerHTML = currentOpData.map(saga => {
             const sagaData = sagaMap[saga.sagaKey];
             const hasUsers = sagaData.users.length > 0;
             if (!hasUsers) return '';
@@ -1500,10 +1618,16 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
     let gearTag = '';
-    if (totalWatchedEps >= 980) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>'; // Wano (Nika)
-    else if (totalWatchedEps >= 670) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>'; // Dressrosa (Boundman)
-    else if (totalWatchedEps >= 304) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">3</sup></span>'; // Enies Lobby
-    else if (totalWatchedEps >= 272) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">2</sup></span>'; // Enies Lobby
+    const isPace = currentTrackMode === 'onepace';
+    const g5Threshold = isPace ? 240 : 980;
+    const g4Threshold = isPace ? 180 : 670;
+    const g3Threshold = isPace ? 85 : 304;
+    const g2Threshold = isPace ? 75 : 272;
+
+    if (totalWatchedEps >= g5Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
+    else if (totalWatchedEps >= g4Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
+    else if (totalWatchedEps >= g3Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">3</sup></span>';
+    else if (totalWatchedEps >= g2Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">2</sup></span>';
 
     gearsEl.innerHTML = gearTag;
 
@@ -1533,6 +1657,8 @@ function normalizeSearchText(str) {
 }
 
 function renderApp() {
+    updateTitleBanner();
+    const currentOpData = getCurrentOpData();
     const t = i18n[currentLang] || i18n.pt;
     const sagaListContainer = document.getElementById('saga-list');
     sagaListContainer.innerHTML = '';
@@ -1543,7 +1669,7 @@ function renderApp() {
 
     let totalArcs = 0, completedArcs = 0, totalEpisodes = 0, watchedEpisodes = 0, activeArc = null;
 
-    opData.forEach(saga => {
+    currentOpData.forEach(saga => {
         let sagaHasVisibleArcs = false;
         const sagaSection = document.createElement('div');
         const title = document.createElement('h2');
@@ -1633,7 +1759,7 @@ function renderApp() {
 
     renderNextUpCard(activeArc);
 
-    opData.forEach(saga => {
+    currentOpData.forEach(saga => {
         saga.arcs.forEach(arc => {
             const input = document.getElementById(`input-${arc.id}`);
             const btnComp = document.getElementById(`btn-comp-${arc.id}`);
@@ -1678,7 +1804,7 @@ function renderNextUpCard(arc) {
     detailEl.textContent = `${arc.currentEps} / ${arc.totalEps} (${t.epsSeries} ${arc.eps})`;
     actionsEl.innerHTML = `
         <button class="btn-quick-add" onclick="addEps('${arc.id}', 1, ${arc.totalEps})">${t.addOneEp}</button>
-        <button class="btn-ep" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${arc.currentEps})">✓ ${t.completeBtn}</button>
+        <button class="btn-complete" onclick="toggleComplete('${arc.id}', ${arc.totalEps}, ${arc.currentEps})">✓ ${t.completeBtn}</button>
     `;
 }
 
@@ -1694,18 +1820,15 @@ function addEps(arcId, amount, totalEps) {
     saveData();
 }
 
-let previousProgressCache = JSON.parse(localStorage.getItem('op_prev_progress') || '{}');
-
 function toggleComplete(arcId, totalEps, currentEps) {
+    const cacheKey = `${currentTrackMode}_${arcId}`;
     if (currentEps >= totalEps) {
-        // Se já estava completo, restaura o progresso parcial anterior se existir, senão define 0
-        const restoredVal = previousProgressCache[arcId] !== undefined ? previousProgressCache[arcId] : 0;
+        const restoredVal = previousProgressCache[cacheKey] !== undefined ? previousProgressCache[cacheKey] : 0;
         userProgress[arcId] = Math.min(totalEps - 1, Math.max(0, restoredVal));
-        delete previousProgressCache[arcId];
+        delete previousProgressCache[cacheKey];
     } else {
-        // Guarda o progresso atual antes de marcar como completo
         if (currentEps > 0) {
-            previousProgressCache[arcId] = currentEps;
+            previousProgressCache[cacheKey] = currentEps;
         }
         userProgress[arcId] = totalEps;
     }

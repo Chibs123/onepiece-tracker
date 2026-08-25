@@ -1617,17 +1617,25 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const mobileBountyEl = document.getElementById('top-mobile-bounty');
     const mobileLocationEl = document.getElementById('top-mobile-location');
 
-    let gearTag = '';
     const isPace = currentTrackMode === 'onepace';
-    const g5Threshold = isPace ? 240 : 980;
-    const g4Threshold = isPace ? 180 : 670;
-    const g3Threshold = isPace ? 85 : 304;
-    const g2Threshold = isPace ? 75 : 272;
+    
+    // Limiares exatos para cada modo
+    const g5Threshold = isPace ? 290 : 980; // Wano (Nika)
+    const g4Threshold = isPace ? 200 : 670; // Dressrosa (Boundman)
+    const g3Threshold = isPace ? 85 : 304;  // Enies Lobby
+    const g2Threshold = isPace ? 66 : 272;  // Enies Lobby
 
-    if (totalWatchedEps >= g5Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
-    else if (totalWatchedEps >= g4Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
-    else if (totalWatchedEps >= g3Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">3</sup></span>';
-    else if (totalWatchedEps >= g2Threshold) gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">2</sup></span>';
+    let gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️</span>';
+
+    if (totalWatchedEps >= g5Threshold) {
+        gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
+    } else if (totalWatchedEps >= g4Threshold) {
+        gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
+    } else if (totalWatchedEps >= g3Threshold) {
+        gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">3</sup></span>';
+    } else if (totalWatchedEps >= g2Threshold) {
+        gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">2</sup></span>';
+    }
 
     gearsEl.innerHTML = gearTag;
 

@@ -1694,9 +1694,22 @@ function addEps(arcId, amount, totalEps) {
     saveData();
 }
 
+let previousProgressCache = JSON.parse(localStorage.getItem('op_prev_progress') || '{}');
+
 function toggleComplete(arcId, totalEps, currentEps) {
-    if (currentEps >= totalEps) { userProgress[arcId] = 0; } 
-    else { userProgress[arcId] = totalEps; }
+    if (currentEps >= totalEps) {
+        // Se já estava completo, restaura o progresso parcial anterior se existir, senão define 0
+        const restoredVal = previousProgressCache[arcId] !== undefined ? previousProgressCache[arcId] : 0;
+        userProgress[arcId] = Math.min(totalEps - 1, Math.max(0, restoredVal));
+        delete previousProgressCache[arcId];
+    } else {
+        // Guarda o progresso atual antes de marcar como completo
+        if (currentEps > 0) {
+            previousProgressCache[arcId] = currentEps;
+        }
+        userProgress[arcId] = totalEps;
+    }
+    localStorage.setItem('op_prev_progress', JSON.stringify(previousProgressCache));
     saveData();
 }
 

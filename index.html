@@ -35,16 +35,26 @@
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
 
-/* ☀️ WHITE LUFFY / GEAR 5 THEME EFFECT ☀️ */
+/* ☀️ WHITE LUFFY / GEAR 5 SUN EFFECT ☀️ */
 .gear-5-glow {
     color: #ffffff !important;
-    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffb703, 0 0 30px #ffffff !important;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 12px var(--accent-gold));
     animation: nikaDrums 1.8s ease-in-out infinite alternate;
+}
+
+.gear-5-sun-icon {
+    width: 1.15em;
+    height: 1.15em;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 4px #ffffff);
 }
 
 @keyframes nikaDrums {
     0% { transform: scale(1); filter: drop-shadow(0 0 4px #ffffff); }
-    50% { transform: scale(1.18); filter: drop-shadow(0 0 12px #ffb703); }
+    50% { transform: scale(1.2); filter: drop-shadow(0 0 10px #ffffff) drop-shadow(0 0 16px var(--accent-gold)); }
     100% { transform: scale(1); filter: drop-shadow(0 0 4px #ffffff); }
 }
         
@@ -1698,7 +1708,7 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     let gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️</span>';
 
     if (hasGear5) {
-        gearTag = '<span class="gear-text-clean gear-5-glow" title="Sun God Nika / White Luffy">☀️<sup class="gear-sup">5</sup></span>';
+        gearTag = '<span class="gear-text-clean gear-5-glow" title="Sun God Nika / White Luffy"><span class="white-sun-icon">☼</span><sup class="gear-sup">5</sup></span>';
     } else if (hasGear4) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
     } else if (hasGear3) {

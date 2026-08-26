@@ -58,38 +58,7 @@ body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-
     100% { transform: scale(1); filter: drop-shadow(0 0 4px #ffffff); }
 }
         
-.bg-map-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    opacity: var(--map-opacity);
-    background: radial-gradient(circle at 50% 30%, rgba(28, 37, 65, 0.4), var(--bg-color));
-    animation: mapFloat 30s ease-in-out infinite alternate;
-    will-change: transform;
-    transform: translateZ(0);
-}
-
-.ocean-wave {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.04);
-    stroke-width: 1.2;
-}
-
-.rhumb-line {
-    stroke: rgba(255, 183, 3, 0.07);
-    stroke-dasharray: 6 4;
-}
-
-.red-line-band {
-    fill: rgba(217, 4, 41, 0.06);
-    transform: rotate(-25deg);
-    transform-origin: center;
-}
-
+.bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; will-change: transform; transform: translateZ(0); }
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
 .compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
 @keyframes compassRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -410,42 +379,22 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
 <div class="bg-map-container">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
         <defs>
-            <!-- Grelha Náutica -->
-            <pattern id="grid" width="90" height="90" patternUnits="userSpaceOnUse">
-                <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#2a3558" stroke-width="0.7"/>
-                <circle cx="45" cy="45" r="1.5" fill="var(--accent-gold)" opacity="0.4"/>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#4a5568" stroke-width="0.8"/>
+                <circle cx="40" cy="40" r="2" fill="#ffb703"/>
             </pattern>
         </defs>
-
-        <!-- Fundo de Grelha -->
         <rect width="100%" height="100%" fill="url(#grid)" />
-
-        <!-- Red Line Estilizada no Fundo -->
-        <rect class="red-line-band" x="-20%" y="45%" width="140%" height="110" rx="30" />
-
-        <!-- Linhas de Rumo Náuticas (Rhumb Lines) -->
-        <line class="rhumb-line" x1="0" y1="0" x2="100%" y2="100%" />
-        <line class="rhumb-line" x1="100%" y1="0" x2="0" y2="100%" />
-        <line class="rhumb-line" x1="50%" y1="0" x2="50%" y2="100%" />
-
-        <!-- Ondas Marítimas -->
-        <path class="ocean-wave" d="M0,150 Q200,120 400,150 T800,150 T1200,150 T1600,150" />
-        <path class="ocean-wave" d="M0,450 Q250,420 500,450 T1000,450 T1500,450 T2000,450" />
-        <path class="ocean-wave" d="M0,750 Q200,720 400,750 T800,750 T1200,750 T1600,750" />
-
-        <!-- Rotas de Navegação -->
-        <path class="route-line-red" d="M-100 200 Q 400 600 1200 -100" stroke="var(--accent-red)" stroke-width="3" fill="none"/>
-        <path class="route-line-gold" d="M0 850 Q 800 250 1800 950" stroke="var(--accent-gold)" stroke-width="2" fill="none"/>
-
-        <!-- Rosa dos Ventos Principal -->
-        <g class="compass-rose" stroke="var(--accent-gold)" fill="none" stroke-width="1.5">
-            <circle cx="160" cy="160" r="50" stroke="#457b9d" stroke-width="2"/>
-            <circle cx="160" cy="160" r="38" stroke="var(--accent-gold)" stroke-dasharray="4 4"/>
-            <path d="M160 90 L160 230 M90 160 L230 160" stroke="#edf2f4" stroke-width="1.2"/>
-            <polygon points="160,105 170,145 160,160 150,145" fill="var(--accent-red)" stroke="none"/>
-            <polygon points="160,215 170,175 160,160 150,175" fill="#edf2f4" stroke="none"/>
-            <polygon points="105,160 145,150 160,160 145,170" fill="#edf2f4" stroke="none"/>
-            <polygon points="215,160 175,150 160,160 175,170" fill="#edf2f4" stroke="none"/>
+        <path class="route-line-red" d="M-100 200 Q 400 600 1200 -100" stroke="#d90429" stroke-width="3.5" fill="none"/>
+        <path class="route-line-gold" d="M0 800 Q 800 200 1800 900" stroke="#ffb703" stroke-width="2.5" fill="none"/>
+        <g class="compass-rose" stroke="#ffb703" fill="none" stroke-width="1.5">
+            <circle cx="160" cy="160" r="45" stroke="#457b9d" stroke-width="2"/>
+            <circle cx="160" cy="160" r="35" stroke="#ffb703" stroke-dasharray="4 4"/>
+            <path d="M160 100 L160 220 M100 160 L220 160" stroke="#edf2f4" stroke-width="1.5"/>
+            <polygon points="160,115 168,148 160,160 152,148" fill="#d90429" stroke="none"/>
+            <polygon points="160,205 168,172 160,160 152,172" fill="#edf2f4" stroke="none"/>
+            <polygon points="115,160 148,152 160,160 148,168" fill="#edf2f4" stroke="none"/>
+            <polygon points="205,160 172,152 160,160 172,168" fill="#edf2f4" stroke="none"/>
         </g>
     </svg>
 </div>

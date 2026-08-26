@@ -35,6 +35,19 @@
 
 body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 12px; min-height: 100vh; position: relative; overflow-x: hidden; }
 
+/* ☀️ WHITE LUFFY / GEAR 5 THEME EFFECT ☀️ */
+.gear-5-glow {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffb703, 0 0 30px #ffffff !important;
+    animation: nikaDrums 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes nikaDrums {
+    0% { transform: scale(1); filter: drop-shadow(0 0 4px #ffffff); }
+    50% { transform: scale(1.18); filter: drop-shadow(0 0 12px #ffb703); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 4px #ffffff); }
+}
+        
 .bg-map-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; opacity: var(--map-opacity); animation: mapFloat 25s ease-in-out infinite alternate; will-change: transform; transform: translateZ(0); }
 @keyframes mapFloat { 0% { transform: scale(1) translate(0, 0); } 50% { transform: scale(1.03) translate(-10px, 8px); } 100% { transform: scale(1.01) translate(10px, -8px); } }
 .compass-rose { transform-origin: 160px 160px; animation: compassRotate 60s linear infinite; }
@@ -742,6 +755,7 @@ function changeTrackMode(mode) {
     }
 }
 
+/* 🎨 APLICAÇÃO DO TEMA */
 function applyCrewTheme() {
     const root = document.documentElement;
     const customGroup = document.getElementById('custom-color-group');
@@ -751,8 +765,16 @@ function applyCrewTheme() {
         root.style.setProperty('--accent-red', customPrimaryColor);
         root.style.setProperty('--accent-gold', customSecondaryColor);
         root.style.setProperty('--accent-red-trans', 'rgba(217, 4, 41, 0.2)');
+        return;
+    }
+
+    if (customGroup) customGroup.style.display = 'none';
+
+    if (selectedCrewMember === 'luffy' && isWhiteLuffyUnlocked()) {
+        root.style.setProperty('--accent-red', '#ffffff');
+        root.style.setProperty('--accent-gold', '#ffb703');
+        root.style.setProperty('--accent-red-trans', 'rgba(255, 255, 255, 0.25)');
     } else {
-        if (customGroup) customGroup.style.display = 'none';
         const theme = crewThemes[selectedCrewMember] || crewThemes.luffy;
         root.style.setProperty('--accent-red', theme.primary);
         root.style.setProperty('--accent-gold', theme.secondary);
@@ -1396,9 +1418,28 @@ function calculateBountyForProgress(progressObj, member = 'luffy') {
     }
 }
 
+/* 🔍 FUNÇÃO AUXILIAR PARA VALIDAR O GEAR 5 / WHITE LUFFY DINAMICAMENTE */
+function isWhiteLuffyUnlocked() {
+    const currentOpData = getCurrentOpData();
+    const allArcs = currentOpData.flatMap(s => s.arcs);
+    
+    const wanoArc = allArcs.find(a => a.id === 'wano');
+    const wanoTotal = wanoArc ? wanoArc.totalEps : 1;
+    const wanoWatched = Math.min(wanoTotal, Math.max(0, userProgress['wano'] || 0));
+    
+    const isDone = (arcId) => {
+        const arc = allArcs.find(a => a.id === arcId);
+        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
+    };
+
+    return isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoWatched >= Math.floor(wanoTotal * 0.75));
+}
+    
 function getSelectedCrewMemberName() {
+    const hasGear5 = isWhiteLuffyUnlocked();
     const names = {
-        luffy: "LUFFY", zoro: "ZORO", nami: "NAMI", usopp: "USOPP", sanji: "SANJI",
+        luffy: hasGear5 ? "WHITE LUFFY (NIKA)" : "LUFFY",
+        zoro: "ZORO", nami: "NAMI", usopp: "USOPP", sanji: "SANJI",
         chopper: "CHOPPER", robin: "ROBIN", franky: "FRANKY", brook: "BROOK", jinbe: "JINBE"
     };
     return names[selectedCrewMember] || "LUFFY";
@@ -1608,7 +1649,7 @@ function fetchGlobalStatsAndFleet() {
     });
 }
 
-/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (BASEADO EM ARCOS CANÓNICOS) ⚡ */
+/* ⚡ ATUALIZA O GEAR E AS INFOS DO VIVRE CARD (COM SUPORTE A WHITE LUFFY) ⚡ */
 function updateProfileGear(totalWatchedEps, activeArc) {
     const gearsEl = document.getElementById('user-gears-display');
     
@@ -1620,7 +1661,6 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const currentOpData = getCurrentOpData();
     const allArcs = currentOpData.flatMap(s => s.arcs);
     
-    // Função auxiliar para verificar progresso num arco
     const getProgress = (arcId) => Math.min(
         (allArcs.find(a => a.id === arcId)?.totalEps || 0), 
         Math.max(0, userProgress[arcId] || 0)
@@ -1647,11 +1687,10 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     const hasGear3 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.6));
     const hasGear2 = hasPassedEnies || (eniesEps >= Math.floor(eniesTotal * 0.3));
 
-    // Determina o ícone final
     let gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️</span>';
 
     if (hasGear5) {
-        gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">5</sup></span>';
+        gearTag = '<span class="gear-text-clean gear-5-glow" title="Sun God Nika / White Luffy">☀️<sup class="gear-sup">5</sup></span>';
     } else if (hasGear4) {
         gearTag = '<span class="gear-text-clean" title="Abrir Definições">⚙️<sup class="gear-sup">4</sup></span>';
     } else if (hasGear3) {
@@ -1676,6 +1715,9 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     if (locationEl) locationEl.textContent = locationText;
     if (mobileBountyEl) mobileBountyEl.textContent = formattedBounty;
     if (mobileLocationEl) mobileLocationEl.textContent = locationText;
+
+    // Atualiza o tema de cores caso tenha acabado de desbloquear o Gear 5
+    applyCrewTheme();
 }
 
 /* 🔍 NORMALIZAÇÃO DE TEXTO PARA PESQUISA 🔍 */

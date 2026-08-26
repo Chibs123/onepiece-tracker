@@ -755,6 +755,23 @@ function changeTrackMode(mode) {
     }
 }
 
+/* 🔍 FUNÇÃO AUXILIAR PARA VALIDAR O GEAR 5 / WHITE LUFFY DINAMICAMENTE */
+function isWhiteLuffyUnlocked() {
+    const currentOpData = getCurrentOpData();
+    const allArcs = currentOpData.flatMap(s => s.arcs);
+    
+    const wanoArc = allArcs.find(a => a.id === 'wano');
+    const wanoTotal = wanoArc ? wanoArc.totalEps : 1;
+    const wanoWatched = Math.min(wanoTotal, Math.max(0, userProgress['wano'] || 0));
+    
+    const isDone = (arcId) => {
+        const arc = allArcs.find(a => a.id === arcId);
+        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
+    };
+
+    return isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoWatched >= Math.floor(wanoTotal * 0.75));
+}
+
 /* 🎨 APLICAÇÃO DO TEMA */
 function applyCrewTheme() {
     const root = document.documentElement;
@@ -932,7 +949,7 @@ const arcDetailsI18n = {
         "impel-down": { name: "Impel Down", summary: "Invasión a la prisión submarina de máxima seguridad para salvar a Ace.", highlights: ["Luffy sobrevive ao veneno de Magellan com ayuda de Ivankov", "Alianza épica con Buggy, Crocodile y Jinbe", "Sacrificio heroico de Bon Clay para abrir las Puertas de la Justicia"] },
         "marineford": { name: "Marineford", summary: "La Gran Guerra: Barbablanca y Luffy intentan rescatar a Ace.", highlights: ["Luffy desata Haki del Conquistador", "Trágica muerte de Ace protegíendo a Luffy", "Muerte legendaria de Barbablanca de pie", "Llegada de Shanks para poner fin a la guerra"] },
         "post-war": { name: "Post-Guerra", summary: "El duelo de Luffy, historia de su infancia com Ace e Sabo, e inicio de los 2 anos de entrenamiento.", highlights: ["Pasado de Luffy, Ace e Sabo (Hermandad)", "Jinbe ayuda a Luffy a recordar lo que aún le queda: su tripulación", "Mensaje secreto 3D2Y en el periódico para 2 años de entrenamiento con Rayleigh"] },
-        "return-sabaody": { name: "Regreso a Sabaody", summary: "2 años después, los Sombrero de Paja se reencuentran en Sabaody mucho más fortes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
+        "return-sabaody": { name: "Regreso a Sabaody", summary: "2 anos después, los Sombrero de Paja se reencuentran en Sabaody mucho más fortes.", highlights: ["Reencuentro épico tras el timeskip", "Destrucción de los Falsos Sombrero de Paja de un solo golpe"] },
         "fishman-island": { name: "Isla de los Hombres-Pez", summary: "Viaje al fondo del océano para detener el golpe de estado de Hody Jones.", highlights: ["Luffy noquea a 50.000 piratas a la vez con Haki del Conquistador", "Princesa Shirahoshi revelada como el Arma Ancestral Poseidón", "Transfusión de sangre simbólica entre Jinbe e Luffy"] },
         "punk-hazard": { name: "Punk Hazard", summary: "En una isla dividida entre fuego e hielo, forman alianza con Trafalgar Law.", highlights: ["Pirate Alliance formed between Luffy and Law", "Caesar Clown derrotado y fábrica de SAD destruida", "Zoro corta a Monet a la mitad sin Haki"] },
         "dressrosa": { name: "Dressrosa", summary: "Operación para derrocar al tirano Doflamingo y liberar la isla de los juguetes.", highlights: ["Sabo regresa vivo y obtiene la fruta Mera Mera no Mi", "Luffy revela el Gear 4th (Boundman)", "Doflamingo defeated with King Kong Gun", "Formación de la Gran Flota de Sombrero de Paja (5.600 miembros)"] },
@@ -1417,23 +1434,6 @@ function calculateBountyForProgress(progressObj, member = 'luffy') {
             return 0;
     }
 }
-
-/* 🔍 FUNÇÃO AUXILIAR PARA VALIDAR O GEAR 5 / WHITE LUFFY DINAMICAMENTE */
-function isWhiteLuffyUnlocked() {
-    const currentOpData = getCurrentOpData();
-    const allArcs = currentOpData.flatMap(s => s.arcs);
-    
-    const wanoArc = allArcs.find(a => a.id === 'wano');
-    const wanoTotal = wanoArc ? wanoArc.totalEps : 1;
-    const wanoWatched = Math.min(wanoTotal, Math.max(0, userProgress['wano'] || 0));
-    
-    const isDone = (arcId) => {
-        const arc = allArcs.find(a => a.id === arcId);
-        return arc && (userProgress[arcId] || 0) >= arc.totalEps;
-    };
-
-    return isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoWatched >= Math.floor(wanoTotal * 0.75));
-}
     
 function getSelectedCrewMemberName() {
     const hasGear5 = isWhiteLuffyUnlocked();
@@ -1670,9 +1670,8 @@ function updateProfileGear(totalWatchedEps, activeArc) {
         return arc && (userProgress[arcId] || 0) >= arc.totalEps;
     };
 
-    // 1. GEAR 5 (Wano em diante)
-    const wanoEps = getProgress('wano');
-    const hasGear5 = isDone('wano') || isDone('egghead') || isDone('elbaf') || (wanoEps >= 140);
+    // 1. GEAR 5 (Dinâmico para Original e One Pace)
+    const hasGear5 = isWhiteLuffyUnlocked();
 
     // 2. GEAR 4 (Dressrosa em diante)
     const dressrosaEps = getProgress('dressrosa');
@@ -1716,7 +1715,7 @@ function updateProfileGear(totalWatchedEps, activeArc) {
     if (mobileBountyEl) mobileBountyEl.textContent = formattedBounty;
     if (mobileLocationEl) mobileLocationEl.textContent = locationText;
 
-    // Atualiza o tema de cores caso tenha acabado de desbloquear o Gear 5
+    // Atualiza as cores do tema
     applyCrewTheme();
 }
 

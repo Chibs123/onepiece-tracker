@@ -397,10 +397,10 @@ footer { margin-top: 40px; padding: 14px 0; text-align: center; font-size: 0.8em
 
         <div class="settings-form-group">
             <label id="label-set-mode">Modo de Visualização</label>
-            <select class="settings-select" id="mode-select" onchange="changeTrackMode(this.value)">
-                <option value="original">📺 Anime Original (Toei)</option>
-                <option value="onepace">✂️ One Pace (Fan Edit)</option>
-            </select>
+                <select class="settings-select" id="mode-select" onchange="changeTrackMode(this.value)">
+                    <option value="original" id="opt-mode-original">📺 Anime Original (Toei)</option>
+                    <option value="onepace" id="opt-mode-onepace">✂️ One Pace (Fan Edit)</option>
+                </select>
         </div>
 
         <div class="settings-form-group">
@@ -830,6 +830,7 @@ const i18n = {
         statsTitle: "🏴‍☠️ Estatísticas da Tripulação", statsSub: "Resumo geral, ranking e localização dos navegadores", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabela de Liderança", thRank: "#", thUser: "Navegador", thProgress: "Progresso", thEpisodes: "Episódios", loadingData: "A carregar dados...", youTag: "(Tu)",
         fleetTitle: "⛵ Rota da Frota dos Chapéus de Palha", fleetSub: "Localização atual de cada navegador nos mares da Grand Line",
         settingsTitle: "⚙️ Definições do Tracker", setProfile: "Perfil de Navegador", setCrew: "Membro para Recompensa", setTheme: "Tema Visual da Aplicação", setLang: "Idioma da Interface", setMode: "Modo de Visualização",
+        optModeOriginal: "📺 Anime Original (Toei)", optModeOnePace: "✂️ One Pace (Fan Edit)",
         optCrewTheme: "🎨 Cor do Personagem Selecionado", optCustomTheme: "🖌️ Cores Personalizadas (Custom)",
         lblCustomPicker: "Escolher Cores Personalizadas", lblColorPri: "Cor Primária", lblColorSec: "Cor Destaque",
         loaderText: "A traçar rota na Grand Line..."
@@ -839,15 +840,17 @@ const i18n = {
         statsTitle: "🏴‍☠️ Crew Stats", statsSub: "General overview, ranking and navigator locations", statCrew: "CREW MEMBERS", statTotEps: "TOTAL EPS WATCHED", statMaxBounty: "MAX BOUNTY", leaderboardHeading: "🏆 Leaderboard", thRank: "#", thUser: "Navigator", thProgress: "Progress", thEpisodes: "Episodes", loadingData: "Loading data...", youTag: "(You)",
         fleetTitle: "⛵ Straw Hat Fleet Route", fleetSub: "Current location of each navigator across the Grand Line",
         settingsTitle: "⚙️ Tracker Settings", setProfile: "Navigator Profile", setCrew: "Bounty Member", setTheme: "Application Visual Theme", setLang: "Interface Language", setMode: "Watch Mode",
+        optModeOriginal: "📺 Original Anime (Toei)", optModeOnePace: "✂️ One Pace (Fan Edit)",
         optCrewTheme: "🎨 Selected Character Color", optCustomTheme: "🖌️ Custom Colors",
         lblCustomPicker: "Choose Custom Colors", lblColorPri: "Primary Color", lblColorSec: "Accent Color",
         loaderText: "Navigating the Grand Line..."
     },
     es: { 
         cloudState: "Sincronizado", switchProfile: "👤 Cambiar Perfil", userStatsBtn: "👤 Tus Stats", globalStatsBtn: "🏴‍☠️ Stats de la Crew", settingsBtn: "⚙️ Ajustes", currentAdventure: "📍 Tu Aventura Actual", statUserTitle: "👤 Tus Estadísticas", statUserSub: "Tu progreso personal en la travesía", lblUserName: "Navegante", lblUserEps: "Episodios Vistos", lblUserPct: "Progreso General", lblUserArcs: "Arcos Completados", lblUserLoc: "Ubicación Actual", lblUserEta: "Estimación hasta Raftel", lblUserBounty: "Recompensa Actual", lblUserHours: "Tiempo Visto", etaDays: "días", etaMonths: "meses", allCaughtUp: "🎉 ¡Al día!", statArcs: "MAPA DE ARCOS", statEps: "EPISODIOS VISTOS", statBountyPrefix: "RECOMPENSA DE ", journeyProgress: "Progreso del Viaje", filterAll: "Todos", filterInProgress: "🟡 En Progreso", filterCompleted: "🟢 Completados", filterPending: "⚪ Pendientes", searchPlaceholder: "🔍 Buscar...", watchedLabel: "Vistos:", completeBtn: "Completar", addOneEp: "▶ +1 Episodio", completedText: "Completado", epsSeries: "Eps:", welcomeTitle: "☠️ BIENVENIDO A LA TRIPULACIÓN ☠️", welcomeDesc: "Introduce tu nombre y PIN secreto para proteger tu progreso:", yourName: "Tu nombre...", enterBtn: "Entrar en la Aventura ▶", summaryDescHeading: "📖 Resumen de la Aventura", summaryScenesHeading: "🔥 Momentos y Escenas Escénicas", allDoneTitle: "🎉 ¡Felicidades! ¡Estás al día con el Anime!", allDoneDesc: "Has completado todos los arcos disponibles.", spoilerLock: "🔒 ¡Contenido Bloqueado por Alerta de Spoilers! Completa este arco marcando todos los episodios como vistos para desbloquear el resumen y las escenas icónicas.", spoilerList: "🔒 ¡Marca el arco como completado para revelar las escenas!",
-        statsTitle: "🏴‍☠️ Estadísticas de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULAÇÃO", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
+        statsTitle: "🏴‍☠️ Estadísticas de la Tripulación", statsSub: "Resumen general, ranking y ubicación de los navegantes", statCrew: "TRIPULACIÓN", statTotEps: "TOTAL EPS VISTOS", statMaxBounty: "RECOMPENSA MÁX.", leaderboardHeading: "🏆 Tabla de Clasificación", thRank: "#", thUser: "Navegante", thProgress: "Progreso", thEpisodes: "Episodios", loadingData: "Cargando datos...", youTag: "(Tú)",
         fleetTitle: "⛵ Ruta de la Flota de Sombrero de Paja", fleetSub: "Ubicación actual de cada navegante en la Grand Line",
         settingsTitle: "⚙️ Ajustes del Tracker", setProfile: "Perfil del Navegante", setCrew: "Miembro para Recompensa", setTheme: "Tema Visual de la Aplicación", setLang: "Idioma de la Interfaz", setMode: "Modo de Visualización",
+        optModeOriginal: "📺 Anime Original (Toei)", optModeOnePace: "✂️ One Pace (Fan Edit)",
         optCrewTheme: "🎨 Color del Personaje Seleccionado", optCustomTheme: "🖌️ Colores Personalizados",
         lblCustomPicker: "Elegir Colores Personalizados", lblColorPri: "Color Primario", lblColorSec: "Color Destacado",
         loaderText: "Navegando por la Grand Line..."
@@ -921,7 +924,9 @@ const arcDetailsI18n = {
         "zou": { name: "Zou", summary: "A city built on the back of a giant elephant over 1,000 years old.", highlights: ["Secret of Road Poneglyphs leading to One Piece revealed", "Iconic Mink line: 'Raizo is safe!'"] },
         "whole-cake": { name: "Whole Cake Island", summary: "Sanji rescue mission in Yonko Big Mom's territory.", highlights: ["Luffy vs Sanji painful duel", "Luffy vs Katakuri in Mirror World and Future Sight Haki upgrade", "Sanji reconciles with the crew", "Luffy declared 5th Emperor with ฿1.5B bounty"] },
         "reverie": { name: "Reverie", summary: "World summit of kings and leaders in Mary Geoise.", highlights: ["Empty Throne and mysterious leader Imu revealed", "Sabo and Revolutionary Army infiltrate Mary Geoise"] },
-        "wano": { name: "País de Wano", summary: "A guerra épica para libertar o isolado País de Wano do domínio de Kaido e Orochi.", highlights: ["Zoro ganha a lendária espada Enma", "O passado de Kozuki Oden e a viagem com Gol D. Roger", "A Invasão de Onigashima e a batalha contra Kaido e Big Mom", "Luffy desperta o GEAR 5TH (O Sol de Nika)", "Derrota dos Yonko e Recompensa do Luffy sobe para ฿3.0B"] },
+        "wano": {name: "Wano Country",summary: "The epic war led by the Ninja-Pirate-Mink-Samurai Alliance to overthrow the Yonko Kaido and Big Mom and liberate the isolated land of Wano.",highlights: ["Zoro acquires the legendary sword Enma","Kozuki Oden's legendary flashback and voyage with Gol D. Roger","The Raid on Onigashima and battle against Kaido and Big Mom", 
+        "Luffy awakens GEAR 5TH (Sun God Nika)","Defeat of two Yonko and Luffy declared a new Emperor"] 
+    },
         "egghead": { name: "Egghead", summary: "Arrival at Dr. Vegapunk's future island and clash with Gorosei.", highlights: ["Dr. Vegapunk reveals Devil Fruit mysteries", "Luffy Gear 5th vs Rob Lucci Awakened", "Arrival of Admirals and the Five Elders (Gorosei)"] },
         "elbaf": { name: "Elbaph", summary: "The Straw Hat Pirates arrive at the legendary land of giant warriors, Elbaph, uncovering ancient mysteries of the Void Century and the Sun God.", highlights: ["Arrival at the legendary land of giant warriors, Elbaph", "Reunion with Dorry and Brogy", "Ancient lore and Void Century revelations"] }
     },
@@ -1199,7 +1204,11 @@ function applyTranslations() {
     document.getElementById('label-color-sec').textContent = t.lblColorSec;
 
     const loaderTxt = document.getElementById('loader-status-txt');
+    const optOrig = document.getElementById('opt-mode-original');
+    const optPace = document.getElementById('opt-mode-onepace');
     if (loaderTxt) loaderTxt.textContent = t.loaderText;
+    if (optOrig) optOrig.textContent = t.optModeOriginal;
+    if (optPace) optPace.textContent = t.optModeOnePace;
 }
 
 function checkUserSession() {
